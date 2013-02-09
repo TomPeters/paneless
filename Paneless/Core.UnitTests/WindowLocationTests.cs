@@ -27,6 +27,21 @@ namespace Paneless.Core.UnitTests
             sut.Height.ShouldBe(BOTTOM - TOP);
         }
 
+        [TestMethod]
+        public void TestClone()
+        {
+            WindowLocation original = new WindowLocation(GetRect());
+            WindowLocation clone = original.Clone();
+            clone.Left += 1;
+            clone.Right += 1;
+            clone.Top += 1;
+            clone.Bottom += 1;
+            clone.Left.ShouldBe(original.Left + 1);
+            clone.Right.ShouldBe(original.Right + 1);
+            clone.Top.ShouldBe(original.Top + 1);
+            clone.Bottom.ShouldBe(original.Bottom + 1);
+        }
+
         private static RECT GetRect()
         {
             RECT rect = new RECT();

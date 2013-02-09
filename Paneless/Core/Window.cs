@@ -43,12 +43,7 @@ namespace Paneless.Core
 
         public void SetLocation(WindowLocation location)
         {
-            RECT rect = new RECT();
-            rect.Left = location.Left;
-            rect.Right = location.Right;
-            rect.Top = location.Top;
-            rect.Bottom = location.Bottom;
-            Wmgr.SetLocation(WindowPtr, rect);
+            Wmgr.SetLocationUnchangedOrder(WindowPtr, location.GetRect());
         }
 
         public WindowLocation Location

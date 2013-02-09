@@ -60,7 +60,7 @@ namespace Paneless.Core.UnitTests
         {
             WindowLocation location = new WindowLocation(new RECT() { Left = 10, Bottom = 40, Right = 20, Top = 30 });
             _sut.SetLocation(location);
-            _mockWindowManager.Verify(mgr => mgr.SetLocation(_windowPtr, It.IsAny<RECT>()));
+            _mockWindowManager.Verify(mgr => mgr.SetLocationUnchangedOrder(_windowPtr, It.IsAny<RECT>()));
         }
     }
 }

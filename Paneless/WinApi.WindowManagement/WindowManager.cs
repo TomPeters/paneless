@@ -33,10 +33,14 @@ namespace Paneless.WinApi
             return rect;
         }
 
-        public void SetLocation(IntPtr windowPtr, RECT rect) //TODO add another call which has the 'insert after' parameter
+        public void SetLocationUnchangedOrder(IntPtr windowPtr, RECT rect)
         {
-            WinApi.SetWindowPos(windowPtr, IntPtr.Zero, rect.Left, rect.Right, rect.Right-rect.Left, rect.Bottom-rect.Top,
-                                (uint) (PositioningFlags.SWP_NOZORDER));
+            SetLocation(windowPtr, IntPtr.Zero, rect, (uint) (PositioningFlags.SWP_NOZORDER));
+        }
+
+        public void SetLocation(IntPtr windowPtr, IntPtr windowInsertAfter, RECT rect, uint positioningFlags)
+        {
+            WinApi.SetWindowPos(windowPtr, windowInsertAfter, rect.Left, rect.Top, rect.Right - rect.Left, rect.Bottom - rect.Top, positioningFlags);
         }
     }
 
@@ -46,6 +50,7 @@ namespace Paneless.WinApi
         string GetTitle(IntPtr windowPtr);
         string GetClassName(IntPtr windowPtr);
         RECT GetLocation(IntPtr windowPtr);
-        void SetLocation(IntPtr windowPtr, RECT rect);
+        void SetLocationUnchangedOrder(IntPtr windowPtr, RECT rect);
+        void SetLocation(IntPtr windowPtr, IntPtr windowInsertAfter, RECT rect, uint positioningFlags);
     }
 }
