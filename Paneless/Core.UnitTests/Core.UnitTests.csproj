@@ -9,7 +9,7 @@
     <ProjectGuid>{1F2A0244-432F-4FEF-BF9F-4B24F00489E4}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Core.UnitTests</RootNamespace>
+    <RootNamespace>Paneless.Core.UnitTests</RootNamespace>
     <AssemblyName>Core.UnitTests</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

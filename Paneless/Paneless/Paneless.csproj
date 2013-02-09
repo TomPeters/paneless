@@ -8,8 +8,8 @@
     <ProjectGuid>{CED80E90-EDAD-459F-AC89-04B74CFBBC8F}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Paneful</RootNamespace>
-    <AssemblyName>Paneful</AssemblyName>
+    <RootNamespace>Paneless</RootNamespace>
+    <AssemblyName>Paneless</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
