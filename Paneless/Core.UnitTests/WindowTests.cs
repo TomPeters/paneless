@@ -82,11 +82,22 @@ namespace Paneless.Core.UnitTests
         }
 
         [TestMethod]
+        public void GetExtendedWindowStyle()
+        {
+            _mockWindowManager.Setup(mgr => mgr.GetExtendedStyle(It.IsAny<IntPtr>()))
+                              .Returns(ExtendedWindowStyleFlags.WS_EX_APPWINDOW);
+
+            ExtendedWindowStyleFlags style = _sut.ExtendedWindowStyleFlags;
+
+            style.ShouldBe(ExtendedWindowStyleFlags.WS_EX_APPWINDOW);
+        }
+
+        [TestMethod]
         public void IsTileableTest()
         {
             _mockWindowManager.Setup(mgr => mgr.IsWindowVisible(It.IsAny<IntPtr>())).Returns(true);
-            _mockWindowManager.Setup(mgr => mgr.GetExtendedStyle(It.IsAny<IntPtr>()))
-                              .Returns(ExtendedWindowStyleFlags.WS_EX_WINDOWEDGE);
+            _mockWindowManager.Setup(mgr => mgr.GetTitle(It.IsAny<IntPtr>())).Returns("Name");
+            _mockWindowManager.Setup(mgr => mgr.GetClassName(It.IsAny<IntPtr>())).Returns("Class");
 
             _sut.IsTileable().ShouldBe(true);
         }
@@ -95,30 +106,54 @@ namespace Paneless.Core.UnitTests
         public void IsNotTileableTest_NotVisible()
         {
             _mockWindowManager.Setup(mgr => mgr.IsWindowVisible(It.IsAny<IntPtr>())).Returns(false);
-            _mockWindowManager.Setup(mgr => mgr.GetExtendedStyle(It.IsAny<IntPtr>()))
-                              .Returns(ExtendedWindowStyleFlags.WS_EX_WINDOWEDGE);
+            _mockWindowManager.Setup(mgr => mgr.GetTitle(It.IsAny<IntPtr>())).Returns("Name");
+            _mockWindowManager.Setup(mgr => mgr.GetClassName(It.IsAny<IntPtr>())).Returns("Class");
 
             _sut.IsTileable().ShouldBe(false);
         }
 
         [TestMethod]
-        public void IsNotTileableTest_NotWindowEdgeWindow()
+        public void IsTileableTest_BadName()
         {
             _mockWindowManager.Setup(mgr => mgr.IsWindowVisible(It.IsAny<IntPtr>())).Returns(true);
-            _mockWindowManager.Setup(mgr => mgr.GetExtendedStyle(It.IsAny<IntPtr>()))
-                              .Returns(ExtendedWindowStyleFlags.WS_EX_CONTEXTHELP);
+            _mockWindowManager.Setup(mgr => mgr.GetTitle(It.IsAny<IntPtr>())).Returns("");
+            _mockWindowManager.Setup(mgr => mgr.GetClassName(It.IsAny<IntPtr>())).Returns("Class");
 
             _sut.IsTileable().ShouldBe(false);
         }
 
         [TestMethod]
-        public void IsVisibleTest()
+        public void IsTileableTest_BadClass()
         {
             _mockWindowManager.Setup(mgr => mgr.IsWindowVisible(It.IsAny<IntPtr>())).Returns(true);
+            _mockWindowManager.Setup(mgr => mgr.GetTitle(It.IsAny<IntPtr>())).Returns("Name");
+            _mockWindowManager.Setup(mgr => mgr.GetClassName(It.IsAny<IntPtr>())).Returns("");
 
-            bool result = _sut.IsVisible();
+            _sut.IsTileable().ShouldBe(false);
+        }
 
-            result.ShouldBe(true);
+        [TestMethod]
+        public void IsNotTileableTest_IsToolWindow()
+        {
+            _mockWindowManager.Setup(mgr => mgr.IsWindowVisible(It.IsAny<IntPtr>())).Returns(true);
+            _mockWindowManager.Setup(mgr => mgr.GetTitle(It.IsAny<IntPtr>())).Returns("Name");
+            _mockWindowManager.Setup(mgr => mgr.GetClassName(It.IsAny<IntPtr>())).Returns("Class");
+            _mockWindowManager.Setup(mgr => mgr.GetExtendedStyle(It.IsAny<IntPtr>()))
+                              .Returns(ExtendedWindowStyleFlags.WS_EX_TOOLWINDOW);
+
+            _sut.IsTileable().ShouldBe(false);
+        }
+
+        [TestMethod]
+        public void IsNotTileableTest_BadNameWithAppWindow()
+        {
+            _mockWindowManager.Setup(mgr => mgr.IsWindowVisible(It.IsAny<IntPtr>())).Returns(true);
+            _mockWindowManager.Setup(mgr => mgr.GetTitle(It.IsAny<IntPtr>())).Returns("");
+            _mockWindowManager.Setup(mgr => mgr.GetClassName(It.IsAny<IntPtr>())).Returns("Class");
+            _mockWindowManager.Setup(mgr => mgr.GetExtendedStyle(It.IsAny<IntPtr>()))
+                              .Returns(ExtendedWindowStyleFlags.WS_EX_APPWINDOW);
+
+            _sut.IsTileable().ShouldBe(true);
         }
     }
 }

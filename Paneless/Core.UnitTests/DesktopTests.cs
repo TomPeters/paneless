@@ -38,7 +38,6 @@ namespace Paneless.Core.UnitTests
             _mockDesktopManager.Setup(mgr => mgr.EnumWindows(It.IsAny<WindowsEnumProcess>()))
                               .Callback<WindowsEnumProcess>(cb => cb(windowPtr, 0));
             _mockWindowManager.Setup(mgr => mgr.IsWindowVisible(It.IsAny<IntPtr>())).Returns(true);
-            _mockWindowManager.Setup(mgr => mgr.GetExtendedStyle(It.IsAny<IntPtr>())).Returns(ExtendedWindowStyleFlags.WS_EX_WINDOWEDGE);
             _sut.PopulateWindows();
             IEnumerable<IWindow> windows = _sut.Windows;
             windows.Count().ShouldBe(1);

@@ -41,14 +41,14 @@ namespace Paneless.Core
             get { return Wmgr.GetClassName(WindowPtr); }
         }
 
-        public void SetLocation(WindowLocation location)
-        {
-            Wmgr.SetLocationUnchangedOrder(WindowPtr, location.GetRect());
-        }
-
         public WindowLocation Location
         {
             get { return new WindowLocation(Wmgr.GetLocation(WindowPtr)); }
+        }
+
+        public void SetLocation(WindowLocation location)
+        {
+            Wmgr.SetLocationUnchangedOrder(WindowPtr, location.GetRect());
         }
 
         public ShowState State
@@ -64,22 +64,39 @@ namespace Paneless.Core
         // Returns true if this window should be handled by Paneless
         public bool IsTileable()
         {
-            return IsVisible() && IsTileableStyle();
+            return IsVisible() && (IsAppWindow() || (HasValidName() && !IsToolWindow()));
         }
 
-        public bool IsVisible()
+        private bool IsAppWindow()
         {
-            return Wmgr.IsWindowVisible(WindowPtr);
-        }
-
-        public bool IsTileableStyle()
-        {
-            ExtendedWindowStyleFlags styleFlags = ExtendedWindowStyleFlags;
-            if (styleFlags.HasFlag(ExtendedWindowStyleFlags.WS_EX_WINDOWEDGE))
+            if (ExtendedWindowStyleFlags.HasFlag(ExtendedWindowStyleFlags.WS_EX_APPWINDOW))
             {
                 return true;
             }
             return false;
+        }
+
+        private bool IsToolWindow()
+        {
+            if (ExtendedWindowStyleFlags.HasFlag(ExtendedWindowStyleFlags.WS_EX_TOOLWINDOW))
+            {
+                return true;
+            }
+            return false;
+        }
+
+        private bool HasValidName() //TODO This isn't a great way to filter windows - look into alternate methods
+        {
+            if (Name != "" && ClassName != "")
+            {
+                return true;
+            }
+            return false;
+        }
+
+        private bool IsVisible()
+        {
+            return Wmgr.IsWindowVisible(WindowPtr);
         }
     }
 
@@ -88,10 +105,9 @@ namespace Paneless.Core
         string Name { get; }
         WindowLocation Location { get; }
         string ClassName { get; }
-        void SetLocation(WindowLocation location);
         ShowState State { get; }
+        void SetLocation(WindowLocation location);
+        ExtendedWindowStyleFlags ExtendedWindowStyleFlags { get; }
         bool IsTileable();
-        bool IsVisible();
-        bool IsTileableStyle();
     }
 }
