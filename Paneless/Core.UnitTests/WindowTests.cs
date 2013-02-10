@@ -74,8 +74,7 @@ namespace Paneless.Core.UnitTests
         [TestMethod]
         public void GetWindowState()
         {
-            WINDOWPLACEMENT placement = new WINDOWPLACEMENT { showCmd = 5 }; // 5 is SW_SHOW
-            _mockWindowManager.Setup(mgr => mgr.GetWindowPlacement(It.IsAny<IntPtr>())).Returns(placement);
+            _mockWindowManager.Setup(mgr => mgr.GetShowState(It.IsAny<IntPtr>())).Returns(ShowState.SW_SHOW);
 
             ShowState state = _sut.State;
 
@@ -85,25 +84,41 @@ namespace Paneless.Core.UnitTests
         [TestMethod]
         public void IsTileableTest()
         {
-            WINDOWPLACEMENT placement = new WINDOWPLACEMENT { showCmd = 2 };
-            _mockWindowManager.Setup(mgr => mgr.GetWindowPlacement(It.IsAny<IntPtr>())).Returns(placement);
+            _mockWindowManager.Setup(mgr => mgr.IsWindowVisible(It.IsAny<IntPtr>())).Returns(true);
+            _mockWindowManager.Setup(mgr => mgr.GetExtendedStyle(It.IsAny<IntPtr>()))
+                              .Returns(ExtendedWindowStyleFlags.WS_EX_WINDOWEDGE);
 
-            ShowState state = _sut.State;
-
-            state.ShouldBe(ShowState.SW_SHOWMINIMIZED);
             _sut.IsTileable().ShouldBe(true);
         }
 
         [TestMethod]
-        public void IsNotTileableTest()
+        public void IsNotTileableTest_NotVisible()
         {
-            WINDOWPLACEMENT placement = new WINDOWPLACEMENT { showCmd = 4 };
-            _mockWindowManager.Setup(mgr => mgr.GetWindowPlacement(It.IsAny<IntPtr>())).Returns(placement);
+            _mockWindowManager.Setup(mgr => mgr.IsWindowVisible(It.IsAny<IntPtr>())).Returns(false);
+            _mockWindowManager.Setup(mgr => mgr.GetExtendedStyle(It.IsAny<IntPtr>()))
+                              .Returns(ExtendedWindowStyleFlags.WS_EX_WINDOWEDGE);
 
-            ShowState state = _sut.State;
-
-            state.ShouldNotBe(ShowState.SW_SHOW);
             _sut.IsTileable().ShouldBe(false);
+        }
+
+        [TestMethod]
+        public void IsNotTileableTest_NotWindowEdgeWindow()
+        {
+            _mockWindowManager.Setup(mgr => mgr.IsWindowVisible(It.IsAny<IntPtr>())).Returns(true);
+            _mockWindowManager.Setup(mgr => mgr.GetExtendedStyle(It.IsAny<IntPtr>()))
+                              .Returns(ExtendedWindowStyleFlags.WS_EX_CONTEXTHELP);
+
+            _sut.IsTileable().ShouldBe(false);
+        }
+
+        [TestMethod]
+        public void IsVisibleTest()
+        {
+            _mockWindowManager.Setup(mgr => mgr.IsWindowVisible(It.IsAny<IntPtr>())).Returns(true);
+
+            bool result = _sut.IsVisible();
+
+            result.ShouldBe(true);
         }
     }
 }

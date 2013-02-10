@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Text;
 
@@ -27,6 +28,14 @@ namespace Paneless.WinApi
             return titleStringBuilder.ToString();
         }
 
+        public ShowState GetShowState(IntPtr windowPtr)
+        {
+            WINDOWPLACEMENT placement = GetWindowPlacement(windowPtr);
+            string stateString = WindowStatusLookup.StatusMap[placement.showCmd];
+            ShowState resultState = (ShowState)Enum.Parse(typeof(ShowState), stateString);
+            return resultState;
+        }
+
         public WINDOWPLACEMENT GetWindowPlacement(IntPtr windowPtr)
         {
             WINDOWPLACEMENT placement = new WINDOWPLACEMENT();
@@ -51,6 +60,16 @@ namespace Paneless.WinApi
         {
             WinApi.SetWindowPos(windowPtr, windowInsertAfter, rect.Left, rect.Top, rect.Right - rect.Left, rect.Bottom - rect.Top, positioningFlags);
         }
+
+        public bool IsWindowVisible(IntPtr windowPtr)
+        {
+            return WinApi.IsWindowVisible(windowPtr);
+        }
+
+        public ExtendedWindowStyleFlags GetExtendedStyle(IntPtr windowPtr)
+        {
+            return (ExtendedWindowStyleFlags)WinApi.GetWindowLong(windowPtr, GetWindowLongNIndex.GWL_EXSTYLE);
+        }
     }
 
     public interface IWindowManager
@@ -61,6 +80,9 @@ namespace Paneless.WinApi
         RECT GetLocation(IntPtr windowPtr);
         void SetLocationUnchangedOrder(IntPtr windowPtr, RECT rect);
         void SetLocation(IntPtr windowPtr, IntPtr windowInsertAfter, RECT rect, uint positioningFlags);
+        ShowState GetShowState(IntPtr windowPtr);
         WINDOWPLACEMENT GetWindowPlacement(IntPtr windowPtr);
+        bool IsWindowVisible(IntPtr windowPtr);
+        ExtendedWindowStyleFlags GetExtendedStyle(IntPtr windowPtr);
     }
 }

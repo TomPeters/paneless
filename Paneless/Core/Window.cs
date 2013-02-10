@@ -53,25 +53,29 @@ namespace Paneless.Core
 
         public ShowState State
         {
-            get
-            {
-                WINDOWPLACEMENT placement = Wmgr.GetWindowPlacement(WindowPtr);
-                return ResultState(placement);
-            }
+            get { return Wmgr.GetShowState(WindowPtr); }
         }
 
-        private static ShowState ResultState(WINDOWPLACEMENT placement)
+        public ExtendedWindowStyleFlags ExtendedWindowStyleFlags
         {
-            string stateString = WindowStatus.StatusMap[placement.showCmd];
-            ShowState resultState = (ShowState) Enum.Parse(typeof (ShowState), stateString);
-            return resultState;
+            get { return Wmgr.GetExtendedStyle(WindowPtr); }
         }
 
         // Returns true if this window should be handled by Paneless
         public bool IsTileable()
         {
-            ShowState curState = State;
-            if (curState == ShowState.SW_SHOWMAXIMIZED || curState == ShowState.SW_SHOWMINIMIZED)
+            return IsVisible() && IsTileableStyle();
+        }
+
+        public bool IsVisible()
+        {
+            return Wmgr.IsWindowVisible(WindowPtr);
+        }
+
+        public bool IsTileableStyle()
+        {
+            ExtendedWindowStyleFlags styleFlags = ExtendedWindowStyleFlags;
+            if (styleFlags.HasFlag(ExtendedWindowStyleFlags.WS_EX_WINDOWEDGE))
             {
                 return true;
             }
@@ -87,5 +91,7 @@ namespace Paneless.Core
         void SetLocation(WindowLocation location);
         ShowState State { get; }
         bool IsTileable();
+        bool IsVisible();
+        bool IsTileableStyle();
     }
 }

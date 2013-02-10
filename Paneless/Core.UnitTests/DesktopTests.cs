@@ -34,11 +34,11 @@ namespace Paneless.Core.UnitTests
         [TestMethod]
         public void TestPopulateWindows()
         {
-            WINDOWPLACEMENT placement = new WINDOWPLACEMENT {showCmd = 2};
             const int windowPtr = 5;
             _mockDesktopManager.Setup(mgr => mgr.EnumWindows(It.IsAny<WindowsEnumProcess>()))
                               .Callback<WindowsEnumProcess>(cb => cb(windowPtr, 0));
-            _mockWindowManager.Setup(mgr => mgr.GetWindowPlacement(It.IsAny<IntPtr>())).Returns((IntPtr ptr) => placement);
+            _mockWindowManager.Setup(mgr => mgr.IsWindowVisible(It.IsAny<IntPtr>())).Returns(true);
+            _mockWindowManager.Setup(mgr => mgr.GetExtendedStyle(It.IsAny<IntPtr>())).Returns(ExtendedWindowStyleFlags.WS_EX_WINDOWEDGE);
             _sut.PopulateWindows();
             IEnumerable<IWindow> windows = _sut.Windows;
             windows.Count().ShouldBe(1);

@@ -1,15 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+
 
 namespace Paneless.WinApi
 {
-    public static class WindowStatus
+    public enum ShowState
     {
-        public static IDictionary<int, string> StatusMap;
+        SW_HIDE,
+        SW_SHOWNORMAL,
+        SW_SHOWMINIMIZED,
+        SW_SHOWMAXIMIZED,
+        SW_SHOWNOACTIVATE,
+        SW_SHOW,
+        SW_MINIMIZE,
+        SW_SHOWMINNOACTIVE,
+        SW_SHOWNA,
+        SW_RESTORE
+    }
 
-        static WindowStatus()
+    internal static class WindowStatusLookup
+    {
+        public static readonly IDictionary<int, string> StatusMap;
+
+        static WindowStatusLookup()
         {
             StatusMap = new Dictionary<int, string>
                 {

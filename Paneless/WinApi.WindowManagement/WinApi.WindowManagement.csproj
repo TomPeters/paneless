@@ -41,8 +41,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Constants\ExtendedWindowStyleFlags.cs" />
+    <Compile Include="Constants\GetWindowLongNIndex.cs" />
     <Compile Include="Constants\PositionFlags.cs" />
-    <Compile Include="Constants\WindowStatus.cs" />
+    <Compile Include="Constants\ShowState.cs" />
     <Compile Include="DesktopManager.cs" />
     <Compile Include="Types\RECT.cs" />
     <Compile Include="Types\WINDOWPLACEMENT.cs" />

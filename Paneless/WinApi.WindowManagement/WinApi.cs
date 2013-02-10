@@ -55,5 +55,16 @@ namespace Paneless.WinApi
         [DllImport("user32.dll", SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool GetWindowPlacement(IntPtr hWnd, out WINDOWPLACEMENT lpwndpl);
+
+        //http://msdn.microsoft.com/en-us/library/windows/desktop/ms633530(v=vs.85).aspx
+        //http://www.pinvoke.net/default.aspx/user32.iswindowvisible
+        [DllImport("user32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool IsWindowVisible(IntPtr hWnd);
+
+        //http://msdn.microsoft.com/en-us/library/windows/desktop/ms633584(v=vs.85).aspx
+        //http://www.pinvoke.net/default.aspx/user32.getwindowlong
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern int GetWindowLong(IntPtr hWnd, int nIndex);
     }
 }
