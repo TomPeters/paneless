@@ -9,22 +9,24 @@ namespace Paneless.Core
     public class Desktop
     {
         private List<Screen> _screens;
-        private List<Window> _windows;
+        private List<IWindow> _windows;
         private readonly WindowsEnumProcess _windowsEnumCallBack;
 
         public Desktop()
-            : this(new DesktopManager())
+            : this(new DesktopManager(), new WindowManager())
         {
         }
 
-        public Desktop(IDesktopManager desktopManager)
+        public Desktop(IDesktopManager desktopManager, IWindowManager windowManager)
         {
             DesktopManager = desktopManager;
+            WindowManager = windowManager;
             _windowsEnumCallBack = AddWindow;
-            _windows = new List<Window>();
+            _windows = new List<IWindow>();
         }
 
         private IDesktopManager DesktopManager { get; set; }
+        private IWindowManager WindowManager { get; set; }
 
         public void PopulateScreens()
         {
@@ -43,11 +45,15 @@ namespace Paneless.Core
 
         private bool AddWindow(int windowsPtr, int lParam)
         {
-            _windows.Add(new Window((IntPtr)windowsPtr));
+            Window window = new Window((IntPtr) windowsPtr, WindowManager);
+            if (window.Name != "")
+            {
+                _windows.Add(window);
+            }
             return true;
         }
 
-        public List<Window> Windows
+        public List<IWindow> Windows
         {
             get { return _windows; }
         } 

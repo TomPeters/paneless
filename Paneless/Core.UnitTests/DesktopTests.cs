@@ -13,12 +13,14 @@ namespace Paneless.Core.UnitTests
     {
         private Mock<IDesktopManager> _mockDesktopManager;
         private Desktop _sut;
+        private Mock<IWindowManager> _mockWindowManager;
 
         [TestInitialize]
         public void Setup()
         {
             _mockDesktopManager = new Mock<IDesktopManager>();
-            _sut = new Desktop(_mockDesktopManager.Object);
+            _mockWindowManager = new Mock<IWindowManager>();
+            _sut = new Desktop(_mockDesktopManager.Object, _mockWindowManager.Object);
         }
 
         [TestMethod]
@@ -35,8 +37,9 @@ namespace Paneless.Core.UnitTests
             const int windowPtr = 5;
             _mockDesktopManager.Setup(mgr => mgr.EnumWindows(It.IsAny<WindowsEnumProcess>()))
                               .Callback<WindowsEnumProcess>(cb => cb(windowPtr, 0));
+            _mockWindowManager.Setup(mgr => mgr.GetTitle(It.IsAny<IntPtr>())).Returns((IntPtr ptr) => "Name");
             _sut.PopulateWindows();
-            List<Window> windows = _sut.Windows;
+            List<IWindow> windows = _sut.Windows;
             windows.Count().ShouldBe(1);
         }
     }
