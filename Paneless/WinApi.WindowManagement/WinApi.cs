@@ -49,5 +49,11 @@ namespace Paneless.WinApi
         [DllImport("user32.dll")]
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool EnumWindows(WindowsEnumProcess lpEnumFunc, IntPtr lParam);
+
+        //http://msdn.microsoft.com/en-us/library/ms633518%28VS.85%29.aspx
+        //http://www.pinvoke.net/default.aspx/user32.getwindowplacement
+        [DllImport("user32.dll", SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        internal static extern bool GetWindowPlacement(IntPtr hWnd, out WINDOWPLACEMENT lpwndpl);
     }
 }

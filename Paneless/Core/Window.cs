@@ -50,6 +50,33 @@ namespace Paneless.Core
         {
             get { return new WindowLocation(Wmgr.GetLocation(WindowPtr)); }
         }
+
+        public ShowState State
+        {
+            get
+            {
+                WINDOWPLACEMENT placement = Wmgr.GetWindowPlacement(WindowPtr);
+                return ResultState(placement);
+            }
+        }
+
+        private static ShowState ResultState(WINDOWPLACEMENT placement)
+        {
+            string stateString = WindowStatus.StatusMap[placement.showCmd];
+            ShowState resultState = (ShowState) Enum.Parse(typeof (ShowState), stateString);
+            return resultState;
+        }
+
+        // Returns true if this window should be handled by Paneless
+        public bool IsTileable()
+        {
+            ShowState curState = State;
+            if (curState == ShowState.SW_SHOWMAXIMIZED || curState == ShowState.SW_SHOWMINIMIZED)
+            {
+                return true;
+            }
+            return false;
+        }
     }
 
     public interface IWindow
@@ -58,5 +85,7 @@ namespace Paneless.Core
         WindowLocation Location { get; }
         string ClassName { get; }
         void SetLocation(WindowLocation location);
+        ShowState State { get; }
+        bool IsTileable();
     }
 }

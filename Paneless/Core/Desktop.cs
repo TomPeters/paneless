@@ -45,15 +45,15 @@ namespace Paneless.Core
 
         private bool AddWindow(int windowsPtr, int lParam)
         {
-            Window window = new Window((IntPtr) windowsPtr, WindowManager);
-            if (window.Name != "")
+            IWindow window = new Window((IntPtr) windowsPtr, WindowManager);
+            if (window.IsTileable())
             {
                 _windows.Add(window);
             }
             return true;
         }
 
-        public List<IWindow> Windows
+        public IEnumerable<IWindow> Windows
         {
             get { return _windows; }
         } 

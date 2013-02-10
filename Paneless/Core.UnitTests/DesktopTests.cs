@@ -34,12 +34,13 @@ namespace Paneless.Core.UnitTests
         [TestMethod]
         public void TestPopulateWindows()
         {
+            WINDOWPLACEMENT placement = new WINDOWPLACEMENT {showCmd = 2};
             const int windowPtr = 5;
             _mockDesktopManager.Setup(mgr => mgr.EnumWindows(It.IsAny<WindowsEnumProcess>()))
                               .Callback<WindowsEnumProcess>(cb => cb(windowPtr, 0));
-            _mockWindowManager.Setup(mgr => mgr.GetTitle(It.IsAny<IntPtr>())).Returns((IntPtr ptr) => "Name");
+            _mockWindowManager.Setup(mgr => mgr.GetWindowPlacement(It.IsAny<IntPtr>())).Returns((IntPtr ptr) => placement);
             _sut.PopulateWindows();
-            List<IWindow> windows = _sut.Windows;
+            IEnumerable<IWindow> windows = _sut.Windows;
             windows.Count().ShouldBe(1);
         }
     }

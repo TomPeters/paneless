@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.InteropServices;
 using System.Text;
 
 namespace Paneless.WinApi
@@ -24,6 +25,14 @@ namespace Paneless.WinApi
             StringBuilder titleStringBuilder = new StringBuilder(classNameLength);
             WinApi.GetClassName(windowPtr, titleStringBuilder, classNameLength);
             return titleStringBuilder.ToString();
+        }
+
+        public WINDOWPLACEMENT GetWindowPlacement(IntPtr windowPtr)
+        {
+            WINDOWPLACEMENT placement = new WINDOWPLACEMENT();
+            placement.length = Marshal.SizeOf(placement);
+            WinApi.GetWindowPlacement(windowPtr, out placement);
+            return placement;
         }
 
         public RECT GetLocation(IntPtr windowPtr)
@@ -52,5 +61,6 @@ namespace Paneless.WinApi
         RECT GetLocation(IntPtr windowPtr);
         void SetLocationUnchangedOrder(IntPtr windowPtr, RECT rect);
         void SetLocation(IntPtr windowPtr, IntPtr windowInsertAfter, RECT rect, uint positioningFlags);
+        WINDOWPLACEMENT GetWindowPlacement(IntPtr windowPtr);
     }
 }

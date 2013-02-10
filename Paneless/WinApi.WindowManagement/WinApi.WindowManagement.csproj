@@ -33,6 +33,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -41,8 +42,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Constants\PositionFlags.cs" />
+    <Compile Include="Constants\WindowStatus.cs" />
     <Compile Include="DesktopManager.cs" />
     <Compile Include="Types\RECT.cs" />
+    <Compile Include="Types\WINDOWPLACEMENT.cs" />
     <Compile Include="WinApi.cs" />
     <Compile Include="WindowManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

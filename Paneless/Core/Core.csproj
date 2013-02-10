@@ -33,6 +33,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -42,7 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Desktop.cs" />
-    <Compile Include="Point.cs" />
+    <Compile Include="ShowState.cs" />
     <Compile Include="WindowLocation.cs" />
     <Compile Include="Window.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
