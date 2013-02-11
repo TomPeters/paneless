@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using System.Threading;
+using System.Windows.Forms;
 using Paneless.Core;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using EasyAssertions;
@@ -41,6 +42,7 @@ namespace Paneless.IntegrationTests
             location.Bottom.ShouldNotBeNull();
             _sut.State.ShouldBe(ShowState.SW_SHOWNORMAL);
             _sut.ExtendedWindowStyleFlags.HasFlag(ExtendedWindowStyleFlags.WS_EX_LEFT);
+            _sut.Screen.ShouldBeA<Screen>();
         }
 
         [TestMethod]

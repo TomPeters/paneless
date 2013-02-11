@@ -8,20 +8,20 @@ namespace Paneless.IntegrationTests
     [TestClass]
     public class DesktopIntegrationTests
     {
-        [TestMethod]
-        public void DesktoPopulateScreensTest()
-        {
-            Desktop sut = new Desktop();
-            sut.PopulateScreens();
-            sut.Screens.Count().ShouldBeGreaterThan(0); // Environment dependent so therefore an integration test
-        }
+        //[TestMethod]
+        //public void DesktoPopulateScreensTest()
+        //{
+        //    Desktop sut = new Desktop();
+        //    sut.PopulateMonitors();
+        //    sut.Monitors.Count().ShouldBeGreaterThan(0); // Environment dependent so therefore an integration test
+        //}
 
-        [TestMethod]
-        public void DesktopPopulateWindowsTest()
-        {
-            Desktop sut = new Desktop();
-            sut.PopulateWindows();
-            sut.Windows.Count().ShouldBeGreaterThan(0);
-        }
+        //[TestMethod]
+        //public void DesktopPopulateWindowsTest()
+        //{
+        //    Desktop sut = new Desktop();
+        //    sut.DetectWindows();
+        //    sut.Windows.Count().ShouldBeGreaterThan(0);
+        //}
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows.Forms;
 using Paneless.WinApi;
 
 namespace Paneless.Core
@@ -19,12 +20,14 @@ namespace Paneless.Core
         {
             Wmgr = windowManager;
             WindowPtr = windowPtr;
+            DetectScreen();
         }
 
         public Window(string windowname, IWindowManager windowManager)
         {
             Wmgr = windowManager;
             WindowPtr = Wmgr.GetPtr(windowname);
+            DetectScreen();
         }
 
         private IWindowManager Wmgr { get; set; }
@@ -46,14 +49,21 @@ namespace Paneless.Core
             get { return new WindowLocation(Wmgr.GetLocation(WindowPtr)); }
         }
 
-        public void SetLocation(WindowLocation location)
-        {
-            Wmgr.SetLocationUnchangedOrder(WindowPtr, location.GetRect());
-        }
+        public Screen Screen { get; set; }
 
         public ShowState State
         {
             get { return Wmgr.GetShowState(WindowPtr); }
+        }
+
+        public void DetectScreen()
+        {
+            Screen = Screen.FromHandle(WindowPtr);
+        }
+
+        public void SetLocation(WindowLocation location)
+        {
+            Wmgr.SetLocationUnchangedOrder(WindowPtr, location.GetRect());
         }
 
         public ExtendedWindowStyleFlags ExtendedWindowStyleFlags
@@ -85,7 +95,7 @@ namespace Paneless.Core
             return false;
         }
 
-        private bool HasValidName() //TODO This isn't a great way to filter windows - look into alternate methods
+        private bool HasValidName() //TODO This isn't a great way to filter windows (but works ok) - look into alternate methods
         {
             if (Name != "" && ClassName != "")
             {
@@ -106,6 +116,8 @@ namespace Paneless.Core
         WindowLocation Location { get; }
         string ClassName { get; }
         ShowState State { get; }
+        Screen Screen { get; set; }
+        void DetectScreen();
         void SetLocation(WindowLocation location);
         ExtendedWindowStyleFlags ExtendedWindowStyleFlags { get; }
         bool IsTileable();

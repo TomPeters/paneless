@@ -1,15 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Windows.Forms;
 using System.Linq;
 using Paneless.WinApi;
 
 namespace Paneless.Core
 {
-    public class Desktop
+    //Top level class that orchestrates the application
+    public class Desktop : IDesktop
     {
-        private List<Screen> _screens;
+        private readonly List<IMonitor> _monitors;
         private List<IWindow> _windows;
+        private readonly List<ITag> _tags; 
         private readonly WindowsEnumProcess _windowsEnumCallBack;
 
         public Desktop()
@@ -21,29 +24,45 @@ namespace Paneless.Core
         {
             DesktopManager = desktopManager;
             WindowManager = windowManager;
-            _windowsEnumCallBack = AddWindow;
-            _windows = new List<IWindow>();
+            _windowsEnumCallBack = AddDetectedWindow;
+            _monitors = new List<IMonitor>();
+            PopulateMonitors();
+            _tags = new List<ITag>();
         }
 
         private IDesktopManager DesktopManager { get; set; }
         private IWindowManager WindowManager { get; set; }
 
-        public void PopulateScreens()
+        private void PopulateMonitors()
         {
-            _screens = Screen.AllScreens.ToList();
+            
+            List<Screen> screens = Screen.AllScreens.ToList();
+            foreach (Screen screen in screens)
+            {
+                _monitors.Add(new Monitor {Screen = screen});
+            }
         }
 
-        public List<Screen> Screens
+        public List<IMonitor> Monitors
         {
-            get { return _screens; }
+            get { return _monitors; }
         }
 
-        public void PopulateWindows()
+        public List<ITag> Tags { get { return _tags; } }
+
+        public void AddTag(ITag tag)
         {
+            _tags.Add(tag);
+        }
+
+        public List<IWindow> DetectWindows()
+        {
+            _windows = new List<IWindow>();
             DesktopManager.EnumWindows(_windowsEnumCallBack);
+            return _windows;
         }
 
-        private bool AddWindow(int windowsPtr, int lParam)
+        private bool AddDetectedWindow(int windowsPtr, int lParam)
         {
             IWindow window = new Window((IntPtr) windowsPtr, WindowManager);
             if (window.IsTileable())
@@ -52,10 +71,13 @@ namespace Paneless.Core
             }
             return true;
         }
+    }
 
-        public IEnumerable<IWindow> Windows
-        {
-            get { return _windows; }
-        } 
+    public interface IDesktop
+    {
+        List<IMonitor> Monitors { get; }
+        List<ITag> Tags { get; } 
+        List<IWindow> DetectWindows();
+        void AddTag(ITag tag);
     }
 }

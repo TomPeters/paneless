@@ -4,7 +4,9 @@
     {
         static void Main(string[] args)
         {
-            
+            Controller controller = new Controller();
+            //controller.SetDefaultLayouts();
+            //controller.AssignWindows();
         }
     }
 }
