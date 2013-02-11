@@ -10,7 +10,7 @@ namespace Paneless.Core
     //Top level class that orchestrates the application
     public class Desktop : IDesktop
     {
-        private readonly List<IMonitor> _monitors;
+        private List<IMonitor> _monitors;
         private List<IWindow> _windows;
         private readonly List<ITag> _tags; 
         private readonly WindowsEnumProcess _windowsEnumCallBack;
@@ -25,9 +25,8 @@ namespace Paneless.Core
             DesktopManager = desktopManager;
             WindowManager = windowManager;
             _windowsEnumCallBack = AddDetectedWindow;
-            _monitors = new List<IMonitor>();
-            PopulateMonitors();
             _tags = new List<ITag>();
+            PopulateMonitors();
         }
 
         private IDesktopManager DesktopManager { get; set; }
@@ -35,7 +34,7 @@ namespace Paneless.Core
 
         private void PopulateMonitors()
         {
-            
+            _monitors = new List<IMonitor>();
             List<Screen> screens = Screen.AllScreens.ToList();
             foreach (Screen screen in screens)
             {

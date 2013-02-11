@@ -10,13 +10,11 @@ namespace Paneless.Core
     {
         private readonly List<IWindow> _windows; 
 
-        public Tag(string name)
+        public Tag()
         {
             _windows = new List<IWindow>();
-            Name = name;
         }
 
-        public string Name { get; set; }
         public List<IWindow> Windows { get { return _windows; } }
         public void AddWindow(IWindow window)
         {
@@ -28,7 +26,6 @@ namespace Paneless.Core
 
     public interface ITag
     {
-        string Name { get; set; }
         List<IWindow> Windows { get; }
         void AddWindow(IWindow window);
         ILayout Layout { get; set; }

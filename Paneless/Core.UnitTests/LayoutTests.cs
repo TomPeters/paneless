@@ -1,9 +1,9 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Paneless.Test
+namespace Paneless.Core.UnitTests
 {
     [TestClass]
-    public class ControllerTests
+    public class LayoutTests
     {
     }
 }

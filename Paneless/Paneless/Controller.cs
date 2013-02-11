@@ -14,14 +14,16 @@ namespace Paneless
         public Controller(IDesktop desktop)
         {
             Desktop = desktop;
+            SetDefaultLayouts();
+            AssignWindows();
         }
 
-        private IDesktop Desktop { get; set; }
+        public IDesktop Desktop { get; set; }
 
-        public void SetDefaultLayouts()
+        private void SetDefaultLayouts() //TODO this is temporary and should be put into some kind of settings/config
         {
-            ITag tag1 = new Tag("1");
-            ITag tag2 = new Tag("2");
+            ITag tag1 = new Tag();
+            ITag tag2 = new Tag();
             Desktop.AddTag(tag1);
             Desktop.AddTag(tag2);
 
@@ -29,7 +31,7 @@ namespace Paneless
             Desktop.Monitors[1].Tag = tag2;
         }
 
-        public void AssignWindows()
+        private void AssignWindows() // TODO: This should always be done at start up (is this the same as controller construction?)
         {
             List<IWindow> windows = Desktop.DetectWindows();
             foreach (IWindow window in windows)

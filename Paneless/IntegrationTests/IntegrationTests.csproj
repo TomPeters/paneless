@@ -49,6 +49,7 @@
     </CodeAnalysisDependentAssemblyPaths>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ControllerTests.cs" />
     <Compile Include="DesktopIntegrationTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="NotepadWindowIntegrationTests.cs" />
@@ -57,6 +58,10 @@
     <ProjectReference Include="..\Core\Core.csproj">
       <Project>{F6B57910-2A53-4066-B743-E815AA00450B}</Project>
       <Name>Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Paneless\Paneless.csproj">
+      <Project>{CED80E90-EDAD-459F-AC89-04B74CFBBC8F}</Project>
+      <Name>Paneless</Name>
     </ProjectReference>
     <ProjectReference Include="..\WinApi.WindowManagement\WinApi.WindowManagement.csproj">
       <Project>{51C317E2-60E2-42EE-AD61-7F823C2EEAEF}</Project>

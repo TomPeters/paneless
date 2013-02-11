@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Paneless.Core
 {
-    // how to layout windows
+    // Describes how to layout windows
     public class Template : ITemplate
     {
     }

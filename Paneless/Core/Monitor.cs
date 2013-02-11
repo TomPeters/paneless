@@ -15,8 +15,6 @@ namespace Paneless.Core
         {
             Tag.AddWindow(window);
         }
-
-        //Tagset?
     }
 
     public interface IMonitor

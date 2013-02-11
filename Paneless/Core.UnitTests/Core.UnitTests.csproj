@@ -54,7 +54,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DesktopTests.cs" />
+    <Compile Include="LayoutTests.cs" />
+    <Compile Include="MonitorTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TagTests.cs" />
     <Compile Include="WindowLocationTests.cs" />
     <Compile Include="WindowTests.cs" />
   </ItemGroup>
