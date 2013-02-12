@@ -40,7 +40,7 @@ namespace Paneless.Core.UnitTests
             _mockWindowManager.Setup(mgr => mgr.GetLocation(It.IsAny<IntPtr>()))
                               .Returns((IntPtr ptr) => new RECT() {Left = 10, Bottom = 40, Right = 20, Top = 30});
 
-            WindowLocation result = _sut.Location;
+            Rectangle result = _sut.Location;
 
             _mockWindowManager.Verify(mgr => mgr.GetLocation(_windowPtr));
             result.X.ShouldBe(10);
@@ -64,7 +64,7 @@ namespace Paneless.Core.UnitTests
         [TestMethod]
         public void SetWindowPositionTest()
         {
-            WindowLocation location = new WindowLocation(new RECT() { Left = 10, Bottom = 40, Right = 20, Top = 30 });
+            Rectangle location = new Rectangle(new RECT() { Left = 10, Bottom = 40, Right = 20, Top = 30 });
 
             _sut.SetLocation(location);
 

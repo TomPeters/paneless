@@ -2,9 +2,9 @@
 
 namespace Paneless.Core
 {
-    public class WindowLocation
+    public class Rectangle
     {
-        public WindowLocation(RECT rect)
+        public Rectangle(RECT rect)
         {
             Left = rect.Left;
             Right = rect.Right;
@@ -12,7 +12,15 @@ namespace Paneless.Core
             Bottom = rect.Bottom;
         }
 
-        private WindowLocation()
+        public Rectangle(System.Drawing.Rectangle workingArea)
+        {
+            Left = workingArea.Left;
+            Right = workingArea.Right;
+            Top = workingArea.Top;
+            Bottom = workingArea.Bottom;
+        }
+
+        public Rectangle()
         {
         }
 
@@ -32,13 +40,15 @@ namespace Paneless.Core
             return new RECT {Left = Left, Right = Right, Top = Top, Bottom = Bottom};
         }
 
-        public WindowLocation Clone()
+        public Rectangle Clone()
         {
-            WindowLocation clone = new WindowLocation();
-            clone.Left = Left;
-            clone.Right = Right;
-            clone.Top = Top;
-            clone.Bottom = Bottom;
+            Rectangle clone = new Rectangle
+                {
+                    Left = Left, 
+                    Right = Right, 
+                    Top = Top, 
+                    Bottom = Bottom
+                };
             return clone;
         }
     }

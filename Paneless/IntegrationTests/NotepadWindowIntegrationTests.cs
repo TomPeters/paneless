@@ -35,7 +35,7 @@ namespace Paneless.IntegrationTests
         {
             _sut.Name.ShouldBe(TestWindowName);
             _sut.ClassName.ShouldBe("Notepad");
-            WindowLocation location = _sut.Location;
+            Rectangle location = _sut.Location;
             location.Left.ShouldNotBeNull();
             location.Right.ShouldNotBeNull();
             location.Top.ShouldNotBeNull();
@@ -48,15 +48,15 @@ namespace Paneless.IntegrationTests
         [TestMethod]
         public void RepositionWindowTest()
         {
-            WindowLocation originalLocation = _sut.Location;
-            WindowLocation proposedLocation = originalLocation.Clone();
+            Rectangle originalLocation = _sut.Location;
+            Rectangle proposedLocation = originalLocation.Clone();
             proposedLocation.Top -= 1;
             proposedLocation.Bottom += 1;
             proposedLocation.Left -= 1;
             proposedLocation.Right += 1;
             _sut.SetLocation(proposedLocation);
 
-            WindowLocation newLocation = _sut.Location;
+            Rectangle newLocation = _sut.Location;
 
             newLocation.Left.ShouldBe(proposedLocation.Left);
             newLocation.Right.ShouldBe(proposedLocation.Right);

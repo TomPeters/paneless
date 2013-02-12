@@ -46,8 +46,7 @@
     <Compile Include="Layout.cs" />
     <Compile Include="Monitor.cs" />
     <Compile Include="Tag.cs" />
-    <Compile Include="Template.cs" />
-    <Compile Include="WindowLocation.cs" />
+    <Compile Include="Rectangle.cs" />
     <Compile Include="Window.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

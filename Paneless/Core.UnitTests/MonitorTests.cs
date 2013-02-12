@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System.Windows.Forms;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 
 namespace Paneless.Core.UnitTests
@@ -12,6 +13,7 @@ namespace Paneless.Core.UnitTests
         public void Setup()
         {
             _sut = new Monitor();
+            _sut.Screen = Screen.AllScreens[0];
         }
 
         [TestMethod]

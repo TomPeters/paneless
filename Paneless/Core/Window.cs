@@ -44,9 +44,9 @@ namespace Paneless.Core
             get { return Wmgr.GetClassName(WindowPtr); }
         }
 
-        public WindowLocation Location
+        public Rectangle Location
         {
-            get { return new WindowLocation(Wmgr.GetLocation(WindowPtr)); }
+            get { return new Rectangle(Wmgr.GetLocation(WindowPtr)); }
         }
 
         public Screen Screen { get; set; }
@@ -61,7 +61,7 @@ namespace Paneless.Core
             Screen = Screen.FromHandle(WindowPtr);
         }
 
-        public void SetLocation(WindowLocation location)
+        public void SetLocation(Rectangle location)
         {
             Wmgr.SetLocationUnchangedOrder(WindowPtr, location.GetRect());
         }
@@ -113,12 +113,12 @@ namespace Paneless.Core
     public interface IWindow
     {
         string Name { get; }
-        WindowLocation Location { get; }
+        Rectangle Location { get; }
         string ClassName { get; }
         ShowState State { get; }
         Screen Screen { get; set; }
         void DetectScreen();
-        void SetLocation(WindowLocation location);
+        void SetLocation(Rectangle location);
         ExtendedWindowStyleFlags ExtendedWindowStyleFlags { get; }
         bool IsTileable();
     }

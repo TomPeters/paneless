@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Layouts;
 using Paneless.Core;
 
 namespace Paneless
@@ -16,6 +17,15 @@ namespace Paneless
             Desktop = desktop;
             SetDefaultLayouts();
             AssignWindows();
+            SetInitialLayouts();
+        }
+
+        private void SetInitialLayouts()
+        {
+            foreach (IMonitor monitor in Desktop.Monitors)
+            {
+                monitor.Tag.SetLayout(new HorizontalLayout());
+            }
         }
 
         public IDesktop Desktop { get; set; }
@@ -34,6 +44,7 @@ namespace Paneless
         private void AssignWindows() // TODO: This should always be done at start up (is this the same as controller construction?)
         {
             List<IWindow> windows = Desktop.DetectWindows();
+
             foreach (IWindow window in windows)
             {
                 foreach (IMonitor monitor in Desktop.Monitors)

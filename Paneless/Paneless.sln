@@ -20,6 +20,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinApi.WindowManagement", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Paneless.Test", "Paneless.Test\Paneless.Test.csproj", "{B92C17CD-E263-40E9-BA45-257F4CB0C412}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Layouts", "Layouts\Layouts.csproj", "{B24B934D-7512-4DA4-9F05-3202EB52207A}"
+EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = Paneful.vsmdi
@@ -93,6 +95,16 @@ Global
 		{B92C17CD-E263-40E9-BA45-257F4CB0C412}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{B92C17CD-E263-40E9-BA45-257F4CB0C412}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{B92C17CD-E263-40E9-BA45-257F4CB0C412}.Release|x86.ActiveCfg = Release|Any CPU
+		{B24B934D-7512-4DA4-9F05-3202EB52207A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B24B934D-7512-4DA4-9F05-3202EB52207A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B24B934D-7512-4DA4-9F05-3202EB52207A}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{B24B934D-7512-4DA4-9F05-3202EB52207A}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{B24B934D-7512-4DA4-9F05-3202EB52207A}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{B24B934D-7512-4DA4-9F05-3202EB52207A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B24B934D-7512-4DA4-9F05-3202EB52207A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B24B934D-7512-4DA4-9F05-3202EB52207A}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{B24B934D-7512-4DA4-9F05-3202EB52207A}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{B24B934D-7512-4DA4-9F05-3202EB52207A}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

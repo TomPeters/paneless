@@ -16,7 +16,7 @@ namespace Paneless.Core.UnitTests
         public void TestPoints()
         {
             RECT rect = GetRect();
-            WindowLocation sut = new WindowLocation(rect);
+            Rectangle sut = new Rectangle(rect);
             sut.Left.ShouldBe(LEFT);
             sut.Right.ShouldBe(RIGHT);
             sut.Top.ShouldBe(TOP);
@@ -30,8 +30,8 @@ namespace Paneless.Core.UnitTests
         [TestMethod]
         public void TestClone()
         {
-            WindowLocation original = new WindowLocation(GetRect());
-            WindowLocation clone = original.Clone();
+            Rectangle original = new Rectangle(GetRect());
+            Rectangle clone = original.Clone();
             clone.Left += 1;
             clone.Right += 1;
             clone.Top += 1;
