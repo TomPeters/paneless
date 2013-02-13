@@ -3,24 +3,23 @@ using System.Linq;
 
 namespace Paneless.Layouts
 {
-    public class HorizontalLayout : LayoutBase
+    public class VerticalLayout : LayoutBase
     {
-
         public override void Tile()
         {
             int numWindows = Windows.Count();
-            int windowWidth = Domain.Width/numWindows;
+            int windowHeight = Domain.Height / numWindows;
             int windowCount = 0;
             foreach (IWindow window in Windows)
             {
-                int windowLeft = Domain.Left + windowCount*windowWidth;
+                int windowTop = Domain.Top + windowCount * windowHeight;
                 Rectangle windowDomain = new Rectangle()
-                    {
-                        Left = windowLeft,
-                        Right = windowLeft + windowWidth,
-                        Top = Domain.Top,
-                        Bottom = Domain.Bottom
-                    };
+                {
+                    Left = Domain.Left,
+                    Right = Domain.Right,
+                    Top = windowTop,
+                    Bottom = windowTop + windowHeight,
+                };
                 RenderInDomain(window, windowDomain);
                 windowCount++;
             }

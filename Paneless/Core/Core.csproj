@@ -43,7 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Desktop.cs" />
-    <Compile Include="Layout.cs" />
+    <Compile Include="ILayout.cs" />
     <Compile Include="Monitor.cs" />
     <Compile Include="Tag.cs" />
     <Compile Include="Rectangle.cs" />

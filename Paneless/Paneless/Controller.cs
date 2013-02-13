@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Layouts;
+using Paneless.Layouts;
 using Paneless.Core;
 
 namespace Paneless
@@ -24,7 +24,7 @@ namespace Paneless
         {
             foreach (IMonitor monitor in Desktop.Monitors)
             {
-                monitor.Tag.SetLayout(new HorizontalLayout());
+                monitor.Tag.SetLayout(new CompositeHorizontalLayout());
             }
         }
 

@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
+using Paneless.Core;
 
-namespace Paneless.Core
+namespace Paneless.Layouts
 {
     // Combination of windows and how to lay them out (template). This contains similar structure to tags but contains different information and has a different purpose
 
@@ -16,7 +14,7 @@ namespace Paneless.Core
             _windows = new List<IWindow>();
         }
 
-        public IEnumerable<IWindow> Windows { get { return _windows; } }
+        public IList<IWindow> Windows { get { return _windows; } }
 
         public Rectangle Domain { get; set; }
 
@@ -32,14 +30,11 @@ namespace Paneless.Core
         }
 
         public abstract void Tile();
-    }
 
-    public interface ILayout
-    {
-        void Tile();
-        IEnumerable<IWindow> Windows { get; }
-        Rectangle Domain { get; set; }
-        void AddWindow(IWindow window);
-        void AddWindowsWithoutTile(IWindow window);
+        public void RenderInDomain(IWindow window, Rectangle windowDomain)
+        {
+            FullDomainLayout fullDomainLayout = new FullDomainLayout(5) {Domain = windowDomain}; //TODO Need a better way of adding a default border width than hard coding it here
+            fullDomainLayout.AddWindow(window);
+        }
     }
 }
