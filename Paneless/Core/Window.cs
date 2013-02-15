@@ -77,6 +77,7 @@ namespace Paneless.Core
             return IsVisible() && (IsAppWindow() || (HasValidName() && !IsToolWindow()));
         }
 
+        // The WS_EX_APPWINDOW extended style indicates that the window should appear in the taskbar
         private bool IsAppWindow()
         {
             if (ExtendedWindowStyleFlags.HasFlag(ExtendedWindowStyleFlags.WS_EX_APPWINDOW))
@@ -86,6 +87,7 @@ namespace Paneless.Core
             return false;
         }
 
+        // Tool windows probably won't look good tiled (and users may not want them tiled) - possibly make this optional later
         private bool IsToolWindow()
         {
             if (ExtendedWindowStyleFlags.HasFlag(ExtendedWindowStyleFlags.WS_EX_TOOLWINDOW))
