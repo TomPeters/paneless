@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 using System.Text;
+using Paneless.WinApi.Constants;
 
 namespace Paneless.WinApi
 {
@@ -66,5 +67,10 @@ namespace Paneless.WinApi
         //http://www.pinvoke.net/default.aspx/user32.getwindowlong
         [DllImport("user32.dll", SetLastError = true)]
         public static extern int GetWindowLong(IntPtr hWnd, int nIndex);
+
+        //http://msdn.microsoft.com/en-us/library/windows/desktop/ms644990(v=vs.85).aspx
+        //http://www.pinvoke.net/default.aspx/user32.setwindowshookex
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern IntPtr SetWindowsHookEx(HookType hookType, IntPtr lpfn, IntPtr hMod, uint dwThreadId);
     }
 }

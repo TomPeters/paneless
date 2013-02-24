@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 using System.Text;
+using Paneless.WinApi.Constants;
 
 namespace Paneless.WinApi
 {
+    public delegate int HookCallback(int code, IntPtr wParam, IntPtr lParam);
+
     public class WindowManager : IWindowManager
     {
         public IntPtr GetPtr(string windowName)
@@ -69,6 +72,32 @@ namespace Paneless.WinApi
         {
             return (ExtendedWindowStyleFlags)WinApi.GetWindowLong(windowPtr, GetWindowLongNIndex.GWL_EXSTYLE);
         }
+
+        public void SetupWindowsHook(HookType hooktype, HookCallback callback)
+        {
+            IntPtr callbackPtr = Marshal.GetFunctionPointerForDelegate(callback);
+            IntPtr wrappedCallbackPtr = AllocHookWrapper(callbackPtr);
+            IntPtr libraryPtr = LoadLibrary("WinApiHookWrapper.dll");
+            IntPtr hHook = WinApi.SetWindowsHookEx(hooktype, wrappedCallbackPtr, libraryPtr, 0);
+        }
+
+        public void FreeWindowsHook()
+        {
+            Free();
+        }
+
+        #region HookWrapper
+
+        [DllImport("..\\..\\..\\Debug\\WinApiHookWrapper.dll")]
+        private static extern IntPtr AllocHookWrapper(IntPtr callback);
+
+        [DllImport("..\\..\\..\\Debug\\WinApiHookWrapper.dll")]
+        private static extern bool Free();
+
+        [DllImport("kernel32.dll")]
+        private static extern IntPtr LoadLibrary(string lpFileName);
+
+        #endregion
     }
 
     public interface IWindowManager

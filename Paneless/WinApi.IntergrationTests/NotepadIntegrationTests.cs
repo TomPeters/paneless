@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Runtime.InteropServices;
 using System.Threading;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Paneless.WinApi;
 using EasyAssertions;
+using Paneless.WinApi.Constants;
+using Paneless.WinApi.Types;
 
 namespace WinApi.IntergrationTests
 {
@@ -101,6 +104,24 @@ namespace WinApi.IntergrationTests
         {
             ExtendedWindowStyleFlags extendedStyle = _wm.GetExtendedStyle(_notepadPtr);
             extendedStyle.HasFlag(ExtendedWindowStyleFlags.WS_EX_LEFT).ShouldBe(true);
+        }
+
+        [TestMethod]
+        public void WindowHookTests()
+        {
+            HookCallback callback = TestHookCallback;
+            _wm.SetupWindowsHook(HookType.WH_CALLWNDPROC, callback);
+            Thread.Sleep(1000);
+        }
+
+        private int TestHookCallback(int code, IntPtr wParam, IntPtr lParam)
+        {
+            CWPSTRUCT myStruct = (CWPSTRUCT)Marshal.PtrToStructure(lParam, typeof(CWPSTRUCT));
+            myStruct.hwnd.ShouldBeNull();
+            myStruct.lparam.ShouldBeNull();
+            myStruct.message.ShouldBe(-1);
+            myStruct.wparam.ShouldBeNull();
+            return 1;
         }
     }
 }
