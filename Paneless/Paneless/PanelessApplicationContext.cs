@@ -1,0 +1,59 @@
+﻿using System;
+using System.ComponentModel;
+using System.Drawing;
+using System.Reflection;
+using System.Windows.Forms;
+using Paneless.Layouts;
+
+namespace Paneless
+{
+    public class PanelessApplicationContext : ApplicationContext
+    {
+        private NotifyIcon _notifyIcon;
+        private readonly IController _controller;
+        private Form _hiddenForm;
+
+        public PanelessApplicationContext()
+        {
+            InitializeContext();
+            _controller = new Controller(new CompositeHorizontalLayout());
+            SetupShellHookWindow();
+        }
+
+        private void InitializeContext()
+        {
+            var components = new Container();
+            ContextMenuStrip contextMenuStrip = new ContextMenuStrip();
+            contextMenuStrip.Items.Add(new ToolStripButton("Exit", null, exitItem_Click));
+            _notifyIcon = new NotifyIcon(components)
+                {
+                    ContextMenuStrip = contextMenuStrip,
+                    Visible = true,
+                    Icon = new Icon(Assembly.GetEntryAssembly().GetManifestResourceStream("Paneless.assets.paneless.ico")),
+                    Text = "This is my notify icon"
+                };
+        }
+
+        private void exitItem_Click(object sender, EventArgs e)
+        {
+            ExitThread();
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            _controller.TerminateHook();
+        }
+
+        protected override void ExitThreadCore()
+        {
+            _notifyIcon.Visible = false;
+            base.ExitThreadCore();
+        }
+
+        private void SetupShellHookWindow()
+        {
+            _hiddenForm = new HiddenForm(_controller);
+            _controller.SetupHook(_hiddenForm.Handle);
+        }
+    }
+}

@@ -14,7 +14,10 @@ x64/
 build/
 [Bb]in/
 [Oo]bj/
-lib/WinApiHookWrapper.*
+lib/WinApi.ShellHook32*
+lib/WinApi.ShellHook64*
+lib/WinApi.ShellHookLauncher32*
+lib/WinApi.ShellHookLauncher64*
 
 # MSTest test Results
 [Tt]est[Rr]esult*/
