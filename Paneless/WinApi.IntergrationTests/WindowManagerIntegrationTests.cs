@@ -8,22 +8,22 @@ using EasyAssertions;
 namespace WinApi.IntergrationTests
 {
     [TestClass]
-    public class NotepadIntegrationTests
+    public abstract class WindowManagerIntegrationTests
     {
-        private const string NotepadTitle = "Untitled - Notepad";
-        private const string NotepadProcess = "Notepad.exe";
-        private const string NotepadClass = "Notepad";
+        protected string ApplicationTitle;
+        protected string ApplicationProcess;
+        protected string ApplicationClass;
         private Process _process;
         private IWindowManager _wm;
-        private IntPtr _notepadPtr;
+        private IntPtr _applicationPtr;
 
         [TestInitialize]
         public void Setup()
         {
-            _process = Process.Start(NotepadProcess);
+            _process = Process.Start(ApplicationProcess);
             Thread.Sleep(1000);
             _wm = new WindowManager();
-            _notepadPtr = _wm.GetPtr(NotepadTitle);
+            _applicationPtr = _wm.GetPtr(ApplicationTitle);
         }
 
         [TestCleanup]
@@ -36,35 +36,35 @@ namespace WinApi.IntergrationTests
         [TestMethod]
         public void GetPtrFromWindowString()
         {
-            IntPtr notepadPtr = _wm.GetPtr(NotepadTitle);
+            IntPtr notepadPtr = _wm.GetPtr(ApplicationTitle);
             notepadPtr.ShouldNotBe(IntPtr.Zero);
         }
 
         [TestMethod]
         public void GetTitle()
         {
-            string title = _wm.GetTitle(_notepadPtr);
-            title.ShouldBe(NotepadTitle);
+            string title = _wm.GetTitle(_applicationPtr);
+            title.ShouldBe(ApplicationTitle);
         }
 
         [TestMethod]
         public void GetClassName()
         {
-            string className = _wm.GetClassName(_notepadPtr);
-            className.ShouldBe(NotepadClass);
+            string className = _wm.GetClassName(_applicationPtr);
+            className.ShouldBe(ApplicationClass);
         }
 
         [TestMethod]
         public void GetShowState()
         {
-            ShowState showState = _wm.GetShowState(_notepadPtr);
+            ShowState showState = _wm.GetShowState(_applicationPtr);
             showState.ShouldBe(ShowState.SW_SHOWNORMAL);
         }
 
         [TestMethod]
         public void GetWindowPlacement()
         {
-            WINDOWPLACEMENT placement = _wm.GetWindowPlacement(_notepadPtr);
+            WINDOWPLACEMENT placement = _wm.GetWindowPlacement(_applicationPtr);
             // Only need to assert show cmd as this is the only thing we are using
             placement.showCmd.ShouldBe(1);
         }
@@ -72,7 +72,7 @@ namespace WinApi.IntergrationTests
         [TestMethod]
         public void GetLocation()
         {
-            RECT location = _wm.GetLocation(_notepadPtr);
+            RECT location = _wm.GetLocation(_applicationPtr);
             location.Right.ShouldBeGreaterThan(location.Left);
             location.Bottom.ShouldBeGreaterThan(location.Top);
         }
@@ -80,27 +80,49 @@ namespace WinApi.IntergrationTests
         [TestMethod]
         public void SetLocationUnchangedOrder()
         {
-            RECT location = _wm.GetLocation(_notepadPtr);
+            RECT location = _wm.GetLocation(_applicationPtr);
             location.Left = location.Left + 1;
-            _wm.SetLocationUnchangedOrder(_notepadPtr, location);
+            _wm.SetLocationUnchangedOrder(_applicationPtr, location);
 
             // Check new location to confirm that it has moved
-            RECT newLocation = _wm.GetLocation(_notepadPtr);
+            RECT newLocation = _wm.GetLocation(_applicationPtr);
             newLocation.Left.ShouldBe(location.Left);
         }
 
         [TestMethod]
         public void IsWindowVisible()
         {
-            bool visibility = _wm.IsWindowVisible(_notepadPtr);
+            bool visibility = _wm.IsWindowVisible(_applicationPtr);
             visibility.ShouldBe(true);
         }
 
         [TestMethod]
         public void GetExtendedStyle()
         {
-            ExtendedWindowStyleFlags extendedStyle = _wm.GetExtendedStyle(_notepadPtr);
+            ExtendedWindowStyleFlags extendedStyle = _wm.GetExtendedStyle(_applicationPtr);
             extendedStyle.HasFlag(ExtendedWindowStyleFlags.WS_EX_LEFT).ShouldBe(true);
+        }
+    }
+
+    [TestClass]
+    public class NotepadWindowManagerIntegrationTests : WindowManagerIntegrationTests
+    {
+        public NotepadWindowManagerIntegrationTests() 
+        {
+            ApplicationTitle = "Untitled - Notepad";
+            ApplicationProcess = "Notepad.exe";
+            ApplicationClass = "Notepad";
+        }
+    }
+
+    [TestClass]
+    public class CalculatorWindowManagerIntegrationTests : WindowManagerIntegrationTests
+    {
+        public CalculatorWindowManagerIntegrationTests()
+        {
+            ApplicationTitle = "Calculator";
+            ApplicationProcess = "calc.exe";
+            ApplicationClass = "CalcFrame";
         }
     }
 }

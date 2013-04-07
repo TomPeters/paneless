@@ -17,10 +17,13 @@ namespace Paneless.WinApi
             WinApi.EnumWindows(windowsEnumCallBack, IntPtr.Zero);
         }
 
+        // TODO: Make this method testable
+        // TODO: Add more flexible directory searching
+        // TODO: Add architecture detection to only launcher require shell hooks
         public bool SetupWindowsHook(IntPtr shellWindowPtr)
         {
             bool result = StoreWindowPtr(shellWindowPtr);
-            _hookThread32 = Process.Start(@"C:\Programming\paneless\lib\WinApi.ShellHookLauncher32.exe"); // TODO: Add more flexible directory searching
+            _hookThread32 = Process.Start(@"C:\Programming\paneless\lib\WinApi.ShellHookLauncher32.exe");
             _hookThread64 = Process.Start(@"C:\Programming\paneless\lib\WinApi.ShellHookLauncher64.exe");
             return result;
         }

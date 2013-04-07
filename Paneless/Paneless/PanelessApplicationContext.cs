@@ -13,10 +13,10 @@ namespace Paneless
         private readonly IController _controller;
         private Form _hiddenForm;
 
-        public PanelessApplicationContext()
+        public PanelessApplicationContext(IController controller)
         {
             InitializeContext();
-            _controller = new Controller(new CompositeHorizontalLayout());
+            _controller = controller;
             SetupShellHookWindow();
         }
 
