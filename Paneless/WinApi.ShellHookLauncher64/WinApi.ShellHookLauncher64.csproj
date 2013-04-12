@@ -87,6 +87,7 @@
     <Compile Include="DirectoryFinder.cs" />
     <Compile Include="ShellHookHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ShellHookHelperDllCalls.cs" />
     <Compile Include="ShellHookLauncher.cs" />
   </ItemGroup>
   <ItemGroup>
