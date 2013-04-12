@@ -101,6 +101,7 @@
     <Compile Include="Constants\ShowState.cs" />
     <Compile Include="Constants\WindowNotification.cs" />
     <Compile Include="DesktopManager.cs" />
+    <Compile Include="DirectoryFinder.cs" />
     <Compile Include="Types\RECT.cs" />
     <Compile Include="Types\WINDOWPLACEMENT.cs" />
     <Compile Include="WinApi.cs" />

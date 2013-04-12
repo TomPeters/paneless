@@ -8,9 +8,22 @@ namespace Paneless.WinApi
 
     public class DesktopManager : IDesktopManager
     {
+        private readonly IDirectoryFinder _directoryFinder;
         private Process _hookThread32;
         private Process _hookThread64;
+        private const string HookLauncher32 = "WinApi.ShellHookLauncher32.exe";
+        private const string HookLauncher64 = "WinApi.ShellHookLauncher64.exe";
         private const string PanelessWindowPropertyId = "PANELESS_WND_40FB6774-53A9-4341-9FF7-BAD24A8205C6";
+
+        public DesktopManager()
+            : this(new DirectoryFinder())
+        {
+        }
+
+        private DesktopManager(IDirectoryFinder directoryFinder)
+        {
+            _directoryFinder = directoryFinder;
+        }
 
         public void EnumWindows(WindowsEnumProcess windowsEnumCallBack)
         {
@@ -23,8 +36,8 @@ namespace Paneless.WinApi
         public bool SetupWindowsHook(IntPtr shellWindowPtr)
         {
             bool result = StoreWindowPtr(shellWindowPtr);
-            _hookThread32 = Process.Start(@"C:\Programming\paneless\lib\WinApi.ShellHookLauncher32.exe");
-            _hookThread64 = Process.Start(@"C:\Programming\paneless\lib\WinApi.ShellHookLauncher64.exe");
+            _hookThread32 = Process.Start(_directoryFinder.FindDirectoryInAncestors(HookLauncher32));
+            _hookThread64 = Process.Start(_directoryFinder.FindDirectoryInAncestors(HookLauncher64));
             return result;
         }
 
