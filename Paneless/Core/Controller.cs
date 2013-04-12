@@ -10,28 +10,30 @@ namespace Paneless
     // Orchestrates Core
     public class Controller : IController
     {
-        private readonly ILayout _initialLayout;
-        private readonly IWindowManager _windowManager;
-        private readonly IDesktopManager _desktopManager;
         private readonly int _windowMessage;
         private const string CustomWindowMessage = "PANELESS_7F75020C-34E7-45B4-A5F8-6827F9DB7DE2";
 
+        private IDesktop Desktop { get; set; }
+
+        private ILayout InitialLayout { get; set; }
+
+        private IWindowManager WindowManager { get; set; }
+
+        private IDesktopManager DesktopManager { get; set; }
 
         public Controller(ILayout initialLayout)
             : this(initialLayout, new Desktop(), new WindowManager(), new DesktopManager())
         {
         }
 
-        private Controller(ILayout initialLayout, IDesktop desktop, IWindowManager windowManager, IDesktopManager desktopManager)
+        public Controller(ILayout initialLayout, IDesktop desktop, IWindowManager windowManager, IDesktopManager desktopManager)
         {
             Desktop = desktop;
-            _initialLayout = initialLayout;
-            _windowManager = windowManager;
-            _desktopManager = desktopManager;
+            InitialLayout = initialLayout;
+            WindowManager = windowManager;
+            DesktopManager = desktopManager;
 
-            
-
-            _windowMessage = _desktopManager.RegisterWindowMessage(CustomWindowMessage);
+            _windowMessage = DesktopManager.RegisterWindowMessage(CustomWindowMessage);
 
             SetDefaultLayouts();
             AssignWindows();
@@ -42,21 +44,18 @@ namespace Paneless
         {
             foreach (IMonitor monitor in Desktop.Monitors)
             {
-                monitor.Tag.SetLayout(_initialLayout);
+                monitor.Tag.SetLayout(InitialLayout);
             }
         }
 
-        public IDesktop Desktop { get; private set; }
-
         private void SetDefaultLayouts() //TODO this is temporary and should be put into some kind of settings/config
         {
-            ITag tag1 = new Tag();
-            ITag tag2 = new Tag();
-            Desktop.AddTag(tag1);
-            Desktop.AddTag(tag2);
-
-            Desktop.Monitors[0].Tag = tag1;
-            Desktop.Monitors[1].Tag = tag2;
+            foreach (IMonitor monitor in Desktop.Monitors)
+            {
+                ITag newTag = new Tag();
+                Desktop.AddTag(newTag);
+                monitor.Tag = newTag;
+            }
         }
 
         private void AssignWindows() // TODO: This should always be done at start up (is this the same as controller construction?)
@@ -67,7 +66,7 @@ namespace Paneless
             {
                 foreach (IMonitor monitor in Desktop.Monitors)
                 {
-                    if (window.Screen.Equals(monitor.Screen))
+                    if (monitor.IsInSameScreen(window))
                     {
                         monitor.AddWindow(window);
                     }
@@ -77,12 +76,12 @@ namespace Paneless
 
         public void SetupHook(IntPtr windowPtr)
         {
-            _desktopManager.SetupWindowsHook(windowPtr); // TODO Use return type to check if this succeeded
+            DesktopManager.SetupWindowsHook(windowPtr); // TODO Use return type to check if this succeeded
         }
 
         public void TerminateHook()
         {
-            _desktopManager.TerminateHookThreads();
+            DesktopManager.TerminateHookThreads();
         }
 
         public void WndProcEventHandler(Message msg)
@@ -110,7 +109,6 @@ namespace Paneless
 
     public interface IController
     {
-        IDesktop Desktop { get; }
         void SetupHook(IntPtr windowPtr);
         void TerminateHook();
         void WndProcEventHandler(Message msg);
