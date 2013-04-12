@@ -81,5 +81,11 @@ namespace Paneless.WinApi
         //http://www.pinvoke.net/default.aspx/user32/getdesktopwindow.html
         [DllImport("user32.dll", SetLastError = false)]
         internal static extern IntPtr GetDesktopWindow();
+
+        //http://msdn.microsoft.com/en-us/library/windows/desktop/ms684139(v=vs.85).aspx
+        //http://www.pinvoke.net/default.aspx/kernel32/iswow64process.html
+        [DllImport("kernel32.dll", SetLastError = true, CallingConvention = CallingConvention.Winapi)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        internal static extern bool IsWow64Process(IntPtr hProcess, [Out, MarshalAs(UnmanagedType.Bool)] out bool wow64Process);
     }
 }
