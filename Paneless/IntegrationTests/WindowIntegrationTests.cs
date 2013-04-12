@@ -9,18 +9,20 @@ using Paneless.WinApi;
 namespace Paneless.IntegrationTests
 {
     [TestClass]
-    public class NotepadWindowIntegrationTests
+    public abstract class WindowIntegrationTests
     {
-        private const string TestWindowName = "Untitled - Notepad";
+        protected string ApplicationClass;
+        protected string ApplicationProcess;
+        protected string ApplicationTitle;
         private Process _process;
         private IWindow _sut;
 
         [TestInitialize]
         public void Setup()
         {
-            _process = Process.Start("Notepad.exe");
+            _process = Process.Start(ApplicationProcess);
             Thread.Sleep(1000);
-            _sut = new Window(TestWindowName);
+            _sut = new Window(ApplicationTitle);
         }
 
         [TestCleanup]
@@ -33,8 +35,8 @@ namespace Paneless.IntegrationTests
         [TestMethod]
         public void GetPropertiesTest()
         {
-            _sut.Name.ShouldBe(TestWindowName);
-            _sut.ClassName.ShouldBe("Notepad");
+            _sut.Name.ShouldBe(ApplicationTitle);
+            _sut.ClassName.ShouldBe(ApplicationClass);
             Rectangle location = _sut.Location;
             location.Left.ShouldNotBeNull();
             location.Right.ShouldNotBeNull();
@@ -62,6 +64,17 @@ namespace Paneless.IntegrationTests
             newLocation.Right.ShouldBe(proposedLocation.Right);
             newLocation.Top.ShouldBe(proposedLocation.Top);
             newLocation.Bottom.ShouldBe(proposedLocation.Bottom);
+        }
+    }
+
+    [TestClass]
+    public class NotepadWindowIntegrationTests : WindowIntegrationTests
+    {
+        public NotepadWindowIntegrationTests()
+        {
+            ApplicationClass = "Notepad";
+            ApplicationProcess = "Notepad.exe";
+            ApplicationTitle = "Untitled - Notepad";
         }
     }
 }
