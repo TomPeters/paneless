@@ -96,6 +96,7 @@
     <Compile Include="Events\HotkeyEvents.cs" />
     <Compile Include="Events\TileWindows.cs" />
     <Compile Include="ILayout.cs" />
+    <Compile Include="ILayoutFactory.cs" />
     <Compile Include="Monitor.cs" />
     <Compile Include="Tag.cs" />
     <Compile Include="Rectangle.cs" />

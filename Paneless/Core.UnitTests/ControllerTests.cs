@@ -11,7 +11,7 @@ namespace Paneless.Core.UnitTests
     public class ControllerTests
     {
         private Controller _sut;
-        private Mock<ILayout> _initialLayoutMock;
+        private Mock<ILayoutFactory> _layoutFactoryMock;
         private Mock<IDesktop> _desktopMock;
         private Mock<IDesktopManager> _dmMock;
         private Mock<IWindowManager> _wmMock;
@@ -21,7 +21,7 @@ namespace Paneless.Core.UnitTests
         [TestInitialize]
         public void Setup()
         {
-            _initialLayoutMock = new Mock<ILayout>();
+            _layoutFactoryMock = new Mock<ILayoutFactory>();
             _desktopMock = new Mock<IDesktop>();
             _monitors = new List<IMonitor>();
             _windows = new List<IWindow>();
@@ -33,7 +33,7 @@ namespace Paneless.Core.UnitTests
         {
             _desktopMock.Setup(d => d.Monitors).Returns(_monitors);
             _desktopMock.Setup(d => d.DetectWindows()).Returns(_windows);
-            _sut = new Controller(_initialLayoutMock.Object, _desktopMock.Object, _wmMock.Object, _dmMock.Object);
+            _sut = new Controller(_layoutFactoryMock.Object, _desktopMock.Object, _wmMock.Object, _dmMock.Object);
         }
 
         [TestMethod]

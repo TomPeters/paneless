@@ -12,32 +12,29 @@ namespace Paneless
     public class Controller : IController
     {
         private readonly int _windowMessage;
-        
-
 
         private IDesktop Desktop { get; set; }
-
-        public ILayout DefaultLayout { get; set; } // This should probably move to settings
 
         private IWindowManager WindowManager { get; set; }
 
         private IDesktopManager DesktopManager { get; set; }
 
-        public Controller(ILayout defaultLayout)
-            : this(defaultLayout, new Desktop(), new WindowManager(), new DesktopManager())
+        public ILayoutFactory LayoutFactory { get; private set; }
+
+        public Controller(ILayoutFactory layoutFactory)
+            : this(layoutFactory, new Desktop(), new WindowManager(), new DesktopManager())
         {
         }
 
-        public Controller(ILayout defaultLayout, IDesktop desktop, IWindowManager windowManager, IDesktopManager desktopManager)
+        public Controller(ILayoutFactory layoutFactory, IDesktop desktop, IWindowManager windowManager, IDesktopManager desktopManager)
         {
             Desktop = desktop;
-            DefaultLayout = defaultLayout;
             WindowManager = windowManager;
             DesktopManager = desktopManager;
+            LayoutFactory = layoutFactory;
 
             SetDefaultLayouts();
             AssignWindows();
-            //SetLayouts(DefaultLayout);
         }
 
         public int RegisterWindowMessage(string windowMessage)
@@ -45,11 +42,11 @@ namespace Paneless
             return DesktopManager.RegisterWindowMessage(windowMessage);
         }
 
-        public void SetLayouts(ILayout layout)
+        public void SetLayouts(string layout)
         {
             foreach (IMonitor monitor in Desktop.Monitors)
             {
-                monitor.Tag.SetLayout(layout);
+                monitor.Tag.SetLayout(LayoutFactory.CreateLayout(layout));
             }
         }
 
@@ -110,8 +107,8 @@ namespace Paneless
         void TerminateHook();
         void SetupHotkeys(IntPtr windowPtr);
         void UnregisterHotKeys(IntPtr windowPtr);
-        void SetLayouts(ILayout layout);
-        ILayout DefaultLayout { get; set; }
+        void SetLayouts(string layout);
         int RegisterWindowMessage(string windowMessage);
+        ILayoutFactory LayoutFactory { get; }
     }
 }

@@ -10,7 +10,7 @@
 
         public override void PerformAction()
         {
-            Controller.SetLayouts(Controller.DefaultLayout);
+            Controller.SetLayouts("");
         }
     }
 }
