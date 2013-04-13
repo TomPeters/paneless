@@ -29,7 +29,7 @@ namespace Paneless
                     ContextMenuStrip = contextMenuStrip,
                     Visible = true,
                     Icon = new Icon(Assembly.GetEntryAssembly().GetManifestResourceStream("Paneless.assets.paneless.ico")),
-                    Text = "This is my notify icon"
+                    Text = "Paneless"
                 };
         }
 
