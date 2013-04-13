@@ -25,6 +25,11 @@ namespace Paneless.Core
             _windows.Add(window);
         }
 
+        public void ClearWindows()
+        {
+            _windows.Clear();
+        }
+
         public void SetLayout(ILayout newLayout)
         {
             _layout = newLayout;
@@ -43,5 +48,6 @@ namespace Paneless.Core
         Rectangle Domain { get; set; }
         void AddWindow(IWindow window);
         void SetLayout(ILayout newLayout);
+        void ClearWindows();
     }
 }

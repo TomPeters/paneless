@@ -19,7 +19,7 @@ namespace Paneless
 
         private IDesktopManager DesktopManager { get; set; }
 
-        public ILayoutFactory LayoutFactory { get; private set; }
+        private ILayoutFactory LayoutFactory { get; set; }
 
         public Controller(ILayoutFactory layoutFactory)
             : this(layoutFactory, new Desktop(), new WindowManager(), new DesktopManager())
@@ -34,7 +34,7 @@ namespace Paneless
             LayoutFactory = layoutFactory;
 
             SetDefaultLayouts();
-            AssignWindows();
+            AssignWindows(); // This probably doesn't need to be called here
         }
 
         public int RegisterWindowMessage(string windowMessage)
@@ -44,6 +44,8 @@ namespace Paneless
 
         public void SetLayouts(string layout)
         {
+            ClearWindows();
+            AssignWindows();
             foreach (IMonitor monitor in Desktop.Monitors)
             {
                 monitor.Tag.SetLayout(LayoutFactory.CreateLayout(layout));
@@ -73,6 +75,14 @@ namespace Paneless
                         monitor.AddWindow(window);
                     }
                 }
+            }
+        }
+
+        private void ClearWindows()
+        {
+            foreach (IMonitor monitor in Desktop.Monitors)
+            {
+                monitor.ClearWindows();
             }
         }
 
@@ -109,6 +119,5 @@ namespace Paneless
         void UnregisterHotKeys(IntPtr windowPtr);
         void SetLayouts(string layout);
         int RegisterWindowMessage(string windowMessage);
-        ILayoutFactory LayoutFactory { get; }
     }
 }

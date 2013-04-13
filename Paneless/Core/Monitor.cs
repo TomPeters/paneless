@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 
 namespace Paneless.Core
 {
@@ -35,6 +31,11 @@ namespace Paneless.Core
         {
             Tag.AddWindow(window);
         }
+
+        public void ClearWindows()
+        {
+            Tag.ClearWindows();
+        }
     }
 
     public interface IMonitor
@@ -42,5 +43,6 @@ namespace Paneless.Core
         bool IsInSameScreen(IWindow window);
         ITag Tag { get; set; }
         void AddWindow(IWindow window);
+        void ClearWindows();
     }
 }
