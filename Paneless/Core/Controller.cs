@@ -11,8 +11,6 @@ namespace Paneless
     // Orchestrates Core
     public class Controller : IController
     {
-        private readonly int _windowMessage;
-
         private IDesktop Desktop { get; set; }
 
         private IWindowManager WindowManager { get; set; }
@@ -34,7 +32,6 @@ namespace Paneless
             LayoutFactory = layoutFactory;
 
             SetDefaultLayouts();
-            AssignWindows(); // This probably doesn't need to be called here
         }
 
         public int RegisterWindowMessage(string windowMessage)
@@ -96,7 +93,7 @@ namespace Paneless
             DesktopManager.TerminateHookThreads();
         }
 
-        public void SetupHotkeys(IntPtr windowPtr)
+        public void SetupHotkeys(IntPtr windowPtr) // TODO No tests here yet as this will change significantly when settings are introduced
         {
             const int MOD_WIN = 0x8;
             const int MOD_CONTROL = 0x2;
@@ -104,7 +101,7 @@ namespace Paneless
             DesktopManager.RegisterHotKeys(windowPtr, (int)HotkeyEvents.Untile, (uint) (MOD_WIN | MOD_CONTROL), 0x55); //U for Untile
         }
 
-        public void UnregisterHotKeys(IntPtr windowPtr)
+        public void UnregisterHotKeys(IntPtr windowPtr) // TODO No tests here yet as this will change significantly when settings are introduced
         {
             DesktopManager.UnregisterHotKeys(windowPtr, 1);
             DesktopManager.UnregisterHotKeys(windowPtr, 2);
