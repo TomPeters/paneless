@@ -45,7 +45,7 @@
     <OutputPath>..\..\release\lib\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <Optimize>true</Optimize>
-    <DebugType>pdbonly</DebugType>
+    <DebugType>none</DebugType>
     <PlatformTarget>x64</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
@@ -89,9 +89,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ShellHookHelperDllCalls.cs" />
     <Compile Include="ShellHookLauncher.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\WinApi.ShellHook64\WinApi.ShellHook64.vcxproj">
