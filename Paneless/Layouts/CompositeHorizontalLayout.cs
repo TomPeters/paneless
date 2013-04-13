@@ -10,6 +10,8 @@ namespace Paneless.Layouts
         {
             switch (Windows.Count)
             {
+                case(0):
+                    break;
                 case (1):
                     {
                         RenderInDomain(Windows[0], Domain);
