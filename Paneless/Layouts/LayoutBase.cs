@@ -33,7 +33,7 @@ namespace Paneless.Layouts
 
         public void RenderInDomain(IWindow window, Rectangle windowDomain)
         {
-            FullDomainLayout fullDomainLayout = new FullDomainLayout(5) {Domain = windowDomain}; //TODO Need a better way of adding a default border width than hard coding it here
+            FullDomainLayout fullDomainLayout = new FullDomainLayout(0) {Domain = windowDomain}; //TODO Need a better way of adding a default border width than hard coding it here
             fullDomainLayout.AddWindow(window);
         }
     }

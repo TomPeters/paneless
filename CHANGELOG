@@ -1,0 +1,7 @@
+Release 1
+==========
+
+- First usable release
+- Control + Windows + T tiles all active windows
+- Significant effort spent on basic infrastructure for receiving events from windows (eg paneless can be notification when a window is resized)
+- System tray icon (right click on it to exit paneless)
