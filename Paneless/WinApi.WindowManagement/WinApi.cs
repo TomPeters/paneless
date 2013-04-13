@@ -87,5 +87,17 @@ namespace Paneless.WinApi
         [DllImport("kernel32.dll", SetLastError = true, CallingConvention = CallingConvention.Winapi)]
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool IsWow64Process(IntPtr hProcess, [Out, MarshalAs(UnmanagedType.Bool)] out bool wow64Process);
+
+        //http://msdn.microsoft.com/en-us/library/windows/desktop/ms646309(v=vs.85).aspx
+        //http://www.pinvoke.net/default.aspx/user32/registerhotkey.html
+        [DllImport("user32.dll", SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        internal static extern bool RegisterHotKey(IntPtr hWnd, int id, uint fsModifiers, uint vk);
+
+        //http://msdn.microsoft.com/en-us/library/windows/desktop/ms646327(v=vs.85).aspx
+        //http://www.pinvoke.net/default.aspx/user32.unregisterhotkey
+        [DllImport("user32.dll", SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        internal static extern bool UnregisterHotKey(IntPtr hWnd, int id);
     }
 }

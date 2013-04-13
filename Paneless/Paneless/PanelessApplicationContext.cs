@@ -42,6 +42,7 @@ namespace Paneless
         protected override void Dispose(bool disposing)
         {
             _controller.TerminateHook();
+            _controller.UnregisterHotKeys(_hiddenForm.Handle);
         }
 
         protected override void ExitThreadCore()
@@ -54,6 +55,7 @@ namespace Paneless
         {
             _hiddenForm = new HiddenForm(_controller);
             _controller.SetupHook(_hiddenForm.Handle);
+            _controller.SetupHotkeys(_hiddenForm.Handle);
         }
     }
 }

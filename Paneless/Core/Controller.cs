@@ -12,6 +12,7 @@ namespace Paneless
     {
         private readonly int _windowMessage;
         private const string CustomWindowMessage = "PANELESS_7F75020C-34E7-45B4-A5F8-6827F9DB7DE2";
+        private const int WM_HOTKEY = 0x0312;
 
         private IDesktop Desktop { get; set; }
 
@@ -84,8 +85,26 @@ namespace Paneless
             DesktopManager.TerminateHookThreads();
         }
 
+        public void SetupHotkeys(IntPtr windowPtr)
+        {
+            const int MOD_WIN = 0x8;
+            const int MOD_CONTROL = 0x2;
+            DesktopManager.RegisterHotKeys(windowPtr, 1, (uint) (MOD_WIN | MOD_CONTROL), 0x54); //T for Tile
+            DesktopManager.RegisterHotKeys(windowPtr, 2, (uint) (MOD_WIN | MOD_CONTROL), 0x55); //U for Untile
+        }
+
+        public void UnregisterHotKeys(IntPtr windowPtr)
+        {
+            DesktopManager.UnregisterHotKeys(windowPtr, 1);
+            DesktopManager.UnregisterHotKeys(windowPtr, 2);
+        }
+
         public void WndProcEventHandler(Message msg)
         {
+            if (msg.Msg == WM_HOTKEY) //WM_HOTKEY
+            {
+                Console.WriteLine(msg.WParam);
+            }
             if (msg.Msg == _windowMessage) // We are only interested in messages sent from our hooks
             {
                 IntPtr HWnd = msg.WParam;
@@ -95,6 +114,7 @@ namespace Paneless
                 {
                     case(WindowNotification.WM_MOVING):
                         // Trigger event wm_moving with argument HWnd
+                        Console.WriteLine("Window Is Moving");
                         break;
                     case(WindowNotification.WM_SHOWWINDOW):
                         // Trigger event WM_Showwindow with argument HWnd
@@ -112,5 +132,7 @@ namespace Paneless
         void SetupHook(IntPtr windowPtr);
         void TerminateHook();
         void WndProcEventHandler(Message msg);
+        void SetupHotkeys(IntPtr windowPtr);
+        void UnregisterHotKeys(IntPtr windowPtr);
     }
 }

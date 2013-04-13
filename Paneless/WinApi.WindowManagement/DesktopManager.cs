@@ -49,6 +49,16 @@ namespace Paneless.WinApi
             if(_arch64) _hookThread64.Kill();
         }
 
+        public bool RegisterHotKeys(IntPtr windowPtr, int keyId, uint modKeys, uint keys)
+        {
+            return WinApi.RegisterHotKey(windowPtr, keyId, modKeys, keys);
+        }
+
+        public bool UnregisterHotKeys(IntPtr windowPtr, int keyId)
+        {
+            return WinApi.UnregisterHotKey(windowPtr, keyId);
+        }
+
         public int RegisterWindowMessage(string windowMessage)
         {
             return (int)WinApi.RegisterWindowMessage(windowMessage);
@@ -83,5 +93,7 @@ namespace Paneless.WinApi
         bool SetupWindowsHook(IntPtr shellWindowPtr);
         int RegisterWindowMessage(string windowMessage);
         void TerminateHookThreads();
+        bool RegisterHotKeys(IntPtr windowPtr, int keyId, uint modKeys, uint keys);
+        bool UnregisterHotKeys(IntPtr windowPtr, int keyId);
     }
 }
