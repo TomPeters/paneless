@@ -41,7 +41,6 @@ namespace Paneless.Core.UnitTests
         {
             ConstructSut();
             _desktopMock.Verify(d => d.Monitors, Times.Once());
-            _dmMock.Verify(dm => dm.RegisterWindowMessage("PANELESS_7F75020C-34E7-45B4-A5F8-6827F9DB7DE2"), Times.Once());
             _desktopMock.Verify(d => d.DetectWindows(), Times.Once());
         }
 

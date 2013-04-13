@@ -54,8 +54,6 @@ namespace Paneless
         private void SetupShellHookWindow()
         {
             _hiddenForm = new HiddenForm(_controller);
-            _controller.SetupHook(_hiddenForm.Handle);
-            _controller.SetupHotkeys(_hiddenForm.Handle);
         }
     }
 }
