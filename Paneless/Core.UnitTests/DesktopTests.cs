@@ -4,7 +4,7 @@ using System.Linq;
 using EasyAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using Paneless.WinApi;
+using WinApi.Interface;
 
 namespace Paneless.Core.UnitTests
 {

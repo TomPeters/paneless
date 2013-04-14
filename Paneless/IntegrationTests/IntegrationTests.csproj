@@ -19,7 +19,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\..\debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -112,9 +112,13 @@
       <Project>{CED80E90-EDAD-459F-AC89-04B74CFBBC8F}</Project>
       <Name>Paneless</Name>
     </ProjectReference>
-    <ProjectReference Include="..\WinApi.WindowManagement\WinApi.WindowManagement.csproj">
-      <Project>{51C317E2-60E2-42EE-AD61-7F823C2EEAEF}</Project>
-      <Name>WinApi.WindowManagement</Name>
+    <ProjectReference Include="..\WinApi\WinApi.Interface\WinApi.Interface.csproj">
+      <Project>{5dc305ad-7e42-441b-8cab-95f857ac379e}</Project>
+      <Name>WinApi.Interface</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WinApi\WinApi.Windows7\WinApi.Windows7.csproj">
+      <Project>{51c317e2-60e2-42ee-ad61-7f823c2eeaef}</Project>
+      <Name>WinApi.Windows7</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

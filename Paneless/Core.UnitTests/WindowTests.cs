@@ -2,7 +2,9 @@
 using EasyAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using Paneless.WinApi;
+using WinApi.Interface;
+using WinApi.Interface.Constants;
+using WinApi.Interface.Types;
 
 namespace Paneless.Core.UnitTests
 {

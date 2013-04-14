@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Threading;
 using System.Windows.Forms;
 using System.Linq;
-using Paneless.WinApi;
+using WinApi.Interface;
 
 namespace Paneless.Core
 {
@@ -14,11 +13,6 @@ namespace Paneless.Core
         private List<IWindow> _windows;
         private readonly List<ITag> _tags; 
         private readonly WindowsEnumProcess _windowsEnumCallBack;
-
-        public Desktop()
-            : this(new DesktopManager(), new WindowManager())
-        {
-        }
 
         public Desktop(IDesktopManager desktopManager, IWindowManager windowManager)
         {

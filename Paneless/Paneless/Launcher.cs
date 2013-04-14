@@ -1,5 +1,8 @@
 ﻿using System.Windows.Forms;
 using Layouts;
+using Paneless.Core;
+using WinApi.Interface;
+using WinApi.Windows7;
 
 namespace Paneless.Launcher
 {
@@ -7,7 +10,9 @@ namespace Paneless.Launcher
     {
         static void Main(string[] args)
         {
-            PanelessApplicationContext applicationContext = new PanelessApplicationContext(new Controller(new LayoutFactory()));
+            IWindowManager windowManager = new WindowManager();
+            IDesktopManager desktopManager = new DesktopManager();
+            PanelessApplicationContext applicationContext = new PanelessApplicationContext(new Controller(new LayoutFactory(), new Desktop(desktopManager, windowManager), desktopManager, windowManager));
             Application.Run(applicationContext);
         }
     }

@@ -1,6 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Paneless.WinApi;
 using EasyAssertions;
+using WinApi.Interface.Types;
 
 namespace Paneless.Core.UnitTests
 {

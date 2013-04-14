@@ -4,7 +4,9 @@ using System.Windows.Forms;
 using Paneless.Core;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using EasyAssertions;
-using Paneless.WinApi;
+using WinApi.Interface;
+using WinApi.Interface.Constants;
+using WinApi.Windows7;
 
 namespace Paneless.IntegrationTests
 {
@@ -17,12 +19,14 @@ namespace Paneless.IntegrationTests
         private Process _process;
         private IWindow _sut;
 
+        protected abstract IWindowManager WindowManager { get; }
+
         [TestInitialize]
         public void Setup()
         {
             _process = Process.Start(ApplicationProcess);
             Thread.Sleep(1000);
-            _sut = new Window(ApplicationTitle);
+            _sut = new Window(ApplicationTitle, WindowManager);
         }
 
         [TestCleanup]
@@ -68,7 +72,16 @@ namespace Paneless.IntegrationTests
     }
 
     [TestClass]
-    public class NotepadWindowIntegrationTests : WindowIntegrationTests
+    public class Windows7WindowIntegrationTests : WindowIntegrationTests
+    {
+        protected override IWindowManager WindowManager
+        {
+            get { return new WindowManager(); }
+        }
+    }
+
+    [TestClass]
+    public class NotepadWindowIntegrationTests : Windows7WindowIntegrationTests
     {
         public NotepadWindowIntegrationTests()
         {

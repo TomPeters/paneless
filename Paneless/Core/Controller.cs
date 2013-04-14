@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Windows.Forms;
 using Paneless.Core;
 using Paneless.Core.Events;
-using Paneless.WinApi;
-using Paneless.WinApi.Constants;
+using WinApi.Interface;
 
 namespace Paneless
 {
@@ -19,12 +17,7 @@ namespace Paneless
 
         private ILayoutFactory LayoutFactory { get; set; }
 
-        public Controller(ILayoutFactory layoutFactory)
-            : this(layoutFactory, new Desktop(), new WindowManager(), new DesktopManager())
-        {
-        }
-
-        public Controller(ILayoutFactory layoutFactory, IDesktop desktop, IWindowManager windowManager, IDesktopManager desktopManager)
+        public Controller(ILayoutFactory layoutFactory, IDesktop desktop, IDesktopManager desktopManager, IWindowManager windowManager)
         {
             Desktop = desktop;
             WindowManager = windowManager;

@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Windows.Forms;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using Paneless.WinApi;
+using WinApi.Interface;
 
 namespace Paneless.Core.UnitTests
 {
@@ -36,7 +35,7 @@ namespace Paneless.Core.UnitTests
         {
             _desktopMock.Setup(d => d.Monitors).Returns(_monitors);
             _desktopMock.Setup(d => d.DetectWindows()).Returns(_windows);
-            _sut = new Controller(_layoutFactoryMock.Object, _desktopMock.Object, _wmMock.Object, _dmMock.Object);
+            _sut = new Controller(_layoutFactoryMock.Object, _desktopMock.Object, _dmMock.Object, _wmMock.Object);
         }
 
         [TestMethod]

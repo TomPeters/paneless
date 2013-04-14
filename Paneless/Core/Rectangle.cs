@@ -1,4 +1,4 @@
-﻿using Paneless.WinApi;
+﻿using WinApi.Interface.Types;
 
 namespace Paneless.Core
 {

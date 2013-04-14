@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
-using Paneless.WinApi.Constants;
+using WinApi.Interface.Constants;
 
 namespace Paneless.Core.Events
 {

@@ -1,21 +1,12 @@
 ﻿using System;
 using System.Windows.Forms;
-using Paneless.WinApi;
+using WinApi.Interface;
+using WinApi.Interface.Constants;
 
 namespace Paneless.Core
 {
     public class Window : IWindow
     {
-        public Window(IntPtr windowPtr)
-            : this(windowPtr, new WindowManager())
-        {
-        }
-
-        public Window(string windowName)
-            : this(windowName, new WindowManager())
-        {
-        }
-
         public Window(IntPtr windowPtr, IWindowManager windowManager)
         {
             Wmgr = windowManager;
