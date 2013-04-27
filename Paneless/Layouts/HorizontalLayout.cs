@@ -1,9 +1,10 @@
 ﻿using Paneless.Core;
 using System.Linq;
+using Paneless.Core.Layouts;
 
 namespace Paneless.Layouts
 {
-    public class HorizontalLayout : LayoutBase
+    public class HorizontalLayout : Layout
     {
 
         public override void Tile()

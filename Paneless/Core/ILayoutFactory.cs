@@ -1,4 +1,6 @@
-﻿namespace Paneless.Core
+﻿using Paneless.Core.Layouts;
+
+namespace Paneless.Core
 {
     public interface ILayoutFactory
     {

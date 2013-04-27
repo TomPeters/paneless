@@ -1,7 +1,7 @@
 ﻿using Paneless.Core;
-using Paneless.Layouts;
+using Paneless.Core.Layouts;
 
-namespace Layouts
+namespace Paneless.Layouts
 {
     public class LayoutFactory : ILayoutFactory
     {

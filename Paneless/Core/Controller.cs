@@ -27,9 +27,14 @@ namespace Paneless
             SetDefaultLayouts();
         }
 
-        public int RegisterWindowMessage(string windowMessage)
+        private void SetDefaultLayouts() //TODO this is temporary and should be put into some kind of settings/config
         {
-            return DesktopManager.RegisterWindowMessage(windowMessage);
+            foreach (IMonitor monitor in Desktop.Monitors)
+            {
+                ITag newTag = new Tag();
+                Desktop.AddTag(newTag);
+                monitor.Tag = newTag;
+            }
         }
 
         public void SetLayouts(string layout)
@@ -39,16 +44,6 @@ namespace Paneless
             foreach (IMonitor monitor in Desktop.Monitors)
             {
                 monitor.Tag.SetLayout(LayoutFactory.CreateLayout(layout));
-            }
-        }
-
-        private void SetDefaultLayouts() //TODO this is temporary and should be put into some kind of settings/config
-        {
-            foreach (IMonitor monitor in Desktop.Monitors)
-            {
-                ITag newTag = new Tag();
-                Desktop.AddTag(newTag);
-                monitor.Tag = newTag;
             }
         }
 
@@ -76,6 +71,14 @@ namespace Paneless
             }
         }
 
+        #region WinApiSetup
+        // TODO Think about moving this to a seperate class - WinApiController?
+
+        public int RegisterWindowMessage(string windowMessage)
+        {
+            return DesktopManager.RegisterWindowMessage(windowMessage);
+        }
+
         public void SetupHook(IntPtr windowPtr)
         {
             DesktopManager.SetupWindowsHook(windowPtr); // TODO Use return type to check if this succeeded
@@ -99,6 +102,8 @@ namespace Paneless
             DesktopManager.UnregisterHotKeys(windowPtr, 1);
             DesktopManager.UnregisterHotKeys(windowPtr, 2);
         }
+
+        #endregion
     }
 
     public interface IController

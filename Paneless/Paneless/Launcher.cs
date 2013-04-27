@@ -1,6 +1,6 @@
 ﻿using System.Windows.Forms;
-using Layouts;
 using Paneless.Core;
+using Paneless.Layouts;
 using WinApi.Interface;
 using WinApi.Windows7;
 

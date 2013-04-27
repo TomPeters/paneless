@@ -1,15 +1,14 @@
 ﻿using System.Collections.Generic;
-using Paneless.Core;
 
-namespace Paneless.Layouts
+namespace Paneless.Core.Layouts
 {
     // Combination of windows and how to lay them out (template). This contains similar structure to tags but contains different information and has a different purpose
 
-    public abstract class LayoutBase : ILayout
+    public abstract class Layout : ILayout
     {
         private readonly List<IWindow> _windows;
 
-        protected LayoutBase()
+        protected Layout()
         {
             _windows = new List<IWindow>();
         }

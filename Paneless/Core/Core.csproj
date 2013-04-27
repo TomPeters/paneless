@@ -96,8 +96,10 @@
     <Compile Include="Events\EventFactory.cs" />
     <Compile Include="Events\HotkeyEvents.cs" />
     <Compile Include="Events\TileWindows.cs" />
-    <Compile Include="ILayout.cs" />
+    <Compile Include="Layouts\FullDomainLayout.cs" />
+    <Compile Include="Layouts\ILayout.cs" />
     <Compile Include="ILayoutFactory.cs" />
+    <Compile Include="Layouts\Layout.cs" />
     <Compile Include="Monitor.cs" />
     <Compile Include="Tag.cs" />
     <Compile Include="Rectangle.cs" />

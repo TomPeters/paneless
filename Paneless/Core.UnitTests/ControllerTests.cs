@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using Paneless.Core.Layouts;
 using WinApi.Interface;
 
 namespace Paneless.Core.UnitTests

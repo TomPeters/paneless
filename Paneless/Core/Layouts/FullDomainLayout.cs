@@ -1,8 +1,6 @@
-﻿using Paneless.Core;
-
-namespace Paneless.Layouts
+﻿namespace Paneless.Core.Layouts
 {
-    public class FullDomainLayout : LayoutBase
+    public class FullDomainLayout : Layout
     {
         public FullDomainLayout()
         {

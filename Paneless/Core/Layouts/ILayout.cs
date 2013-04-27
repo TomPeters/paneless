@@ -1,4 +1,4 @@
-﻿namespace Paneless.Core
+﻿namespace Paneless.Core.Layouts
 {
     public interface ILayout
     {
