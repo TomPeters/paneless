@@ -17,6 +17,8 @@ namespace Paneless.Layouts
                     return new HorizontalLayout();
                 case("VerticalLayout"):
                     return new VerticalLayout();
+                case("EmptyLayout"):
+                    return new EmptyLayout();
                 default:
                     return new CompositeHorizontalLayout();
             }

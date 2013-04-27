@@ -27,14 +27,18 @@ namespace Paneless.Core.Events
             get { return new EmptyEvent(Controller); }
         }
 
-        public void CreateEventFromWindowMessage(Message msg)
+        public IEvent CreateEventFromWindowMessage(Message msg)
         {
-            Event newEvent = EmptyEvent;
+            IEvent newEvent = EmptyEvent;
             if (msg.Msg == WM_HOTKEY) //WM_HOTKEY
             {
                 if ((int)msg.WParam == (int)HotkeyEvents.Tile)
                 {
-                    newEvent = new TileWindows(Controller);
+                    newEvent = new ChangeLayout(Controller, "");
+                }
+                else if ((int) msg.WParam == (int) HotkeyEvents.Untile)
+                {
+                    newEvent = new ChangeLayout(Controller, "EmptyLayout");
                 }
             }
             if (msg.Msg == _windowMessage) // We are only interested in messages sent from our hooks
@@ -55,12 +59,12 @@ namespace Paneless.Core.Events
                         break;
                 }
             }
-            newEvent.FireEvent();
+            return newEvent;
         }
     }
 
     public interface IEventFactory
     {
-        void CreateEventFromWindowMessage(Message msg);
+        IEvent CreateEventFromWindowMessage(Message msg);
     }
 }

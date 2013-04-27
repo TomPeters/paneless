@@ -7,7 +7,7 @@
         {
         }
 
-        public override void PerformAction()
+        public override void FireEvent()
         {
         }
     }

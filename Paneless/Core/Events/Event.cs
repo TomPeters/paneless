@@ -7,16 +7,11 @@
         {
             Controller = controller;
         }
-        public void FireEvent()
-        {
-            PerformAction();
-        }
 
-        public abstract void PerformAction();
+        public abstract void FireEvent();
     }
     public interface IEvent
     {
         void FireEvent();
-        void PerformAction();
     }
 }

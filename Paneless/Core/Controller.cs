@@ -24,10 +24,10 @@ namespace Paneless
             DesktopManager = desktopManager;
             LayoutFactory = layoutFactory;
 
-            SetDefaultLayouts();
+            Initialize();
         }
 
-        private void SetDefaultLayouts() //TODO this is temporary and should be put into some kind of settings/config
+        private void Initialize() //TODO this is temporary and should be put into some kind of settings/config, eg LoadSettingsAndInitialize()
         {
             foreach (IMonitor monitor in Desktop.Monitors)
             {
@@ -35,12 +35,12 @@ namespace Paneless
                 Desktop.AddTag(newTag);
                 monitor.Tag = newTag;
             }
+
+            AssignWindows();
         }
 
         public void SetLayouts(string layout)
         {
-            ClearWindows();
-            AssignWindows();
             foreach (IMonitor monitor in Desktop.Monitors)
             {
                 monitor.Tag.SetLayout(LayoutFactory.CreateLayout(layout));
@@ -60,14 +60,6 @@ namespace Paneless
                         monitor.AddWindow(window);
                     }
                 }
-            }
-        }
-
-        private void ClearWindows()
-        {
-            foreach (IMonitor monitor in Desktop.Monitors)
-            {
-                monitor.ClearWindows();
             }
         }
 

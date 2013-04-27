@@ -95,7 +95,8 @@
     <Compile Include="Events\Event.cs" />
     <Compile Include="Events\EventFactory.cs" />
     <Compile Include="Events\HotkeyEvents.cs" />
-    <Compile Include="Events\TileWindows.cs" />
+    <Compile Include="Events\ChangeLayout.cs" />
+    <Compile Include="Layouts\EmptyLayout.cs" />
     <Compile Include="Layouts\FullDomainLayout.cs" />
     <Compile Include="Layouts\ILayout.cs" />
     <Compile Include="ILayoutFactory.cs" />
