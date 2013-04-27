@@ -12,6 +12,7 @@ namespace Paneless.Core
         public Tag()
         {
             _windows = new List<IWindow>();
+            _layout = new EmptyLayout();
         }
 
         public List<IWindow> Windows { get { return _windows; } }
@@ -31,6 +32,11 @@ namespace Paneless.Core
         public void SetLayout(ILayout newLayout)
         {
             _layout = newLayout;
+        }
+
+        public void Tile()
+        {
+            _layout.ClearWindows();
             foreach (IWindow window in Windows)
             {
                 _layout.AddWindowsWithoutTile(window);
@@ -47,5 +53,6 @@ namespace Paneless.Core
         void AddWindow(IWindow window);
         void SetLayout(ILayout newLayout);
         void ClearWindows();
+        void Tile();
     }
 }

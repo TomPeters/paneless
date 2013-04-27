@@ -6,5 +6,6 @@
         Rectangle Domain { set; }
         void AddWindow(IWindow window);
         void AddWindowsWithoutTile(IWindow window);
+        void ClearWindows();
     }
 }

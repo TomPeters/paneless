@@ -28,6 +28,11 @@ namespace Paneless.Core.Layouts
             _windows.Add(window);
         }
 
+        public void ClearWindows()
+        {
+            _windows.Clear();
+        }
+
         public abstract void Tile();
 
         public void RenderInDomain(IWindow window, Rectangle windowDomain)

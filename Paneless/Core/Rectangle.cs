@@ -1,8 +1,9 @@
-﻿using WinApi.Interface.Types;
+﻿using System;
+using WinApi.Interface.Types;
 
 namespace Paneless.Core
 {
-    public class Rectangle
+    public class Rectangle : IEquatable<Rectangle>
     {
         public Rectangle(RECT rect)
         {
@@ -50,6 +51,14 @@ namespace Paneless.Core
                     Bottom = Bottom
                 };
             return clone;
+        }
+
+        public bool Equals(Rectangle other)
+        {
+            return (Left == other.Left) 
+                && (Right == other.Right)
+                && (Top == other.Top)
+                && (Bottom == other.Bottom);
         }
     }
 }

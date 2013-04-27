@@ -45,6 +45,15 @@ namespace Paneless
             {
                 monitor.Tag.SetLayout(LayoutFactory.CreateLayout(layout));
             }
+            RefreshAllTags();
+        }
+
+        public void RefreshAllTags()
+        {
+            foreach (IMonitor monitor in Desktop.Monitors)
+            {
+                monitor.Tag.Tile();
+            }
         }
 
         private void AssignWindows() // TODO: This should always be done at start up (is this the same as controller construction?)
@@ -106,5 +115,6 @@ namespace Paneless
         void UnregisterHotKeys(IntPtr windowPtr);
         void SetLayouts(string layout);
         int RegisterWindowMessage(string windowMessage);
+        void RefreshAllTags();
     }
 }

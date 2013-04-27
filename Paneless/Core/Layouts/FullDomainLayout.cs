@@ -32,7 +32,10 @@
                     Left = Domain.Left + BorderWidth,
                     Right = Domain.Right - BorderWidth
                 };
-            window.SetLocation(windowDomain);
+            if (window.Location != windowDomain) // Don't want to tile unnecessarily (This reduces excessive circular window messages)
+            {
+                window.SetLocation(windowDomain);
+            }
         }
     }
 }

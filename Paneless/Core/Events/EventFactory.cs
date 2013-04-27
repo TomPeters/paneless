@@ -51,11 +51,19 @@ namespace Paneless.Core.Events
                     case (WindowNotification.WM_MOVING):
                         // Trigger event wm_moving with argument HWnd
                         break;
+                    case (WindowNotification.WM_MOVE):
+                        // This occurs *AFTER* the window has moved.
+                        newEvent = new RefreshAllTags(Controller);
+                        Console.WriteLine("WIndowMoved");
+                        break;
                     case (WindowNotification.WM_SHOWWINDOW):
                         // Trigger event WM_Showwindow with argument HWnd
+                        Console.WriteLine("WM_ShowWindow");
                         break;
-                    default:
-                        // Unhandled event - do nothing
+                    case (WindowNotification.WM_SIZING):
+                    case (WindowNotification.WM_SIZE):
+                        newEvent = new RefreshAllTags(Controller);
+                        //Console.WriteLine("WM_SIZING");
                         break;
                 }
             }

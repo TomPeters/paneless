@@ -12,7 +12,7 @@
 
         public override void FireEvent()
         {
-            Controller.SetLayouts("");
+            Controller.SetLayouts(_layout);
         }
     }
 }
