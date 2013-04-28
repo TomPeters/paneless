@@ -102,6 +102,8 @@
     <Compile Include="Events\EventFactory.cs" />
     <Compile Include="Events\HotkeyEvents.cs" />
     <Compile Include="Events\ChangeLayout.cs" />
+    <Compile Include="Events\ILoggableEvent.cs" />
+    <Compile Include="Events\LoggedEvent.cs" />
     <Compile Include="Events\RefreshAllTags.cs" />
     <Compile Include="Layouts\EmptyLayout.cs" />
     <Compile Include="Layouts\FullDomainLayout.cs" />

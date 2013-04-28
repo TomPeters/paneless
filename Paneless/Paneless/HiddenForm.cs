@@ -30,7 +30,7 @@ namespace Paneless
         protected override void DefWndProc(ref Message m)
         {
             if(EventFactory != null) // Check that the factory has been created so we don't handle messages before we are ready
-                EventFactory.CreateEventFromWindowMessage(m).FireEvent();
+                EventFactory.CreateEvent(m).FireEvent();
             base.DefWndProc(ref m);
         }
     }

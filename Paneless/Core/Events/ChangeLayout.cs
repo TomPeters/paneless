@@ -14,5 +14,10 @@
         {
             Controller.SetLayouts(_layout);
         }
+
+        public override string LogDescription
+        {
+            get { return "Setting new Layout: " + _layout.GetType(); }
+        }
     }
 }

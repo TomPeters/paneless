@@ -1,13 +1,12 @@
 ﻿namespace Paneless.Core.Events
 {
-    public class EmptyEvent : Event
+    public class EmptyEvent : IEvent
     {
-        public EmptyEvent(IController controller) 
-            : base(controller)
+        public EmptyEvent() 
         {
         }
 
-        public override void FireEvent()
+        public void FireEvent()
         {
         }
     }

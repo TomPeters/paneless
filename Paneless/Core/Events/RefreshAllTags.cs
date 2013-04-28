@@ -13,5 +13,10 @@ namespace Paneless.Core.Events
         {
             Controller.RefreshAllTags();
         }
+
+        public override string LogDescription
+        {
+            get { return "Refreshing/Re-tiling all tags"; }
+        }
     }
 }
