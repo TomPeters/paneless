@@ -6,11 +6,13 @@ namespace Paneless
     public class HiddenForm : Form
     {
         private const string CustomWindowMessage = "PANELESS_7F75020C-34E7-45B4-A5F8-6827F9DB7DE2";
+        private static readonly log4net.ILog Logger = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         private readonly Form _form;
 
         public HiddenForm(IController controller)
         {
+            Logger.Debug("Creating hidden form");
             _form = new Form { Visible = false, ShowInTaskbar = false };
             EventFactory = new EventFactory(controller, SetupEventBinding(controller));
         }

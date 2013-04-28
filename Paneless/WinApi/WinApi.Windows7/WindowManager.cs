@@ -10,6 +10,8 @@ namespace WinApi.Windows7
 {
     public class WindowManager : IWindowManager
     {
+        private static readonly log4net.ILog Logger = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         public IntPtr GetPtr(string windowName)
         {
             return (IntPtr)WinApi.FindWindow(null, windowName);
@@ -61,6 +63,7 @@ namespace WinApi.Windows7
 
         private void SetLocation(IntPtr windowPtr, IntPtr windowInsertAfter, RECT rect, uint positioningFlags)
         {
+            Logger.Debug("Setting window with ptr: " + windowPtr + " to position: " + rect.Top + " " + rect.Bottom + " " + rect.Left + " " + rect.Right);
             WinApi.SetWindowPos(windowPtr, windowInsertAfter, rect.Left, rect.Top, rect.Right - rect.Left, rect.Bottom - rect.Top, positioningFlags);
         }
 

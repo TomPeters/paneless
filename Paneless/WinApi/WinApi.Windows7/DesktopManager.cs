@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Diagnostics;
-using Common;
+using Paneless.Common;
 using WinApi.Interface;
 
 namespace WinApi.Windows7
 {
     public class DesktopManager : IDesktopManager
     {
+        private static readonly log4net.ILog Logger = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         private Process _hookThread32;
         private Process _hookThread64;
         private readonly bool _arch64;
@@ -14,6 +16,7 @@ namespace WinApi.Windows7
         public DesktopManager()
         {
             _arch64 = Is64Bit();
+            Logger.Debug(_arch64 ? "64Bit detected" : "32Bit detected");
         }
 
         public void EnumWindows(WindowsEnumProcess windowsEnumCallBack)
@@ -27,6 +30,7 @@ namespace WinApi.Windows7
             bool result = StoreWindowPtr(shellWindowPtr);
             _hookThread32 = Process.Start(DirectoryFinder.FindDirectoryInAncestors(Identifiers.HookLauncher32));
             if(_arch64) _hookThread64 = Process.Start(DirectoryFinder.FindDirectoryInAncestors(Identifiers.HookLauncher64));
+            Logger.Debug("Shell hooks registered to " + shellWindowPtr);
             return result;
         }
 
@@ -34,25 +38,32 @@ namespace WinApi.Windows7
         {
             _hookThread32.Kill();
             if(_arch64) _hookThread64.Kill();
+            Logger.Debug("Shell hooks killed");
         }
 
         public bool RegisterHotKeys(IntPtr windowPtr, int keyId, uint modKeys, uint keys)
         {
+            Logger.Debug("Registering hot key for " + windowPtr + " with keyId: " + keyId + " and modkeys: " + modKeys + " and keys " + keys);
             return WinApi.RegisterHotKey(windowPtr, keyId, modKeys, keys);
         }
 
         public bool UnregisterHotKeys(IntPtr windowPtr, int keyId)
         {
+            Logger.Debug("Unregistering hot key for " + windowPtr + " with keyId" + keyId);
             return WinApi.UnregisterHotKey(windowPtr, keyId);
         }
 
         public int RegisterWindowMessage(string windowMessage)
         {
-            return (int)WinApi.RegisterWindowMessage(windowMessage);
+            Logger.Debug("Registering window message " + windowMessage);
+            int result = (int)WinApi.RegisterWindowMessage(windowMessage);
+            Logger.Debug("Window message registered: " + result);
+            return result;
         }
 
         private bool StoreWindowPtr(IntPtr windowPtr)
         {
+            Logger.Debug("Storing pointer to " + windowPtr + " in global id " + Identifiers.PanelessWindowPropertyId);
             return WinApi.SetProp(WinApi.GetDesktopWindow(), Identifiers.PanelessWindowPropertyId, windowPtr);
         }
 

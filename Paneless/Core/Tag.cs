@@ -6,6 +6,8 @@ namespace Paneless.Core
     // A collection of windows and it'name associated layout. Windows do not have to be unique between tags. Has a name etc. Can be a child of a monitor
     public class Tag : ITag
     {
+        private static readonly log4net.ILog Logger = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         private readonly List<IWindow> _windows;
         private ILayout _layout;
 
@@ -21,6 +23,7 @@ namespace Paneless.Core
 
         public void AddWindow(IWindow window)
         {
+            Logger.Debug("Window " + window.Name + " added to Tag " + this);
             _windows.Add(window);
         }
 
@@ -31,11 +34,13 @@ namespace Paneless.Core
 
         public void SetLayout(ILayout newLayout)
         {
+            Logger.Debug("Tag " + this + " Layout has changed to " + newLayout.GetType());
             _layout = newLayout;
         }
 
         public void Tile()
         {
+            Logger.Debug("Tag " + this + " is being retiled");
             _layout.ClearWindows();
             foreach (IWindow window in Windows)
             {

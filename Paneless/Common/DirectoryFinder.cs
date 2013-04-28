@@ -2,13 +2,16 @@
 using System.IO;
 using System.Linq;
 
-namespace Common
+namespace Paneless.Common
 {
     public static class DirectoryFinder
     {
+        private static readonly log4net.ILog Logger = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         private const string ChildDir = "lib";
         public static string FindDirectoryInAncestors(string fileName)
         {
+            Logger.Debug("Looking for file: " + fileName);
             var curDir = new DirectoryInfo(Directory.GetCurrentDirectory());
             while (curDir.Parent != null)
             {

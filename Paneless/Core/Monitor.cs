@@ -5,6 +5,8 @@ namespace Paneless.Core
     // A combination of screen (physical device) and its layout (windows and how to tile them)
     public class Monitor : IMonitor
     {
+        private static readonly log4net.ILog Logger = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         private ITag _tag;
 
         public Screen Screen { private get; set; }
@@ -29,6 +31,7 @@ namespace Paneless.Core
 
         public void AddWindow(IWindow window)
         {
+            Logger.Debug("Window " + window.Name + " Added to Monitor " + Screen);
             Tag.AddWindow(window);
         }
 

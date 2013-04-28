@@ -9,6 +9,8 @@ namespace Paneless.Core
     //Top level class that orchestrates the application
     public class Desktop : IDesktop
     {
+        private static readonly log4net.ILog Logger = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         private List<IMonitor> _monitors;
         private List<IWindow> _windows;
         private readonly List<ITag> _tags; 
@@ -58,8 +60,10 @@ namespace Paneless.Core
         private bool AddDetectedWindow(int windowsPtr, int lParam)
         {
             IWindow window = new Window((IntPtr) windowsPtr, WindowManager);
+            Logger.Debug("Window Detected: " + window.Name);
             if (window.IsTileable())
             {
+                Logger.Debug("Tileable Window " + window.Name + " added to Desktop");
                 _windows.Add(window);
             }
             return true;
