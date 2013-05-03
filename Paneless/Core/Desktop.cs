@@ -63,7 +63,7 @@ namespace Paneless.Core
             Logger.Debug("Window Detected: " + window.Name);
             if (window.IsTileable())
             {
-                Logger.Debug("Tileable Window " + window.Name + " added to Desktop");
+                Logger.Info("Tileable Window " + window.Name + " added to Desktop");
                 _windows.Add(window);
             }
             return true;
