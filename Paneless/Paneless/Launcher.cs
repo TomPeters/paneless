@@ -16,7 +16,8 @@ namespace Paneless.Launcher
             Logger.Info("Paneless is starting up");
             IWindowManager windowManager = new WindowManager();
             IDesktopManager desktopManager = new DesktopManager();
-            PanelessApplicationContext applicationContext = new PanelessApplicationContext(new Controller(new LayoutFactory(), new Desktop(desktopManager, windowManager), desktopManager, windowManager));
+            IDesktop desktop = new Desktop(desktopManager, windowManager, new LayoutFactory());
+            PanelessApplicationContext applicationContext = new PanelessApplicationContext(new ContextProvider(desktop));
             Application.Run(applicationContext);
             Logger.Info("Paneless is about to close");
         }

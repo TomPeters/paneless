@@ -1,5 +1,7 @@
 ﻿using System.Windows.Forms;
+using Paneless.Core;
 using Paneless.Core.Events;
+using WinApi.Interface;
 
 namespace Paneless
 {
@@ -10,28 +12,50 @@ namespace Paneless
 
         private readonly Form _form;
 
-        public HiddenForm(IController controller)
+        public HiddenForm(IContextProvider contextProvider, IEventManager eventManager, IWinApiRegistrationManager registrationManager)
         {
             Logger.Debug("Creating hidden form");
             _form = new Form { Visible = false, ShowInTaskbar = false };
-            EventFactory = new EventFactory(controller, SetupEventBinding(controller));
+            RegistrationManager = registrationManager;
+            EventFactory = new EventFactory(contextProvider, SetupEventBinding());
+            EventManager = eventManager;
         }
 
         private IEventFactory EventFactory { get; set; }
 
-        private int SetupEventBinding(IController controller)
+        private IEventManager EventManager { get; set; }
+
+        private IWinApiRegistrationManager RegistrationManager { get; set; }
+
+        private int SetupEventBinding()
         {
-            int windowMessage = controller.RegisterWindowMessage(CustomWindowMessage);
-            controller.SetupHook(Handle);
-            controller.SetupHotkeys(Handle);
+            int windowMessage = RegistrationManager.RegisterWindowMessage(CustomWindowMessage);
+            RegistrationManager.SetupHooks(Handle);
+            RegistrationManager.SetupHotKeys(Handle);
             return windowMessage;
+        }
+
+        public void TerminateEventBinding()
+        {
+            RegistrationManager.TerminateHooks();
+            RegistrationManager.UnregisterHotKeys(Handle);
         }
 
         protected override void DefWndProc(ref Message m)
         {
             if(EventFactory != null) // Check that the factory has been created so we don't handle messages before we are ready
-                EventFactory.CreateEvent(m).FireEvent();
+                EventManager.TriggerEvent(EventFactory.CreateEvent(m));
             base.DefWndProc(ref m);
+        }
+
+        public void TriggerStartupEvent()
+        {
+            EventManager.TriggerEvent(EventFactory.CreateStartupEvent());
+        }
+
+        public void TriggerShutdownEvent()
+        {
+            EventManager.TriggerEvent(EventFactory.CreateShutdownEvent());
         }
     }
 }

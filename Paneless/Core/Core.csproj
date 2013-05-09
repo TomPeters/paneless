@@ -95,33 +95,59 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controller.cs" />
+    <Compile Include="Commands\AssignLayoutsToActiveTagsCommand.cs" />
+    <Compile Include="Commands\AssignWindowsToMonitorsCommand.cs" />
+    <Compile Include="Commands\ClearLayoutsOnActiveTagsCommand.cs" />
+    <Compile Include="Commands\Infrastructure\Command.cs" />
+    <Compile Include="Commands\Infrastructure\CommandEventFactory.cs" />
+    <Compile Include="Commands\Infrastructure\CommandFactory.cs" />
+    <Compile Include="Commands\Infrastructure\CompositeCommand.cs" />
+    <Compile Include="Commands\Infrastructure\EmptyCommand.cs" />
+    <Compile Include="Commands\Infrastructure\LoggedCommandProxy.cs" />
+    <Compile Include="Commands\Infrastructure\SingleCommandFactory.cs" />
+    <Compile Include="Commands\RefreshWindowPositionsCommand.cs" />
+    <Compile Include="Commands\AssignTagsToMonitorsCommand.cs" />
+    <Compile Include="ContextProvider.cs" />
     <Compile Include="Desktop.cs" />
-    <Compile Include="Events\EmptyEvent.cs" />
-    <Compile Include="Events\Event.cs" />
-    <Compile Include="Events\EventFactory.cs" />
+    <Compile Include="Events\Infrastructure\CompositeEvent.cs" />
+    <Compile Include="Events\Infrastructure\EmptyEvent.cs" />
+    <Compile Include="Events\Infrastructure\EventBuilder.cs" />
+    <Compile Include="Events\Infrastructure\TriggeredEvent.cs" />
+    <Compile Include="Events\Infrastructure\EventArguments.cs" />
+    <Compile Include="Events\Infrastructure\EventFactory.cs" />
     <Compile Include="Events\HotkeyEvents.cs" />
-    <Compile Include="Events\ChangeLayout.cs" />
-    <Compile Include="Events\ILoggableEvent.cs" />
-    <Compile Include="Events\LoggedEvent.cs" />
-    <Compile Include="Events\RefreshAllTags.cs" />
+    <Compile Include="Events\Infrastructure\EventManager.cs" />
+    <Compile Include="Events\Infrastructure\IEvent.cs" />
+    <Compile Include="Events\KeyEvent.cs" />
+    <Compile Include="Events\ShutdownEvent.cs" />
+    <Compile Include="Events\StartupEvent.cs" />
+    <Compile Include="Events\WindowMovedEvent.cs" />
+    <Compile Include="Events\WindowResizingEvent.cs" />
+    <Compile Include="Events\WindowResizedEvent.cs" />
     <Compile Include="Layouts\EmptyLayout.cs" />
+    <Compile Include="Layouts\EmptyLayoutFactory.cs" />
     <Compile Include="Layouts\FullDomainLayout.cs" />
     <Compile Include="Layouts\ILayout.cs" />
-    <Compile Include="ILayoutFactory.cs" />
+    <Compile Include="Layouts\ILayoutFactory.cs" />
     <Compile Include="Layouts\Layout.cs" />
     <Compile Include="Monitor.cs" />
     <Compile Include="Tag.cs" />
     <Compile Include="Rectangle.cs" />
+    <Compile Include="WinApiRegistrationManager.cs" />
     <Compile Include="Window.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{f1d5b586-7dfd-40d8-a3c3-204a52ac6eb3}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WinApi\WinApi.Interface\WinApi.Interface.csproj">
       <Project>{5dc305ad-7e42-441b-8cab-95f857ac379e}</Project>
       <Name>WinApi.Interface</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>

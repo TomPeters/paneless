@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Linq;
+using Paneless.Core.Layouts;
 using WinApi.Interface;
 
 namespace Paneless.Core
@@ -16,10 +17,11 @@ namespace Paneless.Core
         private readonly List<ITag> _tags; 
         private readonly WindowsEnumProcess _windowsEnumCallBack;
 
-        public Desktop(IDesktopManager desktopManager, IWindowManager windowManager)
+        public Desktop(IDesktopManager desktopManager, IWindowManager windowManager, ILayoutFactory layoutFactory)
         {
             DesktopManager = desktopManager;
             WindowManager = windowManager;
+            LayoutFactory = layoutFactory;
             _windowsEnumCallBack = AddDetectedWindow;
             _tags = new List<ITag>();
             PopulateMonitors();
@@ -27,6 +29,7 @@ namespace Paneless.Core
 
         private IDesktopManager DesktopManager { get; set; }
         private IWindowManager WindowManager { get; set; }
+        public ILayoutFactory LayoutFactory { get; set; } // This shouldn't need to be public
 
         private void PopulateMonitors()
         {
@@ -45,7 +48,7 @@ namespace Paneless.Core
 
         public List<ITag> Tags { get { return _tags; } }
 
-        public void AddTag(ITag tag)
+        public void AddTag(ITag tag) // Tags should probably be constructed in this class
         {
             _tags.Add(tag);
         }
@@ -73,7 +76,8 @@ namespace Paneless.Core
     public interface IDesktop
     {
         List<IMonitor> Monitors { get; }
-        List<ITag> Tags { get; } 
+        List<ITag> Tags { get; }
+        ILayoutFactory LayoutFactory { get; }
         List<IWindow> DetectWindows();
         void AddTag(ITag tag);
     }

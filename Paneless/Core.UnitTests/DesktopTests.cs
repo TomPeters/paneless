@@ -4,6 +4,7 @@ using System.Linq;
 using EasyAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using Paneless.Core.Layouts;
 using WinApi.Interface;
 
 namespace Paneless.Core.UnitTests
@@ -14,13 +15,15 @@ namespace Paneless.Core.UnitTests
         private Mock<IDesktopManager> _mockDesktopManager;
         private Desktop _sut;
         private Mock<IWindowManager> _mockWindowManager;
+        private Mock<ILayoutFactory> _mockLayoutFactory;
 
         [TestInitialize]
         public void Setup()
         {
             _mockDesktopManager = new Mock<IDesktopManager>();
             _mockWindowManager = new Mock<IWindowManager>();
-            _sut = new Desktop(_mockDesktopManager.Object, _mockWindowManager.Object);
+            _mockLayoutFactory = new Mock<ILayoutFactory>();
+            _sut = new Desktop(_mockDesktopManager.Object, _mockWindowManager.Object, _mockLayoutFactory.Object);
         }
 
         [TestMethod]

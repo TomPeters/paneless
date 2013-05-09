@@ -3,6 +3,10 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Reflection;
 using System.Windows.Forms;
+using Paneless.Core;
+using Paneless.Core.Commands;
+using Paneless.Core.Events;
+using WinApi.Windows7;
 
 namespace Paneless
 {
@@ -10,14 +14,15 @@ namespace Paneless
     {
         private static readonly log4net.ILog Logger = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         private NotifyIcon _notifyIcon;
-        private readonly IController _controller;
-        private Form _hiddenForm;
+        private HiddenForm _hiddenForm;
+        private IContextProvider _contextProvider;
 
-        public PanelessApplicationContext(IController controller)
+        public PanelessApplicationContext(IContextProvider contextProvider)
         {
+            _contextProvider = contextProvider;
             InitializeContext();
-            _controller = controller;
             SetupShellHookWindow();
+            _hiddenForm.TriggerStartupEvent();
         }
 
         private void InitializeContext()
@@ -43,8 +48,9 @@ namespace Paneless
 
         protected override void Dispose(bool disposing)
         {
-            _controller.TerminateHook();
-            _controller.UnregisterHotKeys(_hiddenForm.Handle);
+            // Which order should these calls be in?
+            _hiddenForm.TriggerShutdownEvent();
+            _hiddenForm.TerminateEventBinding();
         }
 
         protected override void ExitThreadCore()
@@ -55,7 +61,7 @@ namespace Paneless
 
         private void SetupShellHookWindow()
         {
-            _hiddenForm = new HiddenForm(_controller);
+            _hiddenForm = new HiddenForm(_contextProvider, new EventManager(new CommandEventFactory()), new WinApiRegistrationManager(new DesktopManager()));
         }
     }
 }
