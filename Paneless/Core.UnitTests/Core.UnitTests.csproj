@@ -101,6 +101,8 @@
     </CodeAnalysisDependentAssemblyPaths>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commands\Infrastructure\CommandFactoryTests.cs" />
+    <Compile Include="Commands\Infrastructure\CompositeCommandTests.cs" />
     <Compile Include="DesktopTests.cs" />
     <Compile Include="Events\Infrastructure\CompositeEventTests.cs" />
     <Compile Include="Events\Infrastructure\EventBuilderTests.cs" />
@@ -113,6 +115,10 @@
     <Compile Include="WindowTests.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{f1d5b586-7dfd-40d8-a3c3-204a52ac6eb3}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Core\Core.csproj">
       <Project>{F6B57910-2A53-4066-B743-E815AA00450B}</Project>
       <Name>Core</Name>

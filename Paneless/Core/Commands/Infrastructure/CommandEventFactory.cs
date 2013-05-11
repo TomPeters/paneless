@@ -1,19 +1,17 @@
 ﻿using System.Collections.Generic;
-using System.ComponentModel;
 using Paneless.Core.Events;
-using System.Linq;
 
 namespace Paneless.Core.Commands
 {
+    // Need to break up logic with setting up command mappings to make this class testable
+    // This will probably happen when configuration/settings is added
     public class CommandEventFactory : ICommandEventFactory
     {
         private readonly IList<KeyValuePair<IEvent, ICommandFactory>> _commandMapping; 
-        private ICommandFactory EmptyCommandFactory { get; set; }
 
         public CommandEventFactory()
         {
             _commandMapping = new List<KeyValuePair<IEvent, ICommandFactory>>();
-            EmptyCommandFactory = new SingleCommandFactory<EmptyCommand>();
             SetupCommandMapping();
         }
 
@@ -57,6 +55,14 @@ namespace Paneless.Core.Commands
 
         private ICommandFactory GetCommandFactory(IEvent ev)
         {
+            IList<ICommandFactory> commandFactories = GetCommandFactoriesFromEvent(ev);
+            if (commandFactories.Count == 0)
+                return new SingleCommandFactory<EmptyCommand>();
+            return new CommandFactory(commandFactories);
+        }
+
+        private IList<ICommandFactory> GetCommandFactoriesFromEvent(IEvent ev)
+        {
             IList<ICommandFactory> commandFactories = new List<ICommandFactory>();
             foreach (KeyValuePair<IEvent, ICommandFactory> mappedCommand in _commandMapping)
             {
@@ -65,14 +71,11 @@ namespace Paneless.Core.Commands
                     commandFactories.Add(mappedCommand.Value);
                 }
             }
-            //_commandMapping.Where(cm => ev.Equals(cm.Key)).Select(mappedCommand => mappedCommand.Value).ToList());
-            if (commandFactories.Count == 0)
-                return new SingleCommandFactory<EmptyCommand>();
-            return new CommandFactory(commandFactories);
+            return commandFactories;
         }
     }
 
-    public interface ICommandEventFactory // Think of a better name for this
+    public interface ICommandEventFactory // Try to think of a better name for this
     {
         ICommand CreateCommandFromEvent(IEvent ev);
     }
