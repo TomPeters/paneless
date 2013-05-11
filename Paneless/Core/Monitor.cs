@@ -2,7 +2,6 @@
 
 namespace Paneless.Core
 {
-    // A combination of screen (physical device) and its layout (windows and how to tile them)
     public class Monitor : IMonitor
     {
         private static readonly log4net.ILog Logger = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);

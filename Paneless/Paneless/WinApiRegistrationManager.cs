@@ -2,7 +2,7 @@
 using Paneless.Core.Events;
 using WinApi.Interface;
 
-namespace Paneless.Core
+namespace Paneless
 {
     public class WinApiRegistrationManager : IWinApiRegistrationManager
     {

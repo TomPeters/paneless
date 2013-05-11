@@ -6,6 +6,7 @@ namespace Paneless.Core.Events
     {
         public bool Equals(IEvent other)
         {
+            if (other is CompositeEvent) return other.Equals(this);
             if (!(other is T)) return false;
             return Equals(other as T);
         }

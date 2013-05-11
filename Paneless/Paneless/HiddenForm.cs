@@ -1,7 +1,6 @@
 ﻿using System.Windows.Forms;
 using Paneless.Core;
 using Paneless.Core.Events;
-using WinApi.Interface;
 
 namespace Paneless
 {

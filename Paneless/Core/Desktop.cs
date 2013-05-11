@@ -7,7 +7,6 @@ using WinApi.Interface;
 
 namespace Paneless.Core
 {
-    //Top level class that orchestrates the application
     public class Desktop : IDesktop
     {
         private static readonly log4net.ILog Logger = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
@@ -17,7 +16,7 @@ namespace Paneless.Core
         private readonly List<ITag> _tags; 
         private readonly WindowsEnumProcess _windowsEnumCallBack;
 
-        public Desktop(IDesktopManager desktopManager, IWindowManager windowManager, ILayoutFactory layoutFactory)
+        public Desktop(IDesktopManager desktopManager, IWindowManager windowManager, ILayoutFactory layoutFactory) // Layout factory probably shouldn't even be a property here
         {
             DesktopManager = desktopManager;
             WindowManager = windowManager;
@@ -41,19 +40,19 @@ namespace Paneless.Core
             }
         }
 
-        public List<IMonitor> Monitors
+        public IEnumerable<IMonitor> Monitors
         {
             get { return _monitors; }
         }
 
-        public List<ITag> Tags { get { return _tags; } }
+        public IEnumerable<ITag> Tags { get { return _tags; } }
 
-        public void AddTag(ITag tag) // Tags should probably be constructed in this class
+        public void AddTag(ITag tag)
         {
             _tags.Add(tag);
         }
 
-        public List<IWindow> DetectWindows()
+        public IEnumerable<IWindow> DetectWindows()
         {
             _windows = new List<IWindow>();
             DesktopManager.EnumWindows(_windowsEnumCallBack);
@@ -75,10 +74,10 @@ namespace Paneless.Core
 
     public interface IDesktop
     {
-        List<IMonitor> Monitors { get; }
-        List<ITag> Tags { get; }
+        IEnumerable<IMonitor> Monitors { get; }
+        IEnumerable<ITag> Tags { get; }
         ILayoutFactory LayoutFactory { get; }
-        List<IWindow> DetectWindows();
+        IEnumerable<IWindow> DetectWindows();
         void AddTag(ITag tag);
     }
 }

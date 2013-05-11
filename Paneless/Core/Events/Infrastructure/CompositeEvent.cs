@@ -20,7 +20,9 @@ namespace Paneless.Core.Events
 
         private bool Equals(CompositeEvent other)
         {
-            return Events.Count() == other.Events.Count() && Events.All(curEvent => EventInOtherCompositeEvent(curEvent, other));
+            return Events.Any() 
+                && Events.Count() == other.Events.Count() 
+                && Events.All(curEvent => EventInOtherCompositeEvent(curEvent, other));
         }
 
         private bool EventInOtherCompositeEvent(IEvent curEvent, CompositeEvent other)

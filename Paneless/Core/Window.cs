@@ -63,6 +63,7 @@ namespace Paneless.Core
         }
 
         // Returns true if this window should be handled by Paneless
+        // This should probably push down to winapi (i.e. could change if the api changes)
         public bool IsTileable()
         {
             return IsVisible() && (IsAppWindow() || (HasValidName() && !IsToolWindow()));

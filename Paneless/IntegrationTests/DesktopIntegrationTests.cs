@@ -28,7 +28,7 @@ namespace Paneless.IntegrationTests
         public void DesktopGetWindows()
         {
             Desktop sut = new Desktop(DesktopManager, WindowManager, _layoutFactory);
-            List<IWindow> windows = sut.DetectWindows();
+            IEnumerable<IWindow> windows = sut.DetectWindows();
             windows.Count().ShouldBeGreaterThan(0);
         }
     }
