@@ -1,13 +1,32 @@
-﻿namespace Paneless.Core.Commands
+﻿using System.Collections.Generic;
+using Paneless.Common;
+using Paneless.Core.Layouts;
+
+namespace Paneless.Core.Commands
 {
-    public class AssignLayoutsToActiveTagsCommand : Command
+    public class AssignLayoutsToActiveTagsCommand : ICommand, ILoggable
     {
-        public override void Execute()
+        public AssignLayoutsToActiveTagsCommand(IEnumerable<ITag> activeTags, ILayout layout)
         {
-            foreach (ITag tag in DomainObjectProvider.ActiveTags)
+            Layout = layout;
+            ActiveTags = activeTags;
+        }
+
+        private IEnumerable<ITag> ActiveTags { get; set; }
+
+        private ILayout Layout { get; set; }
+
+        public void Execute()
+        {
+            foreach (ITag tag in ActiveTags)
             {
-                tag.SetLayout(DomainObjectProvider.Desktop.LayoutFactory.CreateLayout(string.Empty));
+                tag.SetLayout(Layout);
             }
+        }
+
+        public string LogDescription
+        {
+            get { return "Assigning layout " + Layout.GetType() + " to tags"; }
         }
     }
 }

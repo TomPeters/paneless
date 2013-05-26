@@ -97,14 +97,18 @@
   <ItemGroup>
     <Compile Include="Commands\AssignLayoutsToActiveTagsCommand.cs" />
     <Compile Include="Commands\AssignWindowsToMonitorsCommand.cs" />
-    <Compile Include="Commands\ClearLayoutsOnActiveTagsCommand.cs" />
-    <Compile Include="Commands\Infrastructure\Command.cs" />
+    <Compile Include="Commands\Command Factories\AssignLayoutsToActiveTagsCommandFactory.cs" />
+    <Compile Include="Commands\Command Factories\AssignTagsToMonitorsCommandFactory.cs" />
+    <Compile Include="Commands\Command Factories\AssignWindowsToMonitorsCommandFactory.cs" />
+    <Compile Include="Commands\Command Factories\ClearLayoutsOnActiveTagsCommandFactory.cs" />
+    <Compile Include="Commands\Command Factories\RefreshWindowPositionsCommandFactory.cs" />
+    <Compile Include="Commands\Infrastructure\EmptyCommandFactory.cs" />
+    <Compile Include="Commands\Infrastructure\ICommand.cs" />
     <Compile Include="Commands\Infrastructure\CommandEventFactory.cs" />
-    <Compile Include="Commands\Infrastructure\CommandFactory.cs" />
+    <Compile Include="Commands\Infrastructure\CompositeCommandFactory.cs" />
     <Compile Include="Commands\Infrastructure\CompositeCommand.cs" />
     <Compile Include="Commands\Infrastructure\EmptyCommand.cs" />
     <Compile Include="Commands\Infrastructure\LoggedCommandProxy.cs" />
-    <Compile Include="Commands\Infrastructure\SingleCommandFactory.cs" />
     <Compile Include="Commands\RefreshWindowPositionsCommand.cs" />
     <Compile Include="Commands\AssignTagsToMonitorsCommand.cs" />
     <Compile Include="DomainObjectProvider.cs" />

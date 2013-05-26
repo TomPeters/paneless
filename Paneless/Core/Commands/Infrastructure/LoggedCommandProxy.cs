@@ -14,10 +14,6 @@ namespace Paneless.Core.Commands
             WrappedCommand = wrappedCommand;
         }
 
-        public IEventArguments EventArguments
-        {
-            set { WrappedCommand.EventArguments = value; }
-        }
         public void Execute()
         {
             ILoggable loggableCommand = WrappedCommand as ILoggable;

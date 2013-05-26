@@ -101,8 +101,12 @@
     </CodeAnalysisDependentAssemblyPaths>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Commands\Infrastructure\CommandFactoryTests.cs" />
+    <Compile Include="Commands\AssignLayoutsToActiveTagsCommandTests.cs" />
+    <Compile Include="Commands\AssignTagsToMonitorsCommandTests.cs" />
+    <Compile Include="Commands\AssignWindowsToMonitorsCommandTests.cs" />
+    <Compile Include="Commands\Infrastructure\CompositeCommandFactoryTests.cs" />
     <Compile Include="Commands\Infrastructure\CompositeCommandTests.cs" />
+    <Compile Include="Commands\RefreshWindowPositionsCommandTests.cs" />
     <Compile Include="DesktopTests.cs" />
     <Compile Include="Events\Infrastructure\CompositeEventTests.cs" />
     <Compile Include="Events\Infrastructure\EventBuilderTests.cs" />

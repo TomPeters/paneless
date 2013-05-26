@@ -1,12 +1,20 @@
-﻿using Paneless.Common;
+﻿using System.Collections.Generic;
+using Paneless.Common;
 
 namespace Paneless.Core.Commands
 {
-    public class RefreshWindowPositionsCommand : Command, ILoggable
+    public class RefreshWindowPositionsCommand : ICommand, ILoggable
     {
-        public override void Execute()
+        private IEnumerable<ITag> ActiveTags { get; set; }
+
+        public RefreshWindowPositionsCommand(IEnumerable<ITag> activeTags)
         {
-            foreach (ITag tag in DomainObjectProvider.ActiveTags)
+            ActiveTags = activeTags;
+        }
+
+        public void Execute()
+        {
+            foreach (ITag tag in ActiveTags)
             {
                 tag.Tile();
             }

@@ -16,8 +16,6 @@ namespace Paneless.Core.UnitTests.Events.Infrastructure
             CheckEventEquality(compositeEvent1, compositeEvent2, false);
         }
 
-
-
         [TestMethod]
         public void CompositeEventsOfDifferentSizeAreNotEqual()
         {

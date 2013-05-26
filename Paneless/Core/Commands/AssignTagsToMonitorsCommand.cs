@@ -1,15 +1,32 @@
-﻿namespace Paneless.Core.Commands
+﻿using System.Collections.Generic;
+using Paneless.Common;
+
+namespace Paneless.Core.Commands
 {
-    public class AssignTagsToMonitorsCommand : Command
+    public class AssignTagsToMonitorsCommand : ICommand, ILoggable
     {
-        public override void Execute()
+        public AssignTagsToMonitorsCommand(IEnumerable<IMonitor> monitors, IDesktop desktop)
         {
-            foreach (IMonitor monitor in DomainObjectProvider.Monitors)
+            Monitors = monitors;
+            Desktop = desktop;
+        }
+
+        private IEnumerable<IMonitor> Monitors { get; set; }
+        private IDesktop Desktop { get; set; }
+
+        public void Execute()
+        {
+            foreach (IMonitor monitor in Monitors)
             {
                 ITag newTag = new Tag();
-                DomainObjectProvider.Desktop.AddTag(newTag);
+                Desktop.AddTag(newTag);
                 monitor.Tag = newTag;
             }
+        }
+
+        public string LogDescription
+        {
+            get { return "Assigning tags to monitors"; }
         }
     }
 }

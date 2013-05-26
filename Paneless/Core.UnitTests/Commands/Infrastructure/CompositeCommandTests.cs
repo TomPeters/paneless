@@ -33,16 +33,5 @@ namespace Paneless.Core.UnitTests.Commands.Infrastructure
             _mockCommand1.Verify(c => c.Execute(), Times.Once());
             _mockCommand2.Verify(c => c.Execute(), Times.Once());
         }
-
-        [TestMethod]
-        public void ChildCommandsAreAssignedEventArgumentsWhenCompositeCommandAssignedEventArguments()
-        {
-            Mock<IEventArguments> mockEventArguments = new Mock<IEventArguments>();
-
-            _sut.EventArguments = mockEventArguments.Object;
-
-            _mockCommand1.VerifySet(c => c.EventArguments = mockEventArguments.Object);
-            _mockCommand2.VerifySet(c => c.EventArguments = mockEventArguments.Object);
-        }
     }
 }

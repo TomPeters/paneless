@@ -13,8 +13,7 @@ namespace Paneless.Core.Events
 
         public void TriggerEvent(ITriggeredEvent ev)
         {
-            ICommand command = CommandEventFactory.CreateCommandFromEvent(ev.Event);
-            command.EventArguments = ev.EventArguments;
+            ICommand command = CommandEventFactory.CreateCommandFromEvent(ev);
             command.Execute();
         }
     }

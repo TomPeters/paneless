@@ -4,7 +4,7 @@ using WinApi.Interface.Constants;
 
 namespace Paneless.Core.Events
 {
-    // This class need to be tested - but this shouldn't happen until we get better infrastructure in place
+    // TODO: This class need to be tested - but this shouldn't happen until we get better infrastructure in place
     public class EventFactory : IEventFactory
     {
         private const int WM_HOTKEY = 0x0312;
