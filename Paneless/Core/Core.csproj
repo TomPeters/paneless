@@ -107,7 +107,7 @@
     <Compile Include="Commands\Infrastructure\SingleCommandFactory.cs" />
     <Compile Include="Commands\RefreshWindowPositionsCommand.cs" />
     <Compile Include="Commands\AssignTagsToMonitorsCommand.cs" />
-    <Compile Include="ContextProvider.cs" />
+    <Compile Include="DomainObjectProvider.cs" />
     <Compile Include="Desktop.cs" />
     <Compile Include="Events\Infrastructure\CompositeEvent.cs" />
     <Compile Include="Events\Infrastructure\EmptyEvent.cs" />

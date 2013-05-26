@@ -3,9 +3,9 @@ using System.Linq;
 
 namespace Paneless.Core
 {
-    public class ContextProvider : IContextProvider
+    public class DomainObjectProvider : IDomainObjectProvider
     {
-        public ContextProvider(IDesktop desktop)
+        public DomainObjectProvider(IDesktop desktop)
         {
             Desktop = desktop;
         }
@@ -23,7 +23,7 @@ namespace Paneless.Core
         }
     }
 
-    public interface IContextProvider
+    public interface IDomainObjectProvider
     {
         IDesktop Desktop { get; }
         IEnumerable<IMonitor> Monitors { get; }

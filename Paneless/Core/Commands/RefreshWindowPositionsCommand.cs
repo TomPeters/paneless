@@ -6,7 +6,7 @@ namespace Paneless.Core.Commands
     {
         public override void Execute()
         {
-            foreach (ITag tag in Context.ActiveTags)
+            foreach (ITag tag in DomainObjectProvider.ActiveTags)
             {
                 tag.Tile();
             }

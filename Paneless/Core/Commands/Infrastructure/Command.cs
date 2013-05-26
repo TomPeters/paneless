@@ -6,7 +6,7 @@ namespace Paneless.Core.Commands
     {
         public IEventArguments EventArguments { protected get; set; }
         public abstract void Execute();
-        protected IContextProvider Context { get { return EventArguments.ContextProvider; }} // For convenience
+        protected IDomainObjectProvider DomainObjectProvider { get { return EventArguments.DomainObjectProvider; }} // For convenience
     }
 
     public interface ICommand

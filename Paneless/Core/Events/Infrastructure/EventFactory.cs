@@ -10,13 +10,13 @@ namespace Paneless.Core.Events
         private const int WM_HOTKEY = 0x0312;
         private static int _windowMessage;
 
-        public EventFactory(IContextProvider contextProvider, int windowMessage)
+        public EventFactory(IDomainObjectProvider domainObjectProvider, int windowMessage)
         {
-            ContextProvider = contextProvider;
+            DomainObjectProvider = domainObjectProvider;
             _windowMessage = windowMessage;
         }
 
-        private IContextProvider ContextProvider { get; set; }
+        private IDomainObjectProvider DomainObjectProvider { get; set; }
 
         public ITriggeredEvent CreateEvent(Message msg)
         {
@@ -43,7 +43,7 @@ namespace Paneless.Core.Events
         private IEventBuilder InitializeBuilder()
         {
             IEventBuilder builder = new EventBuilder();
-            builder.Arguments.ContextProvider = ContextProvider;
+            builder.Arguments.DomainObjectProvider = DomainObjectProvider;
             return builder;
         }
 

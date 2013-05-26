@@ -4,10 +4,10 @@
     {
         public override void Execute()
         {
-            foreach (IMonitor monitor in Context.Monitors)
+            foreach (IMonitor monitor in DomainObjectProvider.Monitors)
             {
                 ITag newTag = new Tag();
-                Context.Desktop.AddTag(newTag);
+                DomainObjectProvider.Desktop.AddTag(newTag);
                 monitor.Tag = newTag;
             }
         }

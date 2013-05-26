@@ -15,11 +15,11 @@ namespace Paneless
         private static readonly log4net.ILog Logger = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         private NotifyIcon _notifyIcon;
         private HiddenForm _hiddenForm;
-        private IContextProvider _contextProvider;
+        private IDomainObjectProvider _domainObjectProvider;
 
-        public PanelessApplicationContext(IContextProvider contextProvider)
+        public PanelessApplicationContext(IDomainObjectProvider domainObjectProvider)
         {
-            _contextProvider = contextProvider;
+            _domainObjectProvider = domainObjectProvider;
             InitializeContext();
             SetupShellHookWindow();
             _hiddenForm.TriggerStartupEvent();
@@ -61,7 +61,7 @@ namespace Paneless
 
         private void SetupShellHookWindow()
         {
-            _hiddenForm = new HiddenForm(_contextProvider, new EventManager(new CommandEventFactory()), new WinApiRegistrationManager(new DesktopManager()));
+            _hiddenForm = new HiddenForm(_domainObjectProvider, new EventManager(new CommandEventFactory()), new WinApiRegistrationManager(new DesktopManager()));
         }
     }
 }

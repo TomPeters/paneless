@@ -11,12 +11,12 @@ namespace Paneless
 
         private readonly Form _form;
 
-        public HiddenForm(IContextProvider contextProvider, IEventManager eventManager, IWinApiRegistrationManager registrationManager)
+        public HiddenForm(IDomainObjectProvider domainObjectProvider, IEventManager eventManager, IWinApiRegistrationManager registrationManager)
         {
             Logger.Debug("Creating hidden form");
             _form = new Form { Visible = false, ShowInTaskbar = false };
             RegistrationManager = registrationManager;
-            EventFactory = new EventFactory(contextProvider, SetupEventBinding());
+            EventFactory = new EventFactory(domainObjectProvider, SetupEventBinding());
             EventManager = eventManager;
         }
 

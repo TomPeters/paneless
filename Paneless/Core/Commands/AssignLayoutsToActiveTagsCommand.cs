@@ -4,9 +4,9 @@
     {
         public override void Execute()
         {
-            foreach (ITag tag in Context.ActiveTags)
+            foreach (ITag tag in DomainObjectProvider.ActiveTags)
             {
-                tag.SetLayout(Context.Desktop.LayoutFactory.CreateLayout(string.Empty));
+                tag.SetLayout(DomainObjectProvider.Desktop.LayoutFactory.CreateLayout(string.Empty));
             }
         }
     }

@@ -13,7 +13,7 @@ namespace Paneless.Core.Commands
 
         private void ClearWindows()
         {
-            foreach (IMonitor monitor in Context.Monitors)
+            foreach (IMonitor monitor in DomainObjectProvider.Monitors)
             {
                 monitor.ClearWindows();
             }
@@ -21,11 +21,11 @@ namespace Paneless.Core.Commands
 
         private void AssignWindows()
         {
-            IEnumerable<IWindow> windows = Context.Desktop.DetectWindows();
+            IEnumerable<IWindow> windows = DomainObjectProvider.Desktop.DetectWindows();
 
             foreach (IWindow window in windows)
             {
-                foreach (IMonitor monitor in Context.Monitors.Where(monitor => monitor.IsInSameScreen(window)))
+                foreach (IMonitor monitor in DomainObjectProvider.Monitors.Where(monitor => monitor.IsInSameScreen(window)))
                 {
                     monitor.AddWindow(window);
                 }
