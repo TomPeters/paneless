@@ -1,4 +1,5 @@
-﻿using Paneless.Core.Events;
+﻿using Paneless.Core.Config;
+using Paneless.Core.Events;
 
 namespace Paneless.Core.Commands
 {
@@ -7,9 +8,10 @@ namespace Paneless.Core.Commands
         public ICommand CreateCommand(IEventArguments eventArguments)
         {
             IDomainObjectProvider domainObjectProvider = eventArguments.DomainObjectProvider;
+            Configuration config = eventArguments.ConfigurationProvider.Configuration;
 
             return new AssignLayoutsToActiveTagsCommand(domainObjectProvider.ActiveTags, 
-                domainObjectProvider.Desktop.LayoutFactory.CreateLayout(string.Empty));
+                domainObjectProvider.Desktop.LayoutFactory.CreateLayout(config.Options.DefaultLayout));
         }
     }
 }

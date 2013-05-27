@@ -111,6 +111,9 @@
     <Compile Include="Commands\Infrastructure\LoggedCommandProxy.cs" />
     <Compile Include="Commands\RefreshWindowPositionsCommand.cs" />
     <Compile Include="Commands\AssignTagsToMonitorsCommand.cs" />
+    <Compile Include="Config\CommandConfiguration.cs" />
+    <Compile Include="Config\KeyBinding.cs" />
+    <Compile Include="Config\Options.cs" />
     <Compile Include="DomainObjectProvider.cs" />
     <Compile Include="Desktop.cs" />
     <Compile Include="Events\Infrastructure\CompositeEvent.cs" />
@@ -128,6 +131,7 @@
     <Compile Include="Events\WindowMovedEvent.cs" />
     <Compile Include="Events\WindowResizingEvent.cs" />
     <Compile Include="Events\WindowResizedEvent.cs" />
+    <Compile Include="Config\IConfigurationProvider.cs" />
     <Compile Include="Layouts\EmptyLayout.cs" />
     <Compile Include="Layouts\EmptyLayoutFactory.cs" />
     <Compile Include="Layouts\FullDomainLayout.cs" />
@@ -135,6 +139,7 @@
     <Compile Include="Layouts\ILayoutFactory.cs" />
     <Compile Include="Layouts\Layout.cs" />
     <Compile Include="Monitor.cs" />
+    <Compile Include="Config\Configuration.cs" />
     <Compile Include="Tag.cs" />
     <Compile Include="Rectangle.cs" />
     <Compile Include="Window.cs" />

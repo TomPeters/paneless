@@ -20,7 +20,7 @@ namespace Paneless.Layouts
                 case("EmptyLayout"):
                     return new EmptyLayout();
                 default:
-                    return new CompositeHorizontalLayout();
+                    return new EmptyLayout();
             }
         }
     }

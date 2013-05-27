@@ -1,5 +1,6 @@
 ﻿using System.Windows.Forms;
 using Paneless.Core;
+using Paneless.Core.Config;
 using Paneless.Core.Events;
 
 namespace Paneless
@@ -11,12 +12,12 @@ namespace Paneless
 
         private readonly Form _form;
 
-        public HiddenForm(IDomainObjectProvider domainObjectProvider, IEventManager eventManager, IWinApiRegistrationManager registrationManager)
+        public HiddenForm(IDomainObjectProvider domainObjectProvider, IConfigurationProvider configurationProvider, IEventManager eventManager, IWinApiRegistrationManager registrationManager)
         {
             Logger.Debug("Creating hidden form");
             _form = new Form { Visible = false, ShowInTaskbar = false };
             RegistrationManager = registrationManager;
-            EventFactory = new EventFactory(domainObjectProvider, SetupEventBinding());
+            EventFactory = new EventFactory(domainObjectProvider, configurationProvider, SetupEventBinding());
             EventManager = eventManager;
         }
 

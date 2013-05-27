@@ -1,0 +1,29 @@
+{ 
+	KeyBindings: [
+		{
+			Keys: [
+				"Ctrl",
+				"Mod",
+				"T"
+			],
+			Action: {
+				Command: "AssignLayoutsToActiveTagsCommand",
+				Arguments: "CompositeHorizontalLayout"
+			}
+		},
+		{
+			Keys: [
+				"Ctrl",
+				"Mod",
+				"U"
+			],
+			Action: {
+				Command: "AssignLayoutsToActiveTagsCommand",
+				Arguments: "EmptyLayout"
+			}
+		}
+	],
+	Options: {
+		DefaultLayout: "CompositeHorizontalLayout"
+	}
+}

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
+using Paneless.Core.Config;
 using WinApi.Interface.Constants;
 
 namespace Paneless.Core.Events
@@ -10,13 +11,16 @@ namespace Paneless.Core.Events
         private const int WM_HOTKEY = 0x0312;
         private static int _windowMessage;
 
-        public EventFactory(IDomainObjectProvider domainObjectProvider, int windowMessage)
+        public EventFactory(IDomainObjectProvider domainObjectProvider, IConfigurationProvider configurationProvider, int windowMessage)
         {
             DomainObjectProvider = domainObjectProvider;
+            ConfigurationProvider = configurationProvider;
             _windowMessage = windowMessage;
         }
 
         private IDomainObjectProvider DomainObjectProvider { get; set; }
+
+        private IConfigurationProvider ConfigurationProvider { get; set; }
 
         public ITriggeredEvent CreateEvent(Message msg)
         {
@@ -44,6 +48,7 @@ namespace Paneless.Core.Events
         {
             IEventBuilder builder = new EventBuilder();
             builder.Arguments.DomainObjectProvider = DomainObjectProvider;
+            builder.Arguments.ConfigurationProvider = ConfigurationProvider;
             return builder;
         }
 
