@@ -23,9 +23,9 @@ namespace Paneless
             DesktopManager.SetupWindowsHook(windowPtr);
         }
 
-        public void TerminateHooks()
+        public void UnregisterHooks()
         {
-            DesktopManager.TerminateHookThreads();
+            DesktopManager.UnregisterHooks();
         }
 
         public void SetupHotKeys(IntPtr windowPtr)
@@ -47,7 +47,7 @@ namespace Paneless
     {
         int RegisterWindowMessage(string windowMessage);
         void SetupHooks(IntPtr windowPtr);
-        void TerminateHooks();
+        void UnregisterHooks();
         void SetupHotKeys(IntPtr windowPtr);
         void UnregisterHotKeys(IntPtr windowPtr);
     }

@@ -34,22 +34,16 @@ static LRESULT CALLBACK GetMsgCallback(int code, WPARAM wparam, LPARAM lparam) {
 
 extern "C"
 __declspec(dllexport)
-BOOL SetupWndProcHook() {
+HHOOK SetupWndProcHook() {
 	hookCallWndProc = SetWindowsHookEx(WH_CALLWNDPROC, (HOOKPROC)WndProcCallback, g_appInstance, 0);
-	if(hookCallWndProc == NULL) {
-		return false;
-	}
-	return true;
+	return hookCallWndProc;
 }
 
  // Also need to hook into GetMessage to ensure we get all messages (WndProc may not be not enough)
 extern "C"
 __declspec(dllexport)
-BOOL SetupGetMsgHook() {
+HHOOK SetupGetMsgHook() {
 	hookCallGetMsg = SetWindowsHookEx(WH_GETMESSAGE, (HOOKPROC)GetMsgCallback, g_appInstance, 0);
-	if(hookCallGetMsg == NULL) {
-		return false;
-	}
-	return true;
+	return hookCallWndProc;
 }
 

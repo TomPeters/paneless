@@ -17,7 +17,7 @@ namespace Paneless
             Logger.Debug("Creating hidden form");
             _form = new Form { Visible = false, ShowInTaskbar = false };
             RegistrationManager = registrationManager;
-            EventFactory = new EventFactory(domainObjectProvider, configurationProvider, SetupEventBinding());
+            EventFactory = new EventFactory(domainObjectProvider, configurationProvider, SetupEventBinding()); // TODO Don't new this up here...
             EventManager = eventManager;
         }
 
@@ -37,7 +37,7 @@ namespace Paneless
 
         public void TerminateEventBinding()
         {
-            RegistrationManager.TerminateHooks();
+            RegistrationManager.UnregisterHooks();
             RegistrationManager.UnregisterHotKeys(Handle);
         }
 

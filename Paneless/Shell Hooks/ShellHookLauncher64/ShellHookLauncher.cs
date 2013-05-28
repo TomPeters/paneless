@@ -1,20 +1,28 @@
-﻿using System.Runtime.InteropServices;
-using System.Threading;
+﻿using System;
+using System.IO;
+using System.IO.Pipes;
+using System.Runtime.InteropServices;
 using Paneless.Common;
 
 namespace ShellHookLauncher
 {
     public static class ShellHookLauncher
     {
-        private const int Timeout = 1000;
         static void Main(string[] args)
         {
             SetDllDirectory(DirectoryFinder.FindDirectoryInAncestors(ShellHookHelper.DllFileName));
-            ShellHookHelper.SetupWndProcHook();
+            IntPtr wndProcHook = ShellHookHelper.SetupWndProcHook();
             ShellHookHelper.SetupGetMsgHook();
-            while (true)
+            using (NamedPipeClientStream pipeClient = new NamedPipeClientStream(".", ShellHookHelper.PanelessNamedPipe, PipeDirection.Out))
             {
-                Thread.Sleep(Timeout); // Keep this thread alive but don't want it to consume much CPU time
+                pipeClient.Connect();
+                using (StreamWriter streamWriter = new StreamWriter(pipeClient))
+                {
+                    // It looks like SetupWndProcHook and SetupGetMsgHook both return the same HHOOK 
+                    // (implying it is associated with the dll rather than the callback)
+                    // So we only need to return one of these HHOOK values to be unregistered later
+                    streamWriter.Write(wndProcHook); 
+                }
             }
         }
 
