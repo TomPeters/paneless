@@ -6,6 +6,9 @@ namespace Paneless
 {
     public class WinApiRegistrationManager : IWinApiRegistrationManager
     {
+        private const int StartupThreadTerminationTimeout = 50;
+        private const int ShutdownThreadTerminationTimeout = 250;
+
         public WinApiRegistrationManager(IDesktopManager desktopManager)
         {
             DesktopManager = desktopManager;
@@ -20,12 +23,13 @@ namespace Paneless
 
         public void SetupHooks(IntPtr windowPtr)
         {
+            DesktopManager.UnregisterHooks(StartupThreadTerminationTimeout); // Shutdown any existing hook threads in case paneless crashed
             DesktopManager.SetupWindowsHook(windowPtr);
         }
 
         public void UnregisterHooks()
         {
-            DesktopManager.UnregisterHooks();
+            DesktopManager.UnregisterHooks(ShutdownThreadTerminationTimeout);
         }
 
         public void SetupHotKeys(IntPtr windowPtr)

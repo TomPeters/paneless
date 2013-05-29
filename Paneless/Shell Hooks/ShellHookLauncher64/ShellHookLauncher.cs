@@ -1,8 +1,6 @@
 ﻿using System;
-using System.IO;
 using System.IO.Pipes;
 using System.Runtime.InteropServices;
-using System.Threading;
 using Paneless.Common;
 
 namespace ShellHookLauncher
@@ -14,20 +12,17 @@ namespace ShellHookLauncher
             SetDllDirectory(DirectoryFinder.FindDirectoryInAncestors(ShellHookHelper.DllFileName));
             IntPtr wndProcHook = ShellHookHelper.SetupWndProcHook();
             ShellHookHelper.SetupGetMsgHook();
-            using (NamedPipeClientStream pipeClient = new NamedPipeClientStream(".", ShellHookHelper.PanelessNamedPipe, PipeDirection.Out))
+
+            WaitForTerminationMessage();
+
+            UnhookWindowsHookEx(wndProcHook);
+        }
+
+        private static void WaitForTerminationMessage()
+        {
+            using (NamedPipeServerStream pipeServer = new NamedPipeServerStream(ShellHookHelper.PanelessNamedPipe, PipeDirection.In))
             {
-                pipeClient.Connect();
-                using (StreamWriter streamWriter = new StreamWriter(pipeClient))
-                {
-                    // It looks like SetupWndProcHook and SetupGetMsgHook both return the same HHOOK 
-                    // (implying it is associated with the dll rather than the callback)
-                    // So we only need to return one of these HHOOK values to be unregistered later
-                    streamWriter.Write(wndProcHook); 
-                }
-            }
-            while (true)
-            {
-                Thread.Sleep(1000);
+                pipeServer.WaitForConnection();
             }
         }
 
@@ -35,5 +30,11 @@ namespace ShellHookLauncher
         //http://www.pinvoke.net/default.aspx/kernel32.setdlldirectory
         [DllImport("kernel32.dll", SetLastError = true)]
         private static extern bool SetDllDirectory(string lpPathName);
+
+        //http://msdn.microsoft.com/en-us/library/windows/desktop/ms644993(v=vs.85).aspx
+        //http://www.pinvoke.net/default.aspx/user32.unhookwindowshookex
+        [DllImport("user32.dll", SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        private static extern bool UnhookWindowsHookEx(IntPtr hhook);
     }
 }

@@ -103,12 +103,6 @@ namespace WinApi.Windows7
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool UnregisterHotKey(IntPtr hWnd, int id);
 
-        //http://msdn.microsoft.com/en-us/library/windows/desktop/ms644993(v=vs.85).aspx
-        //http://www.pinvoke.net/default.aspx/user32.unhookwindowshookex
-        [DllImport("user32.dll", SetLastError = true)]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        internal static extern bool UnhookWindowsHookEx(IntPtr hhook);
-
         //http://msdn.microsoft.com/en-us/library/windows/desktop/ms633548(v=vs.85).aspx
         //http://www.pinvoke.net/default.aspx/user32.showwindow
         [DllImport("user32.dll")]

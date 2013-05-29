@@ -9,10 +9,11 @@ namespace WinApi.Windows7
 {
     public class DesktopManager : IDesktopManager
     {
+        private const string NamedPipe32 = "PanelessHookId32-5b4f1ea2-c775-11e2-8888-47c85008ead5";
+        private const string NamedPipe64 = "PanelessHookId64-5b4f1ea2-c775-11e2-8888-47c85008ead5";
+        
         private static readonly log4net.ILog Logger = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
-        private IntPtr _hook32;
-        private IntPtr _hook64;
         private readonly bool _arch64;
 
         public DesktopManager()
@@ -31,34 +32,35 @@ namespace WinApi.Windows7
         {
             bool result = StoreWindowPtr(shellWindowPtr);
             Process.Start(DirectoryFinder.FindDirectoryInAncestors(Identifiers.HookLauncher32));
-            _hook32 = (IntPtr)Convert.ToInt32(GetIdFromPipe("PanelessHookId32-5b4f1ea2-c775-11e2-8888-47c85008ead5"));
             if (_arch64)
             {
                 Process.Start(DirectoryFinder.FindDirectoryInAncestors(Identifiers.HookLauncher64));
-                _hook64 = (IntPtr)Convert.ToInt32(GetIdFromPipe("PanelessHookId64-5b4f1ea2-c775-11e2-8888-47c85008ead5"));
             }
             Logger.Debug("Shell hooks registered to " + shellWindowPtr);
             return result;
         }
 
-        private string GetIdFromPipe(string pipeName)
+        public void UnregisterHooks(int timeout)
         {
-            using (NamedPipeServerStream pipeServer = new NamedPipeServerStream(pipeName, PipeDirection.In))
-            {
-                pipeServer.WaitForConnection();
-                using (StreamReader streamReader = new StreamReader(pipeServer))
-                {
-                    return streamReader.ReadToEnd();
-                }
-            }
+            SendTerminateMessageToShellHook(NamedPipe32, timeout);
+            if (_arch64)
+                SendTerminateMessageToShellHook(NamedPipe64, timeout);
+            Logger.Debug("Shell hooks removed");
         }
 
-        public void UnregisterHooks()
+        private void SendTerminateMessageToShellHook(string pipeName, int timeout)
         {
-            UnhookWindowsHook(_hook32);
-            if (_arch64)
-                UnhookWindowsHook(_hook64);
-            Logger.Debug("Shell hooks removed");
+            using (NamedPipeClientStream pipeClient = new NamedPipeClientStream(".", pipeName, PipeDirection.Out))
+            {
+                try
+                {
+                    pipeClient.Connect(timeout);
+                    Logger.Debug("Termination message sent to process that did not terminate correctly last time");
+                }
+                catch (TimeoutException ex) // No servers exist - do nothing
+                {
+                }
+            }
         }
 
         public bool RegisterHotKeys(IntPtr windowPtr, int keyId, uint modKeys, uint keys)
@@ -79,12 +81,6 @@ namespace WinApi.Windows7
             int result = (int)WinApi.RegisterWindowMessage(windowMessage);
             Logger.Debug("Window message registered: " + result);
             return result;
-        }
-
-        private bool UnhookWindowsHook(IntPtr hook)
-        {
-            Logger.Debug("Unregistering hook with HHOOK: " + hook);
-            return WinApi.UnhookWindowsHookEx(hook);
         }
 
         private bool StoreWindowPtr(IntPtr windowPtr)

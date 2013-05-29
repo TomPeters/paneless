@@ -11,7 +11,7 @@ namespace WinApi.Interface
         void EnumWindows(WindowsEnumProcess windowsEnumCallBack);
         bool SetupWindowsHook(IntPtr shellWindowPtr);
         int RegisterWindowMessage(string windowMessage);
-        void UnregisterHooks();
+        void UnregisterHooks(int timeout);
         bool RegisterHotKeys(IntPtr windowPtr, int keyId, uint modKeys, uint keys);
         bool UnregisterHotKeys(IntPtr windowPtr, int keyId);
     }
