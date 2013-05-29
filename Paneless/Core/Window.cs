@@ -54,6 +54,7 @@ namespace Paneless.Core
 
         public void SetLocation(Rectangle location)
         {
+            SetShowState(ShowState.SW_RESTORE);
             Wmgr.SetLocationUnchangedOrder(WindowPtr, location.GetRect());
         }
 
