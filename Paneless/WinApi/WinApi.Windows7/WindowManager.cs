@@ -5,6 +5,7 @@ using WinApi.Interface;
 using WinApi.Interface.Constants;
 using WinApi.Interface.Types;
 using WinApi.Windows7.Constants;
+using System.Linq;
 
 namespace WinApi.Windows7
 {
@@ -36,9 +37,7 @@ namespace WinApi.Windows7
         public ShowState GetShowState(IntPtr windowPtr)
         {
             WINDOWPLACEMENT placement = GetWindowPlacement(windowPtr);
-            string stateString = WindowStatusLookup.StatusMap[placement.showCmd];
-            ShowState resultState = (ShowState)Enum.Parse(typeof(ShowState), stateString);
-            return resultState;
+            return (ShowState) placement.showCmd;
         }
 
         public WINDOWPLACEMENT GetWindowPlacement(IntPtr windowPtr)
@@ -54,6 +53,11 @@ namespace WinApi.Windows7
             RECT rect = new RECT();
             WinApi.GetWindowRect(windowPtr, rect);
             return rect;
+        }
+
+        public void SetWindowShowState(IntPtr windowPtr, ShowState showState)
+        {
+            WinApi.ShowWindow(windowPtr, showState);
         }
 
         public void SetLocationUnchangedOrder(IntPtr windowPtr, RECT rect)

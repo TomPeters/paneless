@@ -102,6 +102,11 @@ namespace Paneless.Core
         {
             return Wmgr.IsWindowVisible(WindowPtr);
         }
+
+        public void SetShowState(ShowState showState)
+        {
+            Wmgr.SetWindowShowState(WindowPtr, showState);
+        }
     }
 
     public interface IWindow
@@ -115,5 +120,6 @@ namespace Paneless.Core
         void SetLocation(Rectangle location);
         ExtendedWindowStyleFlags ExtendedWindowStyleFlags { get; }
         bool IsTileable();
+        void SetShowState(ShowState showState);
     }
 }

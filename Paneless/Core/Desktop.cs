@@ -4,6 +4,7 @@ using System.Windows.Forms;
 using System.Linq;
 using Paneless.Core.Layouts;
 using WinApi.Interface;
+using WinApi.Interface.Constants;
 
 namespace Paneless.Core
 {

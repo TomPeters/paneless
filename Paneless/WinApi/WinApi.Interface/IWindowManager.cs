@@ -20,5 +20,6 @@ namespace WinApi.Interface
         WINDOWPLACEMENT GetWindowPlacement(IntPtr windowPtr);
         bool IsWindowVisible(IntPtr windowPtr);
         ExtendedWindowStyleFlags GetExtendedStyle(IntPtr windowPtr);
+        void SetWindowShowState(IntPtr windowPtr, ShowState showState);
     }
 }

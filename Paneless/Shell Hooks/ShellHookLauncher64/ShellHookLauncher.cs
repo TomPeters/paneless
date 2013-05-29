@@ -2,6 +2,7 @@
 using System.IO;
 using System.IO.Pipes;
 using System.Runtime.InteropServices;
+using System.Threading;
 using Paneless.Common;
 
 namespace ShellHookLauncher
@@ -23,6 +24,10 @@ namespace ShellHookLauncher
                     // So we only need to return one of these HHOOK values to be unregistered later
                     streamWriter.Write(wndProcHook); 
                 }
+            }
+            while (true)
+            {
+                Thread.Sleep(1000);
             }
         }
 

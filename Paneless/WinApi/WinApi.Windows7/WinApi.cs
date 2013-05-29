@@ -2,6 +2,7 @@
 using System.Runtime.InteropServices;
 using System.Text;
 using WinApi.Interface;
+using WinApi.Interface.Constants;
 using WinApi.Interface.Types;
 
 namespace WinApi.Windows7
@@ -107,5 +108,11 @@ namespace WinApi.Windows7
         [DllImport("user32.dll", SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool UnhookWindowsHookEx(IntPtr hhook);
+
+        //http://msdn.microsoft.com/en-us/library/windows/desktop/ms633548(v=vs.85).aspx
+        //http://www.pinvoke.net/default.aspx/user32.showwindow
+        [DllImport("user32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        internal static extern bool ShowWindow(IntPtr hWnd, ShowState nCmdShow);
     }
 }
