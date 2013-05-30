@@ -4,7 +4,6 @@ using System.Windows.Forms;
 using System.Linq;
 using Paneless.Core.Layouts;
 using WinApi.Interface;
-using WinApi.Interface.Constants;
 
 namespace Paneless.Core
 {
@@ -17,11 +16,13 @@ namespace Paneless.Core
         private readonly List<ITag> _tags; 
         private readonly WindowsEnumProcess _windowsEnumCallBack;
 
-        public Desktop(IDesktopManager desktopManager, IWindowManager windowManager, ILayoutFactory layoutFactory) // Layout factory probably shouldn't even be a property here
+        public Desktop(IDesktopManager desktopManager, IWindowManager windowManager
+            , ILayoutFactory layoutFactory, IWindowFactory windowFactory) // Layout factory probably shouldn't even be a property here, and neither should window factory
         {
             DesktopManager = desktopManager;
             WindowManager = windowManager;
             LayoutFactory = layoutFactory;
+            WindowFactory = windowFactory;
             _windowsEnumCallBack = AddDetectedWindow;
             _tags = new List<ITag>();
             PopulateMonitors();
@@ -30,6 +31,7 @@ namespace Paneless.Core
         private IDesktopManager DesktopManager { get; set; }
         private IWindowManager WindowManager { get; set; }
         public ILayoutFactory LayoutFactory { get; set; } // This shouldn't need to be public
+        private IWindowFactory WindowFactory { get; set; }
 
         private void PopulateMonitors()
         {
@@ -60,9 +62,10 @@ namespace Paneless.Core
             return _windows;
         }
 
+        // This logic probably shouldn't be here
         private bool AddDetectedWindow(int windowsPtr, int lParam)
         {
-            IWindow window = new Window((IntPtr) windowsPtr, WindowManager);
+            IWindow window = WindowFactory.CreateWindow((IntPtr) windowsPtr);
             Logger.Debug("Window Detected: " + window.Name);
             if (window.IsTileable())
             {

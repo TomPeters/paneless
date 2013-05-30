@@ -16,6 +16,7 @@ namespace Paneless.Core.UnitTests
         private Desktop _sut;
         private Mock<IWindowManager> _mockWindowManager;
         private Mock<ILayoutFactory> _mockLayoutFactory;
+        private Mock<IWindowFactory> _mockWindowFactory;
 
         [TestInitialize]
         public void Setup()
@@ -23,7 +24,8 @@ namespace Paneless.Core.UnitTests
             _mockDesktopManager = new Mock<IDesktopManager>();
             _mockWindowManager = new Mock<IWindowManager>();
             _mockLayoutFactory = new Mock<ILayoutFactory>();
-            _sut = new Desktop(_mockDesktopManager.Object, _mockWindowManager.Object, _mockLayoutFactory.Object);
+            _mockWindowFactory = new Mock<IWindowFactory>();
+            _sut = new Desktop(_mockDesktopManager.Object, _mockWindowManager.Object, _mockLayoutFactory.Object, _mockWindowFactory.Object);
         }
 
         [TestMethod]
@@ -39,10 +41,10 @@ namespace Paneless.Core.UnitTests
         [TestMethod]
         public void TestDetectWindows()
         {
+            _mockWindowFactory.Setup(wf => wf.CreateWindow(It.IsAny<IntPtr>())).Returns(Mock.Of<IWindow>(w => w.IsTileable() == true));
             const int windowPtr = 5;
             _mockDesktopManager.Setup(mgr => mgr.EnumWindows(It.IsAny<WindowsEnumProcess>()))
                               .Callback<WindowsEnumProcess>(cb => cb(windowPtr, 0));
-            _mockWindowManager.Setup(mgr => mgr.IsTileable(It.IsAny<IntPtr>())).Returns(true);
             IEnumerable<IWindow> windows = _sut.DetectWindows();
             windows.Count().ShouldBe(1);
         }

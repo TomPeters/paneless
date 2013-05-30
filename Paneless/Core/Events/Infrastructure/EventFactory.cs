@@ -8,6 +8,8 @@ namespace Paneless.Core.Events
     // TODO: This class need to be tested - but this shouldn't happen until we get better infrastructure in place
     public class EventFactory : IEventFactory
     {
+        private static readonly log4net.ILog Logger = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         private const int WM_HOTKEY = 0x0312;
         private static int _windowMessage;
 
@@ -74,6 +76,9 @@ namespace Paneless.Core.Events
                         break;
                     case (WindowNotification.WM_SIZE):
                         builder.AddEvent(new WindowResizedEvent());
+                        break;
+                    case (WindowNotification.WM_CREATE):
+                        builder.AddEvent(new WindowCreationEvent());
                         break;
                 }
             }

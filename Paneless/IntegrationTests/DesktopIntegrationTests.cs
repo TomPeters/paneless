@@ -20,14 +20,14 @@ namespace Paneless.IntegrationTests
         [TestMethod]
         public void DesktoPopulateMonitorsTest()
         {
-            Desktop sut = new Desktop(DesktopManager, WindowManager, _layoutFactory);
+            Desktop sut = new Desktop(DesktopManager, WindowManager, _layoutFactory, new WindowFactory(WindowManager));
             sut.Monitors.Count().ShouldBeGreaterThan(0);
         }
 
         [TestMethod]
         public void DesktopGetWindows()
         {
-            Desktop sut = new Desktop(DesktopManager, WindowManager, _layoutFactory);
+            Desktop sut = new Desktop(DesktopManager, WindowManager, _layoutFactory, new WindowFactory(WindowManager));
             IEnumerable<IWindow> windows = sut.DetectWindows();
             windows.Count().ShouldBeGreaterThan(0);
         }

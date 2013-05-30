@@ -5,12 +5,14 @@ namespace Paneless.Core
 {
     public class DomainObjectProvider : IDomainObjectProvider
     {
-        public DomainObjectProvider(IDesktop desktop)
+        public DomainObjectProvider(IDesktop desktop, IWindowFactory windowFactory)
         {
             Desktop = desktop;
+            WindowFactory = windowFactory;
         }
 
         public IDesktop Desktop { get; private set; }
+        public IWindowFactory WindowFactory { get; private set; }
 
         public IEnumerable<IMonitor> Monitors
         {
@@ -26,6 +28,7 @@ namespace Paneless.Core
     public interface IDomainObjectProvider
     {
         IDesktop Desktop { get; }
+        IWindowFactory WindowFactory { get; }
         IEnumerable<IMonitor> Monitors { get; }
         IEnumerable<ITag> ActiveTags { get; }
     }
