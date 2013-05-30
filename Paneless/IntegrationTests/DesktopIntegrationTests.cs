@@ -38,7 +38,7 @@ namespace Paneless.IntegrationTests
     {
         protected override IDesktopManager DesktopManager
         {
-            get { return new DesktopManager(); }
+            get { return new DesktopManager(new NamedPipeClient()); }
         }
 
         protected override IWindowManager WindowManager

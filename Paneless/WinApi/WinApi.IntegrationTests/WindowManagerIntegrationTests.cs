@@ -95,9 +95,9 @@ namespace WinApi.IntergrationTests
         }
 
         [TestMethod]
-        public void IsWindowVisible()
+        public void IsWindowTileable()
         {
-            bool visibility = _wm.IsWindowVisible(_applicationPtr);
+            bool visibility = _wm.IsTileable(_applicationPtr);
             visibility.ShouldBe(true);
         }
 

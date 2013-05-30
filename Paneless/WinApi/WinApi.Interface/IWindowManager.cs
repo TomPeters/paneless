@@ -18,8 +18,8 @@ namespace WinApi.Interface
         void SetLocationUnchangedOrder(IntPtr windowPtr, RECT rect);
         ShowState GetShowState(IntPtr windowPtr);
         WINDOWPLACEMENT GetWindowPlacement(IntPtr windowPtr);
-        bool IsWindowVisible(IntPtr windowPtr);
         ExtendedWindowStyleFlags GetExtendedStyle(IntPtr windowPtr);
         void SetWindowShowState(IntPtr windowPtr, ShowState showState);
+        bool IsTileable(IntPtr windowPtr);
     }
 }

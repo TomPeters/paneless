@@ -71,9 +71,32 @@ namespace WinApi.Windows7
             WinApi.SetWindowPos(windowPtr, windowInsertAfter, rect.Left, rect.Top, rect.Right - rect.Left, rect.Bottom - rect.Top, positioningFlags);
         }
 
-        public bool IsWindowVisible(IntPtr windowPtr)
+        public bool IsTileable(IntPtr windowPtr)
+        {
+            var styleFlags = GetExtendedStyle(windowPtr);
+            return IsVisible(windowPtr) && (IsAppWindow(styleFlags) || (HasValidTitle(windowPtr) && !IsToolWindow(styleFlags)));
+        }
+
+        private static bool IsVisible(IntPtr windowPtr)
         {
             return WinApi.IsWindowVisible(windowPtr);
+        }
+
+        private static bool IsAppWindow(ExtendedWindowStyleFlags extendedWindowStyleFlags)
+        {
+            return extendedWindowStyleFlags.HasFlag(ExtendedWindowStyleFlags.WS_EX_APPWINDOW);
+        }
+
+        // TODO: This isn't a great way to filter windows (but works ok) - look into alternate methods 
+        private bool HasValidTitle(IntPtr windowPtr)
+        {
+            return GetTitle(windowPtr) != "" && GetClassName(windowPtr) != "";
+        }
+
+        // Tool windows probably won't look good tiled (and users may not want them tiled) - possibly make this optional later
+        private static bool IsToolWindow(ExtendedWindowStyleFlags styleFlags)
+        {
+            return styleFlags.HasFlag(ExtendedWindowStyleFlags.WS_EX_TOOLWINDOW);
         }
 
         public ExtendedWindowStyleFlags GetExtendedStyle(IntPtr windowPtr)

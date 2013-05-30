@@ -46,8 +46,6 @@ namespace Paneless.IntegrationTests
             location.Right.ShouldNotBeNull();
             location.Top.ShouldNotBeNull();
             location.Bottom.ShouldNotBeNull();
-            _sut.State.ShouldBe(ShowState.SW_SHOWNORMAL);
-            _sut.ExtendedWindowStyleFlags.HasFlag(ExtendedWindowStyleFlags.WS_EX_LEFT);
             _sut.Screen.ShouldBeA<Screen>();
         }
 

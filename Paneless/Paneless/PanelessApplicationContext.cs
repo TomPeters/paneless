@@ -66,7 +66,7 @@ namespace Paneless
 
         private void SetupShellHookWindow()
         {
-            _hiddenForm = new HiddenForm(DomainObjectProvider, ConfigurationProvider, new EventManager(new CommandEventFactory()), new WinApiRegistrationManager(new DesktopManager()));
+            _hiddenForm = new HiddenForm(DomainObjectProvider, ConfigurationProvider, new EventManager(new CommandEventFactory()), new WinApiRegistrationManager(new DesktopManager(new NamedPipeClient())));
         }
     }
 }

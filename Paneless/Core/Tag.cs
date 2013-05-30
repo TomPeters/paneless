@@ -3,7 +3,7 @@ using Paneless.Core.Layouts;
 
 namespace Paneless.Core
 {
-    // A collection of windows and it'name associated layout. Windows do not have to be unique between tags. Has a name etc. Can be a child of a monitor
+    // A collection of windows and it's associated layout. Windows do not have to be unique between tags. Can be a property of a monitor
     public class Tag : ITag
     {
         private static readonly log4net.ILog Logger = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);

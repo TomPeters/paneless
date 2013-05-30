@@ -7,17 +7,15 @@ namespace Paneless.Core
 {
     public class Window : IWindow
     {
+        public Window(string windowName, IWindowManager windowManager)
+            : this(windowManager.GetPtr(windowName), windowManager)
+        {
+        }
+
         public Window(IntPtr windowPtr, IWindowManager windowManager)
         {
             Wmgr = windowManager;
             WindowPtr = windowPtr;
-            DetectScreen();
-        }
-
-        public Window(string windowname, IWindowManager windowManager)
-        {
-            Wmgr = windowManager;
-            WindowPtr = Wmgr.GetPtr(windowname);
             DetectScreen();
         }
 
@@ -40,14 +38,9 @@ namespace Paneless.Core
             get { return new Rectangle(Wmgr.GetLocation(WindowPtr)); }
         }
 
-        public Screen Screen { get; set; }
+        public Screen Screen { get; private set; }
 
-        public ShowState State
-        {
-            get { return Wmgr.GetShowState(WindowPtr); }
-        }
-
-        public void DetectScreen()
+        private void DetectScreen()
         {
             Screen = Screen.FromHandle(WindowPtr);
         }
@@ -58,53 +51,12 @@ namespace Paneless.Core
             Wmgr.SetLocationUnchangedOrder(WindowPtr, location.GetRect());
         }
 
-        public ExtendedWindowStyleFlags ExtendedWindowStyleFlags
-        {
-            get { return Wmgr.GetExtendedStyle(WindowPtr); }
-        }
-
-        // Returns true if this window should be handled by Paneless
-        // This should probably push down to winapi (i.e. could change if the api changes)
         public bool IsTileable()
         {
-            return IsVisible() && (IsAppWindow() || (HasValidName() && !IsToolWindow()));
+            return Wmgr.IsTileable(WindowPtr);
         }
 
-        // The WS_EX_APPWINDOW extended style indicates that the window should appear in the taskbar
-        private bool IsAppWindow()
-        {
-            if (ExtendedWindowStyleFlags.HasFlag(ExtendedWindowStyleFlags.WS_EX_APPWINDOW))
-            {
-                return true;
-            }
-            return false;
-        }
-
-        // Tool windows probably won't look good tiled (and users may not want them tiled) - possibly make this optional later
-        private bool IsToolWindow()
-        {
-            if (ExtendedWindowStyleFlags.HasFlag(ExtendedWindowStyleFlags.WS_EX_TOOLWINDOW))
-            {
-                return true;
-            }
-            return false;
-        }
-
-        private bool HasValidName() //TODO This isn't a great way to filter windows (but works ok) - look into alternate methods
-        {
-            if (Name != "" && ClassName != "")
-            {
-                return true;
-            }
-            return false;
-        }
-
-        private bool IsVisible()
-        {
-            return Wmgr.IsWindowVisible(WindowPtr);
-        }
-
-        public void SetShowState(ShowState showState)
+        private void SetShowState(ShowState showState)
         {
             Wmgr.SetWindowShowState(WindowPtr, showState);
         }
@@ -115,12 +67,8 @@ namespace Paneless.Core
         string Name { get; }
         Rectangle Location { get; }
         string ClassName { get; }
-        ShowState State { get; }
-        Screen Screen { get; set; }
-        void DetectScreen();
+        Screen Screen { get; }
         void SetLocation(Rectangle location);
-        ExtendedWindowStyleFlags ExtendedWindowStyleFlags { get; }
         bool IsTileable();
-        void SetShowState(ShowState showState);
     }
 }

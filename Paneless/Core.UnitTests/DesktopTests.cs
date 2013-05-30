@@ -42,7 +42,7 @@ namespace Paneless.Core.UnitTests
             const int windowPtr = 5;
             _mockDesktopManager.Setup(mgr => mgr.EnumWindows(It.IsAny<WindowsEnumProcess>()))
                               .Callback<WindowsEnumProcess>(cb => cb(windowPtr, 0));
-            _mockWindowManager.Setup(mgr => mgr.IsWindowVisible(It.IsAny<IntPtr>())).Returns(true);
+            _mockWindowManager.Setup(mgr => mgr.IsTileable(It.IsAny<IntPtr>())).Returns(true);
             IEnumerable<IWindow> windows = _sut.DetectWindows();
             windows.Count().ShouldBe(1);
         }

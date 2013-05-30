@@ -47,7 +47,7 @@ namespace WinApi.IntergrationTests
     {
         protected override IDesktopManager DesktopManager
         {
-            get { return new DesktopManager(); }
+            get { return new DesktopManager(new NamedPipeClient()); }
         }
     }
 }
