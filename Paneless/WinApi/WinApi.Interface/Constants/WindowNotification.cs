@@ -4,6 +4,7 @@
     public enum WindowNotification : uint
     {
         WM_CREATE = 0x0001,
+        WM_DESTROY = 0x0002,
         WM_MOVING = 0x0216,
         WM_MOVE = 0x0003,
         WM_SHOWWINDOW = 0x0018,

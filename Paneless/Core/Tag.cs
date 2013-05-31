@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Paneless.Core.Layouts;
 
 namespace Paneless.Core
@@ -49,6 +50,12 @@ namespace Paneless.Core
             _layout.Domain = Domain;
             _layout.Tile();
         }
+
+        public void RemoveWindow(IWindow window)
+        {
+            if (_windows.Any(w => w.Equals(window)))
+                _windows.Remove(_windows.Single(w => w.Equals(window)));
+        }
     }
 
     public interface ITag
@@ -59,5 +66,6 @@ namespace Paneless.Core
         void SetLayout(ILayout newLayout);
         void ClearWindows();
         void Tile();
+        void RemoveWindow(IWindow window);
     }
 }

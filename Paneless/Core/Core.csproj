@@ -105,6 +105,7 @@
     <Compile Include="Commands\Command Factories\AssignWindowsToMonitorsCommandFactory.cs" />
     <Compile Include="Commands\Command Factories\ClearLayoutsOnActiveTagsCommandFactory.cs" />
     <Compile Include="Commands\Command Factories\RefreshWindowPositionsCommandFactory.cs" />
+    <Compile Include="Commands\Command Factories\RemoveWindowCommandFactory.cs" />
     <Compile Include="Commands\Infrastructure\EmptyCommandFactory.cs" />
     <Compile Include="Commands\Infrastructure\ICommand.cs" />
     <Compile Include="Commands\Infrastructure\CommandEventFactory.cs" />
@@ -114,6 +115,7 @@
     <Compile Include="Commands\Infrastructure\LoggedCommandProxy.cs" />
     <Compile Include="Commands\RefreshWindowPositionsCommand.cs" />
     <Compile Include="Commands\AssignTagsToMonitorsCommand.cs" />
+    <Compile Include="Commands\RemoveWindowCommand.cs" />
     <Compile Include="Config\CommandConfiguration.cs" />
     <Compile Include="Config\KeyBinding.cs" />
     <Compile Include="Config\Options.cs" />
@@ -132,6 +134,7 @@
     <Compile Include="Events\ShutdownEvent.cs" />
     <Compile Include="Events\StartupEvent.cs" />
     <Compile Include="Events\WindowCreationEvent.cs" />
+    <Compile Include="Events\WindowDestructionEvent.cs" />
     <Compile Include="Events\WindowMovedEvent.cs" />
     <Compile Include="Events\WindowResizingEvent.cs" />
     <Compile Include="Events\WindowResizedEvent.cs" />

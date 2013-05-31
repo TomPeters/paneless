@@ -36,6 +36,11 @@ namespace Paneless.Core.Commands
             AddCommandMapping(new WindowResizedEvent(), new RefreshWindowPositionsCommandFactory());
             AddCommandMapping(new WindowResizingEvent(), new RefreshWindowPositionsCommandFactory());
             AddCommandMapping(new WindowShownEvent(), new AddNewWindowCommandFactory());
+            AddCommandMapping(new WindowDestructionEvent(), new CompositeCommandFactory(new List<ICommandFactory>
+                {
+                    new RemoveWindowCommandFactory(),
+                    new RefreshWindowPositionsCommandFactory()
+                }));
         }
 
         private void AddCommandMapping(IEvent ev, ICommandFactory commandFactory)

@@ -78,6 +78,9 @@ namespace Paneless.Core.Events
                     case (WindowNotification.WM_SIZE):
                         builder.AddEvent(new WindowResizedEvent());
                         break;
+                    case (WindowNotification.WM_DESTROY):
+                        builder.AddEvent(new WindowDestructionEvent());
+                        break;
                 }
             }
         }
