@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Paneless.Common;
 
 namespace Paneless.Core.Commands
@@ -17,19 +16,19 @@ namespace Paneless.Core.Commands
 
         public void Execute()
         {
-            if (NewWindow.IsTileable())
+            foreach (IMonitor monitor in Monitors)
             {
-                foreach (IMonitor monitor in Monitors)
-                {
-                    if (monitor.IsInSameScreen(NewWindow))
-                        monitor.AddWindow(NewWindow);
-                }
+                if (monitor.IsInSameScreen(NewWindow))
+                    monitor.AddWindow(NewWindow);
             }
         }
 
         public string LogDescription
         {
-            get { return "Detected new window: " + NewWindow.Name + "; and its tileability is: " + NewWindow.IsTileable(); }
+            get { return "Detected new window: " + NewWindow.Name + 
+                "; and its tileability is: " + NewWindow.IsTileable() +
+                "; and its visibility is: " + NewWindow.IsVisible();
+            }
         }
     }
 }

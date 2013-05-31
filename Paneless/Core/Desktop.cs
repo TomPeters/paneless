@@ -55,6 +55,11 @@ namespace Paneless.Core
             _tags.Add(tag);
         }
 
+        public bool IsManagingWindow(IWindow window)
+        {
+            return _windows.All(w => w.Equals(window));
+        }
+
         public IEnumerable<IWindow> DetectWindows()
         {
             _windows = new List<IWindow>();
@@ -67,7 +72,7 @@ namespace Paneless.Core
         {
             IWindow window = WindowFactory.CreateWindow((IntPtr) windowsPtr);
             Logger.Debug("Window Detected: " + window.Name);
-            if (window.IsTileable())
+            if (window.IsTileable() && window.IsVisible())
             {
                 Logger.Info("Tileable Window " + window.Name + " added to Desktop");
                 _windows.Add(window);
@@ -83,5 +88,6 @@ namespace Paneless.Core
         ILayoutFactory LayoutFactory { get; }
         IEnumerable<IWindow> DetectWindows();
         void AddTag(ITag tag);
+        bool IsManagingWindow(IWindow window);
     }
 }

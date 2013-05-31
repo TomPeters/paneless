@@ -56,13 +56,24 @@ namespace Paneless.Core
             return Wmgr.IsTileable(WindowPtr);
         }
 
+        public bool IsVisible()
+        {
+            return Wmgr.IsVisible(WindowPtr);
+        }
+
         private void SetShowState(ShowState showState)
         {
             Wmgr.SetWindowShowState(WindowPtr, showState);
         }
+
+        public bool Equals(IWindow other)
+        {
+            if (!(other is Window)) return false;
+            return ((Window)other).WindowPtr == WindowPtr;
+        }
     }
 
-    public interface IWindow
+    public interface IWindow : IEquatable<IWindow>
     {
         string Name { get; }
         Rectangle Location { get; }
@@ -70,5 +81,6 @@ namespace Paneless.Core
         Screen Screen { get; }
         void SetLocation(Rectangle location);
         bool IsTileable();
+        bool IsVisible();
     }
 }

@@ -70,15 +70,13 @@ namespace Paneless.Core.Events
                         builder.AddEvent(new WindowMovedEvent());
                         break;
                     case (WindowNotification.WM_SHOWWINDOW):
+                        builder.AddEvent(new WindowShownEvent());
                         break;
                     case (WindowNotification.WM_SIZING):
                         builder.AddEvent(new WindowResizingEvent());
                         break;
                     case (WindowNotification.WM_SIZE):
                         builder.AddEvent(new WindowResizedEvent());
-                        break;
-                    case (WindowNotification.WM_CREATE):
-                        builder.AddEvent(new WindowCreationEvent());
                         break;
                 }
             }

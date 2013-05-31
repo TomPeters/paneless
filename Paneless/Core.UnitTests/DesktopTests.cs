@@ -41,7 +41,7 @@ namespace Paneless.Core.UnitTests
         [TestMethod]
         public void TestDetectWindows()
         {
-            _mockWindowFactory.Setup(wf => wf.CreateWindow(It.IsAny<IntPtr>())).Returns(Mock.Of<IWindow>(w => w.IsTileable() == true));
+            _mockWindowFactory.Setup(wf => wf.CreateWindow(It.IsAny<IntPtr>())).Returns(Mock.Of<IWindow>(w => w.IsTileable() == true && w.IsVisible() == true));
             const int windowPtr = 5;
             _mockDesktopManager.Setup(mgr => mgr.EnumWindows(It.IsAny<WindowsEnumProcess>()))
                               .Callback<WindowsEnumProcess>(cb => cb(windowPtr, 0));

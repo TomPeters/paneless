@@ -74,10 +74,10 @@ namespace WinApi.Windows7
         public bool IsTileable(IntPtr windowPtr)
         {
             var styleFlags = GetExtendedStyle(windowPtr);
-            return IsVisible(windowPtr) && (IsAppWindow(styleFlags) || (HasValidTitle(windowPtr) && !IsToolWindow(styleFlags)));
+            return IsAppWindow(styleFlags) || (HasValidTitle(windowPtr) && !IsToolWindow(styleFlags));
         }
 
-        private static bool IsVisible(IntPtr windowPtr)
+        public bool IsVisible(IntPtr windowPtr)
         {
             return WinApi.IsWindowVisible(windowPtr);
         }

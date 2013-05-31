@@ -98,6 +98,7 @@
     <Compile Include="Commands\AssignLayoutsToActiveTagsCommand.cs" />
     <Compile Include="Commands\AssignNewWindowToTagCommand.cs" />
     <Compile Include="Commands\AssignWindowsToMonitorsCommand.cs" />
+    <Compile Include="Commands\Command Factories\AddNewWindowCommandFactory.cs" />
     <Compile Include="Commands\Command Factories\AssignLayoutsToActiveTagsCommandFactory.cs" />
     <Compile Include="Commands\Command Factories\AssignNewWindowToTagCommandFactory.cs" />
     <Compile Include="Commands\Command Factories\AssignTagsToMonitorsCommandFactory.cs" />
@@ -135,6 +136,7 @@
     <Compile Include="Events\WindowResizingEvent.cs" />
     <Compile Include="Events\WindowResizedEvent.cs" />
     <Compile Include="Config\IConfigurationProvider.cs" />
+    <Compile Include="Events\WindowShownEvent.cs" />
     <Compile Include="Layouts\EmptyLayout.cs" />
     <Compile Include="Layouts\EmptyLayoutFactory.cs" />
     <Compile Include="Layouts\FullDomainLayout.cs" />

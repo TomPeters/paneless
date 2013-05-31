@@ -21,5 +21,6 @@ namespace WinApi.Interface
         ExtendedWindowStyleFlags GetExtendedStyle(IntPtr windowPtr);
         void SetWindowShowState(IntPtr windowPtr, ShowState showState);
         bool IsTileable(IntPtr windowPtr);
+        bool IsVisible(IntPtr windowPtr);
     }
 }
