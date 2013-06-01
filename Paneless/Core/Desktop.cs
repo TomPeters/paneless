@@ -57,13 +57,18 @@ namespace Paneless.Core
 
         public bool IsManagingWindow(IWindow window)
         {
-            return _windows.All(w => w.Equals(window));
+            return _windows.Any(w => w.Equals(window));
         }
 
         public void RemoveWindow(IWindow window)
         {
-            if (_windows.Any(w => w.Equals(window)))
+            if (IsManagingWindow(window))
                 _windows.Remove(_windows.Single(w => w.Equals(window)));
+        }
+
+        public void AddWindow(IWindow newWindow)
+        {
+            _windows.Add(newWindow);
         }
 
         public IEnumerable<IWindow> DetectWindows()
@@ -96,5 +101,6 @@ namespace Paneless.Core
         void AddTag(ITag tag);
         bool IsManagingWindow(IWindow window);
         void RemoveWindow(IWindow window);
+        void AddWindow(IWindow newWindow);
     }
 }

@@ -26,7 +26,7 @@ namespace Paneless.Core.UnitTests.Commands
 
             foreach (Mock<IMonitor> monitor in mockMonitors)
             {
-                monitor.VerifySet(m => m.Tag, Times.Once());
+                monitor.VerifySet(m => m.Tag = It.IsAny<ITag>(), Times.Once());
             }
 
             mockDesktop.Verify(d => d.AddTag(It.IsAny<ITag>()), Times.Exactly(mockMonitors.Count));

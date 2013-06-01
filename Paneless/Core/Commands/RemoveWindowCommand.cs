@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
+using Paneless.Common;
 
 namespace Paneless.Core.Commands
 {
-    public class RemoveWindowCommand : ICommand
+    public class RemoveWindowCommand : ICommand, ILoggable
     {
         private IWindow Window { get; set; }
         private IDesktop Desktop { get; set; }
@@ -20,6 +21,11 @@ namespace Paneless.Core.Commands
             Desktop.RemoveWindow(Window);
             foreach (ITag tag in ActiveTags)
                 tag.RemoveWindow(Window);
+        }
+
+        public string LogDescription 
+        { 
+            get { return "Window being removed: " + Window.Name; } 
         }
     }
 }

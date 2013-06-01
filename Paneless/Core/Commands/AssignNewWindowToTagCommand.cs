@@ -7,15 +7,19 @@ namespace Paneless.Core.Commands
     {
         private IWindow NewWindow { get; set; }
         private IEnumerable<IMonitor> Monitors { get; set; }
+        private IDesktop Desktop { get; set; }
 
-        public AssignNewWindowToTagCommand(IWindow newWindow, IEnumerable<IMonitor> monitors)
+        public AssignNewWindowToTagCommand(IWindow newWindow, IEnumerable<IMonitor> monitors, IDesktop desktop)
         {
             NewWindow = newWindow;
             Monitors = monitors;
+            Desktop = desktop;
         }
 
         public void Execute()
         {
+            bool result = Desktop.IsManagingWindow(NewWindow);
+            Desktop.AddWindow(NewWindow);
             foreach (IMonitor monitor in Monitors)
             {
                 if (monitor.IsInSameScreen(NewWindow))
@@ -25,9 +29,11 @@ namespace Paneless.Core.Commands
 
         public string LogDescription
         {
-            get { return "Detected new window: " + NewWindow.Name + 
-                "; and its tileability is: " + NewWindow.IsTileable() +
-                "; and its visibility is: " + NewWindow.IsVisible();
+            get
+            {
+                return "Detected new window: " + NewWindow.Name +
+                       "; and its tileability is: " + NewWindow.IsTileable() +
+                       "; and its visibility is: " + NewWindow.IsVisible();
             }
         }
     }

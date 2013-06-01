@@ -18,7 +18,6 @@ namespace Paneless.Core.Commands.Command_Factories
 
         private static bool NewWindowShouldBeAdded(IWindow window, IDesktop desktop)
         {
-            
             return window.IsTileable() && !desktop.IsManagingWindow(window);
         }
     }

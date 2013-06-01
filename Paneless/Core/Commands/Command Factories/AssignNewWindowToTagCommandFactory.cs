@@ -7,7 +7,7 @@ namespace Paneless.Core.Commands
         public ICommand CreateCommand(IEventArguments eventArguments)
         {
             return new AssignNewWindowToTagCommand(eventArguments.DomainObjectProvider.WindowFactory.CreateWindow(eventArguments.Hwnd), 
-                                                    eventArguments.DomainObjectProvider.Monitors);
+                                                    eventArguments.DomainObjectProvider.Monitors, eventArguments.DomainObjectProvider.Desktop);
         }
     }
 }

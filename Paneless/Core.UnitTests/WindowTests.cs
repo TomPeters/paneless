@@ -3,7 +3,6 @@ using EasyAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using WinApi.Interface;
-using WinApi.Interface.Constants;
 using WinApi.Interface.Types;
 
 namespace Paneless.Core.UnitTests
@@ -11,6 +10,7 @@ namespace Paneless.Core.UnitTests
     [TestClass]
     public class WindowTests
     {
+        private const int PtrValue = 1;
         private IntPtr _windowPtr;
         private Mock<IWindowManager> _mockWindowManager;
         private IWindow _sut;
@@ -18,7 +18,7 @@ namespace Paneless.Core.UnitTests
         [TestInitialize]
         public void Setup()
         {
-            _windowPtr = new IntPtr();
+            _windowPtr = new IntPtr(PtrValue);
             _mockWindowManager = new Mock<IWindowManager>();
             _sut = new Window(_windowPtr, _mockWindowManager.Object);
         }
@@ -71,6 +71,30 @@ namespace Paneless.Core.UnitTests
             _sut.SetLocation(location);
 
             _mockWindowManager.Verify(mgr => mgr.SetLocationUnchangedOrder(_windowPtr, It.IsAny<RECT>()));
+        }
+
+        [TestMethod]
+        public void WindowsWithSamePtrValueAreEqual()
+        {
+            IWindow equalWindow = new Window(new IntPtr(PtrValue), _mockWindowManager.Object);
+            _sut.Equals(equalWindow).ShouldBe(true);
+            equalWindow.Equals(_sut).ShouldBe(true);
+        }
+
+        [TestMethod]
+        public void WindowsWithSamePtrAreEqual()
+        {
+            IWindow equalWindow = new Window(_windowPtr, _mockWindowManager.Object);
+            _sut.Equals(equalWindow).ShouldBe(true);
+            equalWindow.Equals(_sut).ShouldBe(true);
+        }
+
+        [TestMethod]
+        public void WindowsWithDifferentPtrAreNotEqual()
+        {
+            IWindow equalWindow = new Window(new IntPtr(2), _mockWindowManager.Object);
+            _sut.Equals(equalWindow).ShouldBe(false);
+            equalWindow.Equals(_sut).ShouldBe(false);
         }
     }
 }

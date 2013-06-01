@@ -69,7 +69,7 @@ namespace Paneless.Core
         public bool Equals(IWindow other)
         {
             if (!(other is Window)) return false;
-            return ((Window)other).WindowPtr == WindowPtr;
+            return ((Window)other).WindowPtr.Equals(WindowPtr);
         }
     }
 
