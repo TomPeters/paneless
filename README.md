@@ -1,3 +1,5 @@
+Note: This project has been abandoned
+
 paneless
 ========
 
@@ -27,9 +29,10 @@ If you find any bugs or discover any applications that are not being tiled corre
 Contributing
 ============
 
-Contributions are very welcome, just fork and submit a pull request. 
+This project has been abandoned.
+~~Contributions are very welcome, just fork and submit a pull request. 
 The general infrastructure is in its easly stages and is still evolving rapidly with every commit. Once it matures a bit more it will be easier to pick a feature to hack on.
 
-I will try to keep the Github issues tracker up to date to reflect the immediate project direction so you can find appropriate tasks and discuss them there.
+~~I will try to keep the Github issues tracker up to date to reflect the immediate project direction so you can find appropriate tasks and discuss them there.
 
-I am more than happy to discuss the project in detail or help out anyone who wishes to contribute. Just contact me at tom@tjpeters.net
+~~I am more than happy to discuss the project in detail or help out anyone who wishes to contribute. Just contact me at tom@tjpeters.net
